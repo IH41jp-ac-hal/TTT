@@ -37,12 +37,10 @@ git branch
 git switch -c develop
 git pull origin develop
 ```
-// \Flutter_App\配下にあるReadmeファイルの変更をステージングエリアに保存します。
+// ステージングエリアに保存します。
 ```
-cd ..
 git add .
 git commit -m "firstcommit"
-cd exampletest
 ```
 // ここから、自分の作業環境を構築していきます。
 ※nameは仮で自分の名前にしておいてください。
