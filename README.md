@@ -23,14 +23,10 @@ $ git config --global user.email "you-email@example.com"
 ## リポジトリをcloneする
 `C:\IH41jp-ac-hal`上でpowershellを立ち上げ、リモートリポジトリをcloneしてください。
 ```
-git clone "https://github.com/IH41jp-ac-hal/Flutter_App.git"
+git clone "https://github.com/IH41jp-ac-hal/TTT.git"
 ```
 ## ブランチを切る
 
-// ディレクトリの階層を以下のように降りてください。
-```
-cd .\Flutter_App\exampletest\
-```
 // ここで、mainが表示されるか確認してください。
 ```
 git branch
