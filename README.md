@@ -65,7 +65,7 @@ git commit -m "修正内容"
 ```
 // ローカルリポジトリの内容をリモートリポジトリに送信して下さい。
 ```
-git push origin develop
+git push origin "ブランチ名"
 ```
 // プルリクエストを投げましょう。※一旦無視でok
 
