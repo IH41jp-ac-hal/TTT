@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trukkertrakker/screens/HomePage.dart';
-import 'package:trukkertrakker/screens/Browse.dart';
+import 'package:trukkertrakker/screens/Reservation.dart';
 import 'package:trukkertrakker/screens/Information.dart';
-import 'package:trukkertrakker/screens/Library.dart';
+import 'package:trukkertrakker/screens/List.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -27,9 +27,9 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const _screens = [
     HomePageScreen(),
-    BrowseScreen(),
+    ReservationScreen(),
     InformationScreen(),
-    LibraryScreen(),
+    ListScreen(),
   ];
 
   int _selectedIndex = 0;
@@ -48,13 +48,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'トップ'),
+          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'ホーム'),
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month), label: '予約'),
           BottomNavigationBarItem(
               icon: Icon(Icons.local_shipping), label: '配送状況'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: 'Library'),
+              icon: Icon(Icons.account_circle), label: '予約一覧'),
         ],
         type: BottomNavigationBarType.fixed,
       ),
