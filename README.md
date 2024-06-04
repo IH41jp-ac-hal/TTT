@@ -29,6 +29,7 @@ git clone "https://github.com/IH41jp-ac-hal/TTT.git"
 
 // ここで、mainが表示されるか確認してください。
 ```
+cd .\TTT\
 git branch
 ```
 // Developブランチを切ってください。
