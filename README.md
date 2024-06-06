@@ -94,6 +94,8 @@ git push origin "ブランチ名"
 
 ![スクリーンショット (27)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/9043cc9d-526d-4870-b377-6c2b9f6a2358)
 
+## Git操作豆知識
+
 // ブランチ切り替え方
 
 ```
