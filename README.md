@@ -113,12 +113,24 @@ git brach -d "ブランチ名"
 
 // ブランチ名変更
 
-リモート上の操作
+1.0-リモート上の操作
 
+1.1-View all branchesを開いてください。
 
+1.2-名前変更したいブランチ画面右側の◦◦◦を選択しRename branchを選択してください。
 
-ローカル上の操作
+1.3-ブランチ名を決めたら緑色のRename branchを選択しましょう。
 
+1-/
+![スクリーンショット (28)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/462f0669-3e5b-47f3-8697-206e36e73ce3)
+2-/
+![スクリーンショット (29)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/89aaac53-1302-45dd-863e-85a8c5a04cc1)
+3-/
+![スクリーンショット (30)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/200d8bf5-576b-441c-bce9-8002244bad5c)
+
+2.0-ローカル上の操作
+
+2.1-
 ```
 git branch -m OLD-BRANCH-NAME NEW-BRANCH-NAME
 git fetch origin
@@ -126,6 +138,7 @@ git branch -u origin/NEW-BRANCH-NAME NEW-BRANCH-NAME
 git remote set-head origin -a
 ```
 
+※必ず上記の手順で行ってください。
 
 
 
