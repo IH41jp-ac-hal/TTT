@@ -137,7 +137,7 @@ git branch -u origin/NEW-BRANCH-NAME NEW-BRANCH-NAME
 git remote set-head origin -a
 ```
 
-※必ず上記の手順で行ってください。
+※ブランチ名を変更する際は必ず上記の手順で行ってください。
 
 
 
