@@ -54,7 +54,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           BottomNavigationBarItem(
               icon: Icon(Icons.local_shipping), label: '配送状況'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: 'Library'),
+              icon: Icon(Icons.account_circle), label: '予約一覧'),
         ],
         type: BottomNavigationBarType.fixed,
       ),
