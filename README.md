@@ -111,6 +111,21 @@ git switch main
 git brach -d "ブランチ名"
 ```
 
+// ブランチ名変更
+
+リモート上の操作
+
+
+
+ローカル上の操作
+
+```
+git branch -m OLD-BRANCH-NAME NEW-BRANCH-NAME
+git fetch origin
+git branch -u origin/NEW-BRANCH-NAME NEW-BRANCH-NAME
+git remote set-head origin -a
+```
+
 
 
 
