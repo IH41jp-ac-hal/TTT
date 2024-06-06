@@ -73,6 +73,9 @@ git push origin "ブランチ名"
 先ほど、PUSHした内容がプルリクエスト出来るようになっています。
 自分のブランチからDevelopブランチに対してプルリクエストを投げるようにしてください。
 
+![スクリーンショット (25)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/bdad7f23-1292-4eeb-978a-215b0af3d642)
+![スクリーンショット (27)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/9043cc9d-526d-4870-b377-6c2b9f6a2358)
+
 // ブランチ切り替え方
 
 ```
