@@ -84,9 +84,13 @@ git push origin "ブランチ名"
 4-画面右側の緑色のCreate pull requestを選択してください。
 
 下記のスクリーンショットの1枚目と2枚目は画面が切り替わった時のイメージです。
+
 1-/2-/3-/
+
 ![スクリーンショット (25)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/bdad7f23-1292-4eeb-978a-215b0af3d642)
+
 4-/
+
 ![スクリーンショット (27)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/9043cc9d-526d-4870-b377-6c2b9f6a2358)
 
 // ブランチ切り替え方
