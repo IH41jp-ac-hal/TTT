@@ -3,8 +3,8 @@ import 'package:trukkertrakker/src/app.dart';
 
 void main() => runApp(MyApp());
 
-class ListScreen extends StatelessWidget {
-  const ListScreen({Key? key}) : super(key: key);
+class acountScreen extends StatelessWidget {
+  const acountScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
