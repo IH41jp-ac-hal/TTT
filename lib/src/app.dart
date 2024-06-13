@@ -3,6 +3,7 @@ import 'package:trukkertrakker/screens/HomePage.dart';
 import 'package:trukkertrakker/screens/Browse.dart';
 import 'package:trukkertrakker/screens/Information.dart';
 import 'package:trukkertrakker/screens/Library.dart';
+import 'package:trukkertrakker/screens/Reservation.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const _screens = [
     HomePageScreen(),
-    BrowseScreen(),
+    ReservationScreen(),
     InformationScreen(),
     LibraryScreen(),
   ];
