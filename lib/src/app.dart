@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trukkertrakker/screens/HomePage.dart';
 import 'package:trukkertrakker/screens/Reservation.dart';
 import 'package:trukkertrakker/screens/Information.dart';
-import 'package:trukkertrakker/screens/List.dart';
+import 'package:trukkertrakker/screens/acount.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

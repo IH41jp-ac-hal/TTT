@@ -41,7 +41,7 @@ class InformationScreen extends StatelessWidget {
             Container(
               width: size.width, // 画面の幅を設定
               height: size.height * 0.4, // 画面の高さを設定
-              color: Color.fromARGB(255, 201, 246, 0),
+              color: Colors.blueGrey,
               child: Text(
                 '混雑状況',
                 style: TextStyle(
@@ -62,7 +62,7 @@ class InformationScreen extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      height: 75, // ボタンの高さを設定
+                      height: 65, // ボタンの高さを設定
                       child: ElevatedButton(
                         onPressed: () {
                           // ボタン1が押された時の処理
@@ -76,6 +76,7 @@ class InformationScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.lightGreen, // ボタンの背景色を赤に設定
                           shape: CircleBorder(),
                         ),
                       ),
@@ -83,10 +84,10 @@ class InformationScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      height: 75, // ボタンの高さを設定
+                      height: 65, // ボタンの高さを設定
                       child: ElevatedButton(
                         onPressed: () {
-                          // ボタン1が押された時の処理
+                          // ボタン2が押された時の処理
                         },
                         child: Text(
                           '~10分',
@@ -97,6 +98,7 @@ class InformationScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.lightBlue, // ボタンの背景色を赤に設定
                           shape: CircleBorder(),
                         ),
                       ),
@@ -104,10 +106,10 @@ class InformationScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      height: 75, // ボタンの高さを設定
+                      height: 65, // ボタンの高さを設定
                       child: ElevatedButton(
                         onPressed: () {
-                          // ボタン1が押された時の処理
+                          // ボタン3が押された時の処理
                         },
                         child: Text(
                           '10~30分',
@@ -118,6 +120,7 @@ class InformationScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orangeAccent, // ボタンの背景色を赤に設定
                           shape: CircleBorder(),
                         ),
                       ),
@@ -125,10 +128,10 @@ class InformationScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      height: 75, // ボタンの高さを設定
+                      height: 65, // ボタンの高さを設定
                       child: ElevatedButton(
                         onPressed: () {
-                          // ボタン1が押された時の処理
+                          // ボタン4が押された時の処理
                         },
                         child: Text(
                           '30分以上',
@@ -139,6 +142,7 @@ class InformationScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.redAccent, // ボタンの背景色を赤に設定
                           shape: CircleBorder(),
                         ),
                       ),
@@ -146,10 +150,10 @@ class InformationScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      height: 75, // ボタンの高さを設定
+                      height: 65, // ボタンの高さを設定
                       child: ElevatedButton(
                         onPressed: () {
-                          // ボタン1が押された時の処理
+                          // ボタン5が押された時の処理
                         },
                         child: Text(
                           '激込み',
@@ -160,6 +164,7 @@ class InformationScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purpleAccent, // ボタンの背景色を赤に設定
                           shape: CircleBorder(),
                         ),
                       ),
