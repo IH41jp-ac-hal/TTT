@@ -62,7 +62,7 @@ class InformationScreen extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      height: 65, // ボタンの高さを設定
+                      height: 60, // ボタンの高さを設定
                       child: ElevatedButton(
                         onPressed: () {
                           // ボタン1が押された時の処理
@@ -70,9 +70,9 @@ class InformationScreen extends StatelessWidget {
                         child: Text(
                           '平常',
                           style: TextStyle(
-                            fontSize: 14, // フォントサイズを調整
-                            color: Colors.white, // テキストの色を白に設定
-                          ),
+                              fontSize: 14, // フォントサイズを調整
+                              color: Colors.white, // テキストの色を白に設定
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         style: ElevatedButton.styleFrom(
@@ -84,7 +84,7 @@ class InformationScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      height: 65, // ボタンの高さを設定
+                      height: 60, // ボタンの高さを設定
                       child: ElevatedButton(
                         onPressed: () {
                           // ボタン2が押された時の処理
@@ -92,9 +92,9 @@ class InformationScreen extends StatelessWidget {
                         child: Text(
                           '~10分',
                           style: TextStyle(
-                            fontSize: 14, // フォントサイズを調整
-                            color: Colors.white, // テキストの色を白に設定
-                          ),
+                              fontSize: 14, // フォントサイズを調整
+                              color: Colors.white, // テキストの色を白に設定
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         style: ElevatedButton.styleFrom(
@@ -106,17 +106,17 @@ class InformationScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      height: 65, // ボタンの高さを設定
+                      height: 60, // ボタンの高さを設定
                       child: ElevatedButton(
                         onPressed: () {
                           // ボタン3が押された時の処理
                         },
                         child: Text(
-                          '10~30分',
+                          '~30分',
                           style: TextStyle(
-                            fontSize: 14, // フォントサイズを調整
-                            color: Colors.white, // テキストの色を白に設定
-                          ),
+                              fontSize: 14, // フォントサイズを調整
+                              color: Colors.white, // テキストの色を白に設定
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         style: ElevatedButton.styleFrom(
@@ -128,7 +128,7 @@ class InformationScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      height: 65, // ボタンの高さを設定
+                      height: 60, // ボタンの高さを設定
                       child: ElevatedButton(
                         onPressed: () {
                           // ボタン4が押された時の処理
@@ -136,9 +136,9 @@ class InformationScreen extends StatelessWidget {
                         child: Text(
                           '30分以上',
                           style: TextStyle(
-                            fontSize: 14, // フォントサイズを調整
-                            color: Colors.white, // テキストの色を白に設定
-                          ),
+                              fontSize: 14, // フォントサイズを調整
+                              color: Colors.white, // テキストの色を白に設定
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         style: ElevatedButton.styleFrom(
@@ -150,17 +150,17 @@ class InformationScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      height: 65, // ボタンの高さを設定
+                      height: 60, // ボタンの高さを設定
                       child: ElevatedButton(
                         onPressed: () {
                           // ボタン5が押された時の処理
                         },
                         child: Text(
-                          '激込み',
+                          '渋滞',
                           style: TextStyle(
-                            fontSize: 14, // フォントサイズを調整
-                            color: Colors.white, // テキストの色を白に設定
-                          ),
+                              fontSize: 14, // フォントサイズを調整
+                              color: Colors.white, // テキストの色を白に設定
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         style: ElevatedButton.styleFrom(
