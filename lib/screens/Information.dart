@@ -70,7 +70,7 @@ class InformationScreen extends StatelessWidget {
                         child: Text(
                           '平常',
                           style: TextStyle(
-                              fontSize: 14, // フォントサイズを調整
+                              fontSize: 15, // フォントサイズを調整
                               color: Colors.white, // テキストの色を白に設定
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
@@ -92,7 +92,7 @@ class InformationScreen extends StatelessWidget {
                         child: Text(
                           '~10分',
                           style: TextStyle(
-                              fontSize: 14, // フォントサイズを調整
+                              fontSize: 15, // フォントサイズを調整
                               color: Colors.white, // テキストの色を白に設定
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
@@ -114,7 +114,7 @@ class InformationScreen extends StatelessWidget {
                         child: Text(
                           '~30分',
                           style: TextStyle(
-                              fontSize: 14, // フォントサイズを調整
+                              fontSize: 15, // フォントサイズを調整
                               color: Colors.white, // テキストの色を白に設定
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
@@ -136,7 +136,7 @@ class InformationScreen extends StatelessWidget {
                         child: Text(
                           '30分以上',
                           style: TextStyle(
-                              fontSize: 14, // フォントサイズを調整
+                              fontSize: 15, // フォントサイズを調整
                               color: Colors.white, // テキストの色を白に設定
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
@@ -158,7 +158,7 @@ class InformationScreen extends StatelessWidget {
                         child: Text(
                           '渋滞',
                           style: TextStyle(
-                              fontSize: 14, // フォントサイズを調整
+                              fontSize: 15, // フォントサイズを調整
                               color: Colors.white, // テキストの色を白に設定
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
