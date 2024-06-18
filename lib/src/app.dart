@@ -57,6 +57,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               icon: Icon(Icons.account_circle), label: '予約一覧'),
         ],
         type: BottomNavigationBarType.fixed,
+        backgroundColor: Color.fromARGB(255, 67, 185, 198),
       ),
     );
   }
