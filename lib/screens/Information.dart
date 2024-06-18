@@ -96,6 +96,7 @@ class _InformationScreenState extends State<InformationScreen> {
                     fontSize: 22, height: 4, fontWeight: FontWeight.bold),
               ),
             ),
+<<<<<<< HEAD
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 均等に配置
               children: <Widget>[
@@ -122,11 +123,36 @@ class _InformationScreenState extends State<InformationScreen> {
                             backgroundColor: Colors.lightGreen, // ボタンの背景色を赤に設定
                             shape: CircleBorder(),
                           ),
+=======
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 均等に配置
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      height: 60, // ボタンの高さを設定
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // ボタン1が押された時の処理
+                        },
+                        child: Text(
+                          '平常',
+                          style: TextStyle(
+                              fontSize: 15, // フォントサイズを調整
+                              color: Colors.white, // テキストの色を白に設定
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.lightGreen, // ボタンの背景色を赤に設定
+                          shape: CircleBorder(),
+>>>>>>> 0355153d1f45f64c9d2cef23f414f8760d343fec
                         ),
                       ),
                       Text('$normalCount'), // 押された回数を表示
                     ],
                   ),
+<<<<<<< HEAD
                 ),
                 Expanded(
                   child: Column(
@@ -151,11 +177,32 @@ class _InformationScreenState extends State<InformationScreen> {
                             backgroundColor: Colors.lightBlue, // ボタンの背景色を赤に設定
                             shape: CircleBorder(),
                           ),
+=======
+                  Expanded(
+                    child: Container(
+                      height: 60, // ボタンの高さを設定
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // ボタン2が押された時の処理
+                        },
+                        child: Text(
+                          '~10分',
+                          style: TextStyle(
+                              fontSize: 15, // フォントサイズを調整
+                              color: Colors.white, // テキストの色を白に設定
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.lightBlue, // ボタンの背景色を赤に設定
+                          shape: CircleBorder(),
+>>>>>>> 0355153d1f45f64c9d2cef23f414f8760d343fec
                         ),
                       ),
                       Text('$tenMinutesCount'), // 押された回数を表示
                     ],
                   ),
+<<<<<<< HEAD
                 ),
                 Expanded(
                   child: Column(
@@ -181,11 +228,32 @@ class _InformationScreenState extends State<InformationScreen> {
                                 Colors.orangeAccent, // ボタンの背景色を赤に設定
                             shape: CircleBorder(),
                           ),
+=======
+                  Expanded(
+                    child: Container(
+                      height: 60, // ボタンの高さを設定
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // ボタン3が押された時の処理
+                        },
+                        child: Text(
+                          '~30分',
+                          style: TextStyle(
+                              fontSize: 15, // フォントサイズを調整
+                              color: Colors.white, // テキストの色を白に設定
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orangeAccent, // ボタンの背景色を赤に設定
+                          shape: CircleBorder(),
+>>>>>>> 0355153d1f45f64c9d2cef23f414f8760d343fec
                         ),
                       ),
                       Text('$thirtyMinutesCount'), // 押された回数を表示
                     ],
                   ),
+<<<<<<< HEAD
                 ),
                 Expanded(
                   child: Column(
@@ -210,11 +278,32 @@ class _InformationScreenState extends State<InformationScreen> {
                             backgroundColor: Colors.redAccent, // ボタンの背景色を赤に設定
                             shape: CircleBorder(),
                           ),
+=======
+                  Expanded(
+                    child: Container(
+                      height: 60, // ボタンの高さを設定
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // ボタン4が押された時の処理
+                        },
+                        child: Text(
+                          '30分以上',
+                          style: TextStyle(
+                              fontSize: 15, // フォントサイズを調整
+                              color: Colors.white, // テキストの色を白に設定
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.redAccent, // ボタンの背景色を赤に設定
+                          shape: CircleBorder(),
+>>>>>>> 0355153d1f45f64c9d2cef23f414f8760d343fec
                         ),
                       ),
                       Text('$moreThanThirtyCount'), // 押された回数を表示
                     ],
                   ),
+<<<<<<< HEAD
                 ),
                 Expanded(
                   child: Column(
@@ -240,6 +329,26 @@ class _InformationScreenState extends State<InformationScreen> {
                                 Colors.purpleAccent, // ボタンの背景色を赤に設定
                             shape: CircleBorder(),
                           ),
+=======
+                  Expanded(
+                    child: Container(
+                      height: 60, // ボタンの高さを設定
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // ボタン5が押された時の処理
+                        },
+                        child: Text(
+                          '渋滞',
+                          style: TextStyle(
+                              fontSize: 15, // フォントサイズを調整
+                              color: Colors.white, // テキストの色を白に設定
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purpleAccent, // ボタンの背景色を赤に設定
+                          shape: CircleBorder(),
+>>>>>>> 0355153d1f45f64c9d2cef23f414f8760d343fec
                         ),
                       ),
                       Text('$trafficJamCount'), // 押された回数を表示
