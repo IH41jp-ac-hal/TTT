@@ -141,6 +141,8 @@ git remote set-head origin -a
 
 ## 対処済みエラー
 
+![image](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/b5efa483-fb15-435f-a072-e50e204e1d47)
+
 上記のようなエラーが出た際の対処を下記に記しています。
 
 再度push出来るようになっていると思います。
