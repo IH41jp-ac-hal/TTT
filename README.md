@@ -147,6 +147,8 @@ git remote set-head origin -a
 
 再度push出来るようになっていると思います。
 
+※使用する際は自分のブランチ名に対して行ってください。
+
 ```
 git fetch origin
 git pull origin feature/Delivery
