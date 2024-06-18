@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trukkertrakker/screens/HomePage.dart';
-import 'package:trukkertrakker/screens/Browse.dart';
 import 'package:trukkertrakker/screens/Information.dart';
-import 'package:trukkertrakker/screens/Library.dart';
+import 'package:trukkertrakker/screens/account.dart';
 import 'package:trukkertrakker/screens/Reservation.dart';
 
 class MyApp extends StatelessWidget {
@@ -30,7 +29,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     HomePageScreen(),
     ReservationScreen(),
     InformationScreen(),
-    LibraryScreen(),
+    accountScreen(),
   ];
 
   int _selectedIndex = 0;
