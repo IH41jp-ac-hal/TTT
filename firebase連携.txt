@@ -1,0 +1,28 @@
+https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
+
+https://firebase.google.com/docs/cli?hl=ja#windows-npm
+でスタンドアロンバイナリダウンロード
+
+firebase login
+
+flutter アプリの入っているフォルダに移動
+
+dart pub global activate flutterfire_cli
+
+flutterfire configure
+
+設定画面で開発者モードをオンにする
+
+flutter pub add firebase_core
+
+flutter run
+
+main.dartに
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
+
+flutter pub add	firebase_auth	cloud_firestore		firebase_storage	firebase_database
