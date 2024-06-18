@@ -141,10 +141,6 @@ git remote set-head origin -a
 
 ## 対処済みエラー
 
-[Upload[InternetShortcut]
-URL=https://cdn.discordapp.com/attachments/1077065588763013262/1252515851966611456/image.png?ex=66727fc9&is=66712e49&hm=543447e08cec82ef60279bfeb33151d7a9583b3be6508d64124531884392ffa4&
-ing image.png.url…]()
-
 上記のようなエラーが出た際の対処を下記に記しています。
 
 再度push出来るようになっていると思います。
