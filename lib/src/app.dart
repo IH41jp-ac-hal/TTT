@@ -29,7 +29,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     HomePageScreen(),
     ReservationScreen(),
     InformationScreen(),
-    acountScreen(),
+    AccountScreen(),
   ];
 
   int _selectedIndex = 0;

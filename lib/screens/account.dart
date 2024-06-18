@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:trukkertrakker/src/app.dart';
 
+// アカウント情報モデル
+class AccountInfo {
+  final String name;
+  final String email;
+  final String profileImageUrl;
+
+  AccountInfo(
+      {required this.name, required this.email, required this.profileImageUrl});
+}
+
 void main() => runApp(MyApp());
 
-class acountScreen extends StatelessWidget {
-  const acountScreen({Key? key}) : super(key: key);
+class AccountScreen extends StatelessWidget {
+  const AccountScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // アカウント情報取得 (仮)
+    final accountInfo = AccountInfo(
+      name: '山田 太郎',
+      email: 'yamada.taro@example.com',
+      profileImageUrl: 'assets/logo.png',
+    );
+
     return MaterialApp(
       home: Scaffold(
         appBar: PreferredSize(
@@ -25,17 +42,49 @@ class acountScreen extends StatelessWidget {
                 child: Container(
                   width: 114,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/logo.png'),
-                      )),
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/logo.png'),
+                    ),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
-        body: Column(children: []),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              // プロフィール写真
+              CircleAvatar(
+                radius: 50.0,
+                backgroundImage: AssetImage(accountInfo.profileImageUrl),
+              ),
+              SizedBox(height: 20.0),
+
+              // 名前
+              Text(
+                accountInfo.name,
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              ),
+
+              // メールアドレス
+              Text(
+                accountInfo.email,
+                style: TextStyle(fontSize: 16.0),
+              ),
+
+              // 編集ボタン
+              ElevatedButton(
+                onPressed: () {
+                  // 編集画面に遷移 or ダイアログを表示
+                },
+                child: Text('編集'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
