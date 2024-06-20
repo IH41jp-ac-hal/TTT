@@ -334,21 +334,37 @@ class ReservationDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('お名前: ${reservation.name}'),
+            Text(
+              'お名前: ${reservation.name}',
+              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+            ),
             SizedBox(height: 8.0),
-            Text('電話番号: ${reservation.phoneNumber}'),
+            Text(
+              '電話番号: ${reservation.phoneNumber}',
+              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+            ),
             SizedBox(height: 8.0),
-            Text('日付: ${reservation.date}'),
+            Text(
+              '日付: ${reservation.date}',
+              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+            ),
             SizedBox(height: 8.0),
-            Text('時刻: ${reservation.time}'),
+            Text(
+              '時刻: ${reservation.time}',
+              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+            ),
             SizedBox(height: 8.0),
-            Text('倉庫場所: ${reservation.warehouseLocation}'),
+            Text(
+              '倉庫場所: ${reservation.warehouseLocation}',
+              style: TextStyle(fontSize: 20.0), // 文字の大きさを20に設定
+            ),
           ],
         ),
       ),
     );
   }
 }
+
 
 class ListViewWidget extends StatelessWidget {
   final List<Reservation> reservations;
@@ -362,8 +378,11 @@ class ListViewWidget extends StatelessWidget {
       itemCount: reservations.length,
       itemBuilder: (context, index) {
         final reservation = reservations[index];
+        
         //予約一覧の見出し
         return ListTile(
+          //背景色
+          tileColor: Color.fromARGB(255, 173, 250, 237),
           title: Text(reservation.name),
           subtitle: Text('${reservation.date} ${reservation.time}'),
           onTap: () {
