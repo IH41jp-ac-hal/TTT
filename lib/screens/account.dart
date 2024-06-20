@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:trukkertrakker/screens/EditAccount.dart';
 import 'package:trukkertrakker/src/app.dart';
 
 // アカウント情報モデル
 class AccountInfo {
-  final String name;
-  final String email;
-  final String profileImageUrl;
+  String name;
+  String email;
+  String profileImageUrl;
+  String bio;
 
-  AccountInfo(
-      {required this.name, required this.email, required this.profileImageUrl});
+  AccountInfo({
+    required this.name,
+    required this.email,
+    required this.profileImageUrl,
+    required this.bio,
+  });
 }
 
 void main() => runApp(MyApp());
@@ -23,6 +29,7 @@ class AccountScreen extends StatelessWidget {
       name: '山田 太郎',
       email: 'yamada.taro@example.com',
       profileImageUrl: 'assets/logo.png',
+      bio: 'こんにちは、山田太郎です。フルスタックエンジニアとして働いています。',
     );
 
     return MaterialApp(
@@ -53,36 +60,69 @@ class AccountScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              // プロフィール写真
-              CircleAvatar(
-                radius: 50.0,
-                backgroundImage: AssetImage(accountInfo.profileImageUrl),
-              ),
-              SizedBox(height: 20.0),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                // プロフィール写真
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage: AssetImage(accountInfo.profileImageUrl),
+                  ),
+                ),
+                SizedBox(height: 10.0),
 
-              // 名前
-              Text(
-                accountInfo.name,
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-              ),
+                // 名前
+                Text(
+                  accountInfo.name,
+                  style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 5.0),
 
-              // メールアドレス
-              Text(
-                accountInfo.email,
-                style: TextStyle(fontSize: 16.0),
-              ),
+                // メールアドレス
+                Text(
+                  accountInfo.email,
+                  style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                ),
+                SizedBox(height: 20.0),
 
-              // 編集ボタン
-              ElevatedButton(
-                onPressed: () {
-                  // 編集画面に遷移 or ダイアログを表示
-                },
-                child: Text('編集'),
-              ),
-            ],
+                // バイオ
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    accountInfo.bio,
+                    style: TextStyle(fontSize: 16.0),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 20.0),
+
+                // 編集ボタン
+                ElevatedButton(
+                  onPressed: () async {
+                    final updatedAccountInfo = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            EditAccountScreen(accountInfo: accountInfo),
+                      ),
+                    );
+
+                    if (updatedAccountInfo != null) {
+                      // アカウント情報を更新する
+                      accountInfo.name = updatedAccountInfo.name;
+                      accountInfo.email = updatedAccountInfo.email;
+                      accountInfo.profileImageUrl =
+                          updatedAccountInfo.profileImageUrl;
+                      accountInfo.bio = updatedAccountInfo.bio;
+                    }
+                  },
+                  child: Text('編集'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
