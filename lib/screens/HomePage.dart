@@ -136,7 +136,7 @@ class _CardSliderState extends State<CardSlider> {
                 );
               } else if (widget.cards[index] == 'アカウント情報') {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => accountScreen()));
+                    MaterialPageRoute(builder: (context) => AccountScreen()));
               }
             },
             child: Container(
