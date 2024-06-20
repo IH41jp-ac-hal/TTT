@@ -139,6 +139,19 @@ git remote set-head origin -a
 
 ※ブランチ名を変更する際は必ず上記の手順で行ってください。
 
+## 対処済みエラー
 
+![image](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/b5efa483-fb15-435f-a072-e50e204e1d47)
+
+上記のようなエラーが出た際の対処を下記に記しています。
+
+※使用する際は自分のブランチ名に対して行ってください。
+
+```
+git fetch origin
+git pull origin feature/Delivery
+```
+
+再度push出来るようになっていると思います。
 
 
