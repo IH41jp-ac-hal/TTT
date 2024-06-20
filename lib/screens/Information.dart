@@ -39,6 +39,25 @@ class _InformationScreenState extends State<InformationScreen> {
     return highestStatus;
   }
 
+  // 状況に応じた背景色を返す関数
+  Color getBackgroundColor() {
+    String currentStatus = getCurrentStatus();
+    switch (currentStatus) {
+      case '平常':
+        return Colors.lightGreen;
+      case '~10分':
+        return Colors.lightBlue;
+      case '~30分':
+        return Colors.orangeAccent;
+      case '30分以上':
+        return Colors.redAccent;
+      case '渋滞':
+        return Colors.purpleAccent;
+      default:
+        return Colors.blueGrey;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size; // 画面サイズを得るための変数定義(size)
@@ -74,8 +93,7 @@ class _InformationScreenState extends State<InformationScreen> {
             Container(
               width: size.width, // 画面の幅を設定
               height: size.height * 0.4, // 画面の高さを設定
-              color: Colors.blueGrey,
-              // 混雑状況を最大のカウントに基づいて表示
+              color: getBackgroundColor(), // 混雑状況に基づいた背景色を設定
               child: Center(
                 child: Text(
                   '現在の状況: ${getCurrentStatus()}',
@@ -119,7 +137,7 @@ class _InformationScreenState extends State<InformationScreen> {
                             textAlign: TextAlign.center,
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightGreen, // ボタンの背景色を赤に設定
+                            backgroundColor: Colors.lightGreen, // ボタンの背景色を設定
                             shape: CircleBorder(),
                           ),
                         ),
@@ -148,7 +166,7 @@ class _InformationScreenState extends State<InformationScreen> {
                             textAlign: TextAlign.center,
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightBlue, // ボタンの背景色を赤に設定
+                            backgroundColor: Colors.lightBlue, // ボタンの背景色を設定
                             shape: CircleBorder(),
                           ),
                         ),
@@ -177,8 +195,7 @@ class _InformationScreenState extends State<InformationScreen> {
                             textAlign: TextAlign.center,
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Colors.orangeAccent, // ボタンの背景色を赤に設定
+                            backgroundColor: Colors.orangeAccent, // ボタンの背景色を設定
                             shape: CircleBorder(),
                           ),
                         ),
@@ -207,7 +224,7 @@ class _InformationScreenState extends State<InformationScreen> {
                             textAlign: TextAlign.center,
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.redAccent, // ボタンの背景色を赤に設定
+                            backgroundColor: Colors.redAccent, // ボタンの背景色を設定
                             shape: CircleBorder(),
                           ),
                         ),
@@ -236,8 +253,7 @@ class _InformationScreenState extends State<InformationScreen> {
                             textAlign: TextAlign.center,
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Colors.purpleAccent, // ボタンの背景色を赤に設定
+                            backgroundColor: Colors.purpleAccent, // ボタンの背景色を設定
                             shape: CircleBorder(),
                           ),
                         ),
