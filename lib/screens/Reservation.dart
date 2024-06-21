@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -69,15 +70,18 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: _isReservationSelected ? Colors.blue : Colors.white,
+                      color:
+                          _isReservationSelected ? Colors.blue : Colors.white,
                       borderRadius: BorderRadius.circular(16.0),
                       border: Border.all(color: Colors.blue),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
                     child: Text(
                       '予約',
                       style: TextStyle(
-                        color: _isReservationSelected ? Colors.white : Colors.blue,
+                        color:
+                            _isReservationSelected ? Colors.white : Colors.blue,
                       ),
                     ),
                   ),
@@ -91,15 +95,19 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: !_isReservationSelected ? Colors.blue : Colors.white,
+                      color:
+                          !_isReservationSelected ? Colors.blue : Colors.white,
                       borderRadius: BorderRadius.circular(16.0),
                       border: Border.all(color: Colors.blue),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
                     child: Text(
                       '予約一覧',
                       style: TextStyle(
-                        color: !_isReservationSelected ? Colors.white : Colors.blue,
+                        color: !_isReservationSelected
+                            ? Colors.white
+                            : Colors.blue,
                       ),
                     ),
                   ),
@@ -145,6 +153,32 @@ class _ReservationViewState extends State<ReservationView> {
     super.dispose();
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      setState(() {
+        _dateController.text = "${picked.toLocal()}".split(' ')[0];
+      });
+    }
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        _timeController.text = picked.format(context);
+      });
+    }
+  }
+
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       final newReservation = Reservation(
@@ -169,83 +203,114 @@ class _ReservationViewState extends State<ReservationView> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: 'お名前',
+    return SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  labelText: 'お名前',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'お名前を入力してください';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'お名前を入力してください';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              controller: _phoneNumberController,
-              decoration: InputDecoration(
-                labelText: '電話番号',
+              SizedBox(height: 16.0),
+              TextFormField(
+                keyboardType: TextInputType.phone, // 数字キーボードを指定
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[0-9]')), //数字のみ入力
+                  LengthLimitingTextInputFormatter(11) //11文字
+                ],
+                controller: _phoneNumberController,
+                decoration: InputDecoration(
+                  labelText: '電話番号',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '電話番号を入力してください';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return '電話番号を入力してください';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              controller: _dateController,
-              decoration: InputDecoration(
-                labelText: '日付',
+              SizedBox(height: 16.0),
+              TextFormField(
+                controller: _dateController,
+                decoration: InputDecoration(
+                  labelText: '日付',
+                ),
+                readOnly: true,
+                onTap: () {
+                  _selectDate(context);
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '日付を入力してください';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return '日付を入力してください';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              controller: _timeController,
-              decoration: InputDecoration(
-                labelText: '時刻',
+              SizedBox(height: 16.0),
+              TextFormField(
+                controller: _timeController,
+                decoration: InputDecoration(
+                  labelText: '時刻',
+                ),
+                readOnly: true,
+                onTap: () {
+                  _selectTime(context);
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '時刻を入力してください';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return '時刻を入力してください';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              controller: _warehouseLocationController,
-              decoration: InputDecoration(
-                labelText: '倉庫場所',
+              SizedBox(height: 16.0),
+              TextFormField(
+                controller: _warehouseLocationController,
+                decoration: InputDecoration(
+                  labelText: '倉庫場所',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '倉庫場所を入力してください';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return '倉庫場所を入力してください';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 32.0),
-            ElevatedButton(
-              onPressed: _submitForm,
-              child: Text('送信'),
-            ),
-          ],
+              SizedBox(height: 32.0),
+              Center(
+                child: ElevatedButton(
+                  onPressed: _submitForm,
+                  child: Text(
+                    '送信',
+                    style: TextStyle(
+                      color: Colors.white, // テキストの色を白に設定
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.black), // ボタンの背景色を設定
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0), // 角丸の半径を指定
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -289,15 +354,68 @@ class ListViewWidget extends StatelessWidget {
 
   ListViewWidget({required this.reservations});
 
+  void _deleteReservation(BuildContext context, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("削除"),
+          content: Text("この予約を削除しますか？"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("キャンセル"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("削除"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                // Remove reservation from the list
+                _removeReservation(context, index);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _removeReservation(BuildContext context, int index) {
+    // Get the state of ReservationScreen
+    final _reservationScreenState =
+        context.findAncestorStateOfType<_ReservationScreenState>();
+
+    // Remove reservation only if the state is retrieved successfully
+    if (_reservationScreenState != null) {
+      _reservationScreenState.setState(() {
+        reservations.removeAt(index);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
+      shrinkWrap: true,
       itemCount: reservations.length,
       itemBuilder: (context, index) {
         final reservation = reservations[index];
         return ListTile(
           title: Text(reservation.name),
           subtitle: Text('${reservation.date} ${reservation.time}'),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(reservation.warehouseLocation),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () =>
+                    _deleteReservation(context, index), // Call delete function
+              ),
+            ],
+          ),
           onTap: () {
             Navigator.push(
               context,
@@ -310,6 +428,7 @@ class ListViewWidget extends StatelessWidget {
           },
         );
       },
+      separatorBuilder: (context, index) => Divider(),
     );
   }
 }
