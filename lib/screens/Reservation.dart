@@ -53,8 +53,31 @@ class _ReservationScreenState extends State<ReservationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('予約'),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(110.0),
+        child: AppBar(
+          centerTitle: false,
+          title: Text(
+            '予約',
+            style: TextStyle(fontSize: 19, height: 4),
+          ),
+          backgroundColor: Color.fromARGB(255, 9, 142, 163),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0, top: 23.0),
+              child: Container(
+                width: 114,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/logo.png'),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: <Widget>[
