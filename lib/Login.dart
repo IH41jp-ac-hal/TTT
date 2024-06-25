@@ -4,8 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'src/app.dart';
 import 'firebase_options.dart';
 
-void main()  {
+// firebaseのrealtimedatabase用のimport
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer' as developer;
+FirebaseDatabase database = FirebaseDatabase.instance;
 
+void main() {
   runApp(
     LoginApp(),
   );
@@ -43,6 +48,17 @@ class _AuthAppPageState extends State<AuthAppPage> {
   // View information about registration and login
   String DebugText = "";
 
+//ログインボタンが押されたとき
+  void get() async {
+      final ref = FirebaseDatabase.instance.ref('users/1');
+      final snapshot = await ref.get();
+      if(snapshot.value != null){
+        developer.log("value : ${snapshot.value}");
+      }else{
+        developer.log("value : null");
+      }
+    }
+
   @override
   Widget build(BuildContext context) {
     Firebase.initializeApp();
@@ -62,7 +78,8 @@ class _AuthAppPageState extends State<AuthAppPage> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: "6 character long Password"),
+                decoration:
+                    InputDecoration(labelText: "6 character long Password"),
                 // Mask not to show password
                 obscureText: true,
                 onChanged: (String value) {
@@ -78,7 +95,7 @@ class _AuthAppPageState extends State<AuthAppPage> {
                     // User Registration
                     final FirebaseAuth auth = FirebaseAuth.instance;
                     final UserCredential result =
-                    await auth.createUserWithEmailAndPassword(
+                        await auth.createUserWithEmailAndPassword(
                       email: registerUserEmail,
                       password: registerUserPassword,
                     );
@@ -96,7 +113,6 @@ class _AuthAppPageState extends State<AuthAppPage> {
                 },
                 child: Text("User Registration"),
               ),
-
               const SizedBox(height: 1),
               TextFormField(
                 decoration: InputDecoration(labelText: "Mail Address"),
@@ -122,7 +138,7 @@ class _AuthAppPageState extends State<AuthAppPage> {
                     // Try login
                     final FirebaseAuth auth = FirebaseAuth.instance;
                     final UserCredential result =
-                    await auth.signInWithEmailAndPassword(
+                        await auth.signInWithEmailAndPassword(
                       email: loginUserEmail,
                       password: loginUserPassword,
                     );
@@ -131,6 +147,9 @@ class _AuthAppPageState extends State<AuthAppPage> {
                     setState(() {
                       DebugText = "Succeeded to Login：${user.email}";
                     });
+
+                    get();
+
                   } catch (e) {
                     // Failed to login
                     setState(() {
