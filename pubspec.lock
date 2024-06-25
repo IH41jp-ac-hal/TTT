@@ -73,17 +73,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-<<<<<<< HEAD
-=======
-  cross_file:
-    dependency: transitive
-    description:
-      name: cross_file
-      sha256: "55d7b444feb71301ef6b8838dbc1ae02e63dd48c8773f3810ff53bb1e2945b32"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.4+1"
->>>>>>> f4d8b2d297f9ce172795084312b3c4c540aad5ad
   cupertino_icons:
     dependency: "direct main"
     description:
