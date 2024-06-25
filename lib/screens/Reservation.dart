@@ -453,4 +453,5 @@ class ListViewWidget extends StatelessWidget {
       separatorBuilder: (context, index) => Divider(), // ここで区切り線を追加する
     );
   }
+  
 }
