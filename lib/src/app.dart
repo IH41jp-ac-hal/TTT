@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:trukkertrakker/screens/HomePage.dart';
 import 'package:trukkertrakker/screens/Reservation.dart';
 import 'package:trukkertrakker/screens/Information.dart';
+<<<<<<< HEAD
 import 'package:trukkertrakker/screens/acount.dart';
 import 'package:trukkertrakker/user/Login.dart';
 import 'package:trukkertrakker/user/Sign.dart';
+=======
+import 'package:trukkertrakker/screens/account.dart';
+>>>>>>> ccdf0cb32cd6a220a6b85ba57acf03a6021f5c68
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -50,13 +54,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'トップ'),
+          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'ホーム'),
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month), label: '予約'),
           BottomNavigationBarItem(
               icon: Icon(Icons.local_shipping), label: '配送状況'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: 'Library'),
+              icon: Icon(Icons.account_circle), label: 'アカウント'),
         ],
         type: BottomNavigationBarType.fixed,
         backgroundColor: Color.fromARGB(255, 67, 185, 198),

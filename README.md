@@ -65,13 +65,36 @@ git commit -m "修正内容"
 ```
 // ローカルリポジトリの内容をリモートリポジトリに送信して下さい。
 ```
-git push origin develop
+git push origin "ブランチ名"
 ```
-// プルリクエストを投げましょう。※一旦無視でok
+
+## プルリクエストを投げる
+
+// プルリクエストを投げましょう。
 
 ここからは、GitHubの組織をブラウザで立ち上げてください。
 先ほど、PUSHした内容がプルリクエスト出来るようになっています。
 自分のブランチからDevelopブランチに対してプルリクエストを投げるようにしてください。
+
+1-GitHubのリポジトリ開きましょう。
+
+2-画面上部のタブからPull requestsを選択してください。
+
+3-画面右側の緑色のNew pull requestを選択してください。
+
+4-画面右側の緑色のCreate pull requestを選択してください。
+
+下記のスクリーンショットの1枚目と2枚目は画面が切り替わった時のイメージです。
+
+1-/2-/3-/
+
+![スクリーンショット (25)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/bdad7f23-1292-4eeb-978a-215b0af3d642)
+
+4-/
+
+![スクリーンショット (27)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/9043cc9d-526d-4870-b377-6c2b9f6a2358)
+
+## Git操作豆知識
 
 // ブランチ切り替え方
 
@@ -79,7 +102,56 @@ git push origin develop
 git switch "ブランチ名"
 ```
 
+// ローカルブランチ削除
 
+Gitでは現在のブランチを削除することできません。そのため、削除対象外のブランチに切り替える必要があります。
 
+```
+git switch main
+git brach -d "ブランチ名"
+```
+
+// ブランチ名変更
+
+1.0-リモート上の操作
+
+1.1-View all branchesを開いてください。
+
+1.2-名前変更したいブランチ画面右側の◦◦◦を選択しRename branchを選択してください。
+
+1.3-ブランチ名を決めたら緑色のRename branchを選択しましょう。
+
+1.1-/
+![スクリーンショット (28)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/462f0669-3e5b-47f3-8697-206e36e73ce3)
+1.2-/
+![スクリーンショット (29)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/89aaac53-1302-45dd-863e-85a8c5a04cc1)
+1.3-/
+![スクリーンショット (30)](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/200d8bf5-576b-441c-bce9-8002244bad5c)
+
+2.0-ローカル上の操作
+
+```
+git branch -m OLD-BRANCH-NAME NEW-BRANCH-NAME
+git fetch origin
+git branch -u origin/NEW-BRANCH-NAME NEW-BRANCH-NAME
+git remote set-head origin -a
+```
+
+※ブランチ名を変更する際は必ず上記の手順で行ってください。
+
+## 対処済みエラー
+
+![image](https://github.com/IH41jp-ac-hal/TTT/assets/109325206/b5efa483-fb15-435f-a072-e50e204e1d47)
+
+上記のようなエラーが出た際の対処を下記に記しています。
+
+※使用する際は自分のブランチ名に対して行ってください。
+
+```
+git fetch origin
+git pull origin feature/Delivery
+```
+
+再度push出来るようになっていると思います。
 
 
