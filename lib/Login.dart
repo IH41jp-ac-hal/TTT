@@ -4,13 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'src/app.dart';
 import 'firebase_options.dart';
 
-void main() async {
-  await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
+void main()  {
 
   runApp(
-    MyApp(),
+    LoginApp(),
   );
 }
 
@@ -48,6 +45,7 @@ class _AuthAppPageState extends State<AuthAppPage> {
 
   @override
   Widget build(BuildContext context) {
+    Firebase.initializeApp();
     return Scaffold(
       body: Center(
         child: Container(
