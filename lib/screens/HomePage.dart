@@ -1,6 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:trukkertrakker/screens/Information.dart';
+import 'package:trukkertrakker/screens/Reservation.dart';
+import 'package:trukkertrakker/screens/account.dart';
 import 'package:trukkertrakker/src/app.dart';
 
 void main() => runApp(MyApp());
@@ -20,9 +22,9 @@ class HomePageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> valuesData = [
-      'hogehoegさん走行中。現在の走行状態を確認できる',
-      '平野さぼり',
-      '平野　樹',
+      '予約画面',
+      '配送状況',
+      'アカウント情報',
     ];
 
     return Scaffold(
@@ -120,16 +122,34 @@ class _CardSliderState extends State<CardSlider> {
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            width: 300, // Adjust width as necessary
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.0),
-              color: Colors.blueAccent,
-            ),
-            child: Center(
-              child: Text(
-                widget.cards[index],
-                style: TextStyle(fontSize: 28, color: Colors.white),
+          child: GestureDetector(
+            onTap: () {
+              if (widget.cards[index] == '配送状況') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InformationScreen()),
+                );
+              } else if (widget.cards[index] == '予約画面') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ReservationScreen()),
+                );
+              } else if (widget.cards[index] == 'アカウント情報') {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AccountScreen()));
+              }
+            },
+            child: Container(
+              width: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.0),
+                color: Colors.blueAccent,
+              ),
+              child: Center(
+                child: Text(
+                  widget.cards[index],
+                  style: TextStyle(fontSize: 28, color: Colors.white),
+                ),
               ),
             ),
           ),

@@ -41,7 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-<<<<<<< HEAD
   cross_file:
     dependency: transitive
     description:
@@ -50,16 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.4+1"
-=======
->>>>>>> ccdf0cb32cd6a220a6b85ba57acf03a6021f5c68
   cupertino_icons:
     dependency: "direct main"
     description:
       name: cupertino_icons
-      sha256: d57953e10f9f8327ce64a508a355f0b1ec902193f66288e8cb5070e7c47eeb2d
+      sha256: ba631d1c7f7bef6b729a622b7b752645a2d076dba9976925b8f25725a30e1ee6
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.6"
+    version: "1.0.8"
   fake_async:
     dependency: transitive
     description:
@@ -126,7 +123,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< HEAD
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -219,15 +215,6 @@ packages:
       sha256: "78eb209deea09858f5269f5a5b02be4049535f568c07b275096836f01ea323fa"
       url: "https://pub.dev"
     source: hosted
-=======
-  leak_tracker:
-    dependency: transitive
-    description:
-      name: leak_tracker
-      sha256: "78eb209deea09858f5269f5a5b02be4049535f568c07b275096836f01ea323fa"
-      url: "https://pub.dev"
-    source: hosted
->>>>>>> ccdf0cb32cd6a220a6b85ba57acf03a6021f5c68
     version: "10.0.0"
   leak_tracker_flutter_testing:
     dependency: transitive
@@ -277,7 +264,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
-<<<<<<< HEAD
   mime:
     dependency: transitive
     description:
@@ -286,8 +272,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-=======
->>>>>>> ccdf0cb32cd6a220a6b85ba57acf03a6021f5c68
   path:
     dependency: transitive
     description:
@@ -296,7 +280,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
-<<<<<<< HEAD
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -305,8 +288,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-=======
->>>>>>> ccdf0cb32cd6a220a6b85ba57acf03a6021f5c68
   sky_engine:
     dependency: transitive
     description: flutter
@@ -360,7 +341,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.1"
-<<<<<<< HEAD
   typed_data:
     dependency: transitive
     description:
@@ -369,8 +349,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
-=======
->>>>>>> ccdf0cb32cd6a220a6b85ba57acf03a6021f5c68
   vector_math:
     dependency: transitive
     description:
@@ -387,7 +365,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "13.0.0"
-<<<<<<< HEAD
   web:
     dependency: transitive
     description:
@@ -399,7 +376,3 @@ packages:
 sdks:
   dart: ">=3.3.0 <4.0.0"
   flutter: ">=3.19.0"
-=======
-sdks:
-  dart: ">=3.2.0-0 <4.0.0"
->>>>>>> ccdf0cb32cd6a220a6b85ba57acf03a6021f5c68
