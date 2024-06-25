@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+<<<<<<< HEAD
+=======
+import 'package:trukkertrakker/src/app.dart';
+>>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
 
 void main() => runApp(MyApp());
 
@@ -52,8 +56,36 @@ class _ReservationScreenState extends State<ReservationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       appBar: AppBar(
         title: Text('予約'),
+=======
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(110.0),
+        child: AppBar(
+          centerTitle: false,
+          title: Text(
+            '予約',
+            style: TextStyle(fontSize: 19, height: 4),
+          ),
+          backgroundColor: Color.fromARGB(255, 9, 142, 163),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0, top: 23.0),
+              child: Container(
+                width: 114,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/logo.png'),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+>>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
       ),
       body: Column(
         children: <Widget>[
@@ -354,6 +386,7 @@ class ListViewWidget extends StatelessWidget {
 
   ListViewWidget({required this.reservations});
 
+<<<<<<< HEAD
   void _deleteReservation(BuildContext context, int index) {
     showDialog(
       context: context,
@@ -416,6 +449,19 @@ class ListViewWidget extends StatelessWidget {
               ),
             ],
           ),
+=======
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true, // ここに追加する
+      itemCount: reservations.length,
+      itemBuilder: (context, index) {
+        final reservation = reservations[index];
+        //予約一覧の見出し
+        return ListTile(
+          title: Text(reservation.name),
+          subtitle: Text('${reservation.date} ${reservation.time}'),
+>>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
           onTap: () {
             Navigator.push(
               context,
@@ -428,7 +474,11 @@ class ListViewWidget extends StatelessWidget {
           },
         );
       },
+<<<<<<< HEAD
       separatorBuilder: (context, index) => Divider(),
+=======
+      separatorBuilder: (context, index) => Divider(), // ここで区切り線を追加する
+>>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
     );
   }
 }
