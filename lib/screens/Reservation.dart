@@ -371,6 +371,47 @@ class ListViewWidget extends StatelessWidget {
 
   ListViewWidget({required this.reservations});
 
+  void _deleteReservation(BuildContext context, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("削除"),
+          content: Text("この予約を削除しますか？"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("キャンセル"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("削除"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                // Remove reservation from the list
+                _removeReservation(context, index);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _removeReservation(BuildContext context, int index) {
+    // Get the state of ReservationScreen
+    final _reservationScreenState =
+        context.findAncestorStateOfType<_ReservationScreenState>();
+
+    // Remove reservation only if the state is retrieved successfully
+    if (_reservationScreenState != null) {
+      _reservationScreenState.setState(() {
+        reservations.removeAt(index);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -385,6 +426,18 @@ class ListViewWidget extends StatelessWidget {
           tileColor: Color.fromARGB(255, 173, 250, 237),
           title: Text(reservation.name),
           subtitle: Text('${reservation.date} ${reservation.time}'),
+          //削除ボタン
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(reservation.warehouseLocation),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () =>
+                    _deleteReservation(context, index), // Call delete function
+              ),
+            ],
+          ),
           onTap: () {
             Navigator.push(
               context,
