@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:trukkertrakker/screens/Information.dart';
 import 'package:trukkertrakker/screens/Reservation.dart';
-import 'package:trukkertrakker/screens/acount.dart';
+import 'package:trukkertrakker/screens/account.dart';
 import 'package:trukkertrakker/src/app.dart';
 
 void main() => runApp(MyApp());
@@ -136,7 +136,7 @@ class _CardSliderState extends State<CardSlider> {
                 );
               } else if (widget.cards[index] == 'アカウント情報') {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => accountScreen()));
+                    MaterialPageRoute(builder: (context) => AccountScreen()));
               }
             },
             child: Container(
