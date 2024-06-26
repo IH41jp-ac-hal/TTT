@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:trukkertrakker/src/app.dart';
 import 'Sign.dart';
 
@@ -55,6 +56,13 @@ class _LoginPageState extends State<LoginPage> {
       context,
       MaterialPageRoute(builder: (context) => SignUpPage()),
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FlutterNativeSplash.remove(); //起動完了時にスプラッシュ画面を終わらせる
   }
 
   @override
