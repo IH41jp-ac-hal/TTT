@@ -203,24 +203,47 @@ class _ReservationViewState extends State<ReservationView> {
     }
   }
 
+  //リマインダー仮
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      final newReservation = Reservation(
-        name: _nameController.text,
-        phoneNumber: _phoneNumberController.text,
-        date: _dateController.text,
-        time: _timeController.text,
-        warehouseLocation: _warehouseLocationController.text,
-      );
-      widget.onSubmit(newReservation);
-      _formKey.currentState!.reset();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ReservationDetailsScreen(
-            reservation: newReservation,
-          ),
-        ),
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("確認"),
+            content: Text("この内容で予約を完了しますか？"),
+            actions: <Widget>[
+              TextButton(
+                child: Text("いいえ"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text("はい"),
+                onPressed: () {
+                  final newReservation = Reservation(
+                    name: _nameController.text,
+                    phoneNumber: _phoneNumberController.text,
+                    date: _dateController.text,
+                    time: _timeController.text,
+                    warehouseLocation: _warehouseLocationController.text,
+                  );
+                  widget.onSubmit(newReservation);
+                  Navigator.of(context).pop(); // ダイアログを閉じる
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ReservationDetailsScreen(
+                        reservation: newReservation,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        },
       );
     }
   }
@@ -389,6 +412,7 @@ class ReservationDetailsScreen extends StatelessWidget {
 }
 
 
+//削除ボタン
 class ListViewWidget extends StatelessWidget {
   final List<Reservation> reservations;
 
@@ -442,7 +466,7 @@ class ListViewWidget extends StatelessWidget {
       itemCount: reservations.length,
       itemBuilder: (context, index) {
         final reservation = reservations[index];
-        
+
         //予約一覧の見出し
         return ListTile(
           //背景色
@@ -476,5 +500,4 @@ class ListViewWidget extends StatelessWidget {
       separatorBuilder: (context, index) => Divider(), // ここで区切り線を追加する
     );
   }
-  
 }

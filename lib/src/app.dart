@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:trukkertrakker/screens/HomePage.dart';
-<<<<<<< HEAD
-import 'package:trukkertrakker/screens/Information.dart';
-import 'package:trukkertrakker/screens/account.dart';
-=======
->>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
 import 'package:trukkertrakker/screens/Reservation.dart';
 import 'package:trukkertrakker/screens/Information.dart';
 import 'package:trukkertrakker/screens/account.dart';
@@ -34,11 +29,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     HomePageScreen(),
     ReservationScreen(),
     InformationScreen(),
-<<<<<<< HEAD
-    accountScreen(),
-=======
     AccountScreen(),
->>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
   ];
 
   int _selectedIndex = 0;

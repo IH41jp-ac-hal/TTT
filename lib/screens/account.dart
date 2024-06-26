@@ -1,19 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:trukkertrakker/src/app.dart';
-
-void main() => runApp(MyApp());
-
-class accountScreen extends StatelessWidget {
-  const accountScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TruckerTrekker',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-=======
 import 'package:trukkertrakker/screens/EditAccount.dart';
 import 'package:trukkertrakker/src/app.dart';
 
@@ -140,7 +125,6 @@ class AccountScreen extends StatelessWidget {
             ),
           ),
         ),
->>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
       ),
     );
   }
