@@ -1,13 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:trukkertrakker/src/app.dart';
 
 void main() => runApp(MyApp());
 
-<<<<<<< HEAD
- class HomePageScreen extends StatelessWidget {
-=======
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,15 +14,10 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePageScreen extends StatelessWidget {
->>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
   const HomePageScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return MaterialApp(
-        home: Scaffold(
-=======
     List<String> valuesData = [
       'hogehoegさん走行中。現在の走行状態を確認できる',
       '平野さぼり',
@@ -34,7 +25,6 @@ class HomePageScreen extends StatelessWidget {
     ];
 
     return Scaffold(
->>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(110.0),
         child: AppBar(
@@ -53,33 +43,23 @@ class HomePageScreen extends StatelessWidget {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
-<<<<<<< HEAD
-                    image: AssetImage('assets/logo.png'), // 画像のパスを指定
-=======
                     image: AssetImage('assets/logo.png'),
->>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
                   ),
                 ),
               ),
             ),
           ],
         ),
-<<<<<<< HEAD
-=======
       ),
       body: CardSlider(
         cards: valuesData,
         bottomOffset: .0005,
         cardHeight: 0.75,
         itemDotOffset: 0.25,
->>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
       ),
       //body
-    ));
+    );
   }
-<<<<<<< HEAD
-}
-=======
 }
 
 class CardSlider extends StatefulWidget {
@@ -158,4 +138,3 @@ class _CardSliderState extends State<CardSlider> {
     );
   }
 }
->>>>>>> b237a1803f93961a7b290da88e55f2451b58a022
