@@ -219,6 +219,7 @@ class _ReservationViewState extends State<ReservationView> {
                   Navigator.of(context).pop();
                 },
               ),
+              //はいを押すと登録内容表示
               TextButton(
                 child: Text("はい"),
                 onPressed: () {
