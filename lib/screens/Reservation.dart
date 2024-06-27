@@ -203,24 +203,48 @@ class _ReservationViewState extends State<ReservationView> {
     }
   }
 
+  //リマインダー仮
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      final newReservation = Reservation(
-        name: _nameController.text,
-        phoneNumber: _phoneNumberController.text,
-        date: _dateController.text,
-        time: _timeController.text,
-        warehouseLocation: _warehouseLocationController.text,
-      );
-      widget.onSubmit(newReservation);
-      _formKey.currentState!.reset();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ReservationDetailsScreen(
-            reservation: newReservation,
-          ),
-        ),
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("確認"),
+            content: Text("この内容で予約を完了しますか？"),
+            actions: <Widget>[
+              TextButton(
+                child: Text("いいえ"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              //はいを押すと登録内容表示
+              TextButton(
+                child: Text("はい"),
+                onPressed: () {
+                  final newReservation = Reservation(
+                    name: _nameController.text,
+                    phoneNumber: _phoneNumberController.text,
+                    date: _dateController.text,
+                    time: _timeController.text,
+                    warehouseLocation: _warehouseLocationController.text,
+                  );
+                  widget.onSubmit(newReservation);
+                  Navigator.of(context).pop(); // ダイアログを閉じる
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ReservationDetailsScreen(
+                        reservation: newReservation,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        },
       );
     }
   }
@@ -389,10 +413,52 @@ class ReservationDetailsScreen extends StatelessWidget {
 }
 
 
+//削除ボタン
 class ListViewWidget extends StatelessWidget {
   final List<Reservation> reservations;
 
   ListViewWidget({required this.reservations});
+
+  void _deleteReservation(BuildContext context, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("削除"),
+          content: Text("この予約を削除しますか？"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("キャンセル"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("削除"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                // Remove reservation from the list
+                _removeReservation(context, index);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _removeReservation(BuildContext context, int index) {
+    // Get the state of ReservationScreen
+    final _reservationScreenState =
+        context.findAncestorStateOfType<_ReservationScreenState>();
+
+    // Remove reservation only if the state is retrieved successfully
+    if (_reservationScreenState != null) {
+      _reservationScreenState.setState(() {
+        reservations.removeAt(index);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -401,13 +467,25 @@ class ListViewWidget extends StatelessWidget {
       itemCount: reservations.length,
       itemBuilder: (context, index) {
         final reservation = reservations[index];
-        
+
         //予約一覧の見出し
         return ListTile(
           //背景色
           tileColor: Color.fromARGB(255, 173, 250, 237),
           title: Text(reservation.name),
           subtitle: Text('${reservation.date} ${reservation.time}'),
+          //削除ボタン
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(reservation.warehouseLocation),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () =>
+                    _deleteReservation(context, index), // Call delete function
+              ),
+            ],
+          ),
           onTap: () {
             Navigator.push(
               context,
