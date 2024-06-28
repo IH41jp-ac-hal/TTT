@@ -59,7 +59,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           centerTitle: false,
           title: Text(
             '予約',
-            style: TextStyle(fontSize: 19, height: 4),
+            style: TextStyle(fontSize: 19, height: 3),
           ),
           backgroundColor: Color.fromARGB(255, 9, 142, 163),
           actions: <Widget>[
