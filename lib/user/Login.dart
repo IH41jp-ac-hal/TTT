@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:trukkertrakker/src/app.dart';
 import 'Sign.dart';
 
+// firebase用のimport
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer' as developer;
+FirebaseDatabase database = FirebaseDatabase.instance;
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -11,6 +17,13 @@ class _LoginPageState extends State<LoginPage> {
   String? email;
   String? password;
   bool isVisible = false;
+
+  // Login field email address
+  String loginUserEmail = "";
+  // Login field password (login)
+  String loginUserPassword = "";
+  // View information about registration and login
+  String DebugText = "";
 
   void toggleShowPassword() {
     setState(() {
@@ -26,21 +39,49 @@ class _LoginPageState extends State<LoginPage> {
     this.password = password;
   }
 
-  void _login() {
-    if (email != null && password != null) {
-      // Replace this with actual authentication logic
-      if (email == "user@example.com" && password == "password123") {
+  void _login() async {
+    // if (email != null && password != null) {
+    //   // Replace this with actual authentication logic
+    //   if (email == "user@example.com" && password == "password123") {
+    //     Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(builder: (context) => MyStatefulWidget()),
+    //     );
+    //   } else {
+    //     // error message
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text('無効なメールアドレスまたはパスワード')),
+    //     );
+    //   }
+    // }
+
+    try { 
+        // Try login
+        final FirebaseAuth auth = FirebaseAuth.instance;
+        final UserCredential result =
+            await auth.signInWithEmailAndPassword(
+          email: loginUserEmail,
+          password: loginUserPassword,
+        );
+        
+        // Succeeded to login
+        final User user = result.user!;
+        setState(() {
+          DebugText = "Succeeded to Login：${user.email}";
+        });
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => MyStatefulWidget()),
         );
-      } else {
-        // error message
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('無効なメールアドレスまたはパスワード')),
-        );
+
+      } catch (e) {
+        
+        // Failed to login
+        setState(() {
+          DebugText = "Failed to Login：${e.toString()}";
+        });
       }
-    }
   }
 
   void _loginAsGuest() {
@@ -135,6 +176,8 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: _navigateToSignup,
                       child: const Text('新規会員登録'),
                     ),
+                    const SizedBox(height: 8),
+                    Text(DebugText),
                   ],
                 )),
           ],

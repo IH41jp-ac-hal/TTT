@@ -113,6 +113,12 @@ class _AuthAppPageState extends State<AuthAppPage> {
                 },
                 child: Text("User Registration"),
               ),
+
+
+
+
+
+              
               const SizedBox(height: 1),
               TextFormField(
                 decoration: InputDecoration(labelText: "Mail Address"),
