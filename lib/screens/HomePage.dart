@@ -32,11 +32,15 @@ class HomePageScreen extends StatelessWidget {
         preferredSize: const Size.fromHeight(110.0),
         child: AppBar(
           centerTitle: false,
-          title: Text(
-            'TruckTrakker 仮メインページ',
-            style: TextStyle(fontSize: 19, height: 4),
+          title: const Text(
+            'TruckTrakker',
+            style: TextStyle(
+              fontSize: 28,
+              height: 4,
+              color: Color(0xFFF1F1F1),
+            ),
           ),
-          backgroundColor: Color.fromARGB(255, 9, 142, 163),
+          backgroundColor: Color.fromARGB(255, 57, 70, 87),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 15.0, top: 23.0),
@@ -121,7 +125,7 @@ class _CardSliderState extends State<CardSlider> {
       itemCount: widget.cards.length,
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(36.0),
           child: GestureDetector(
             onTap: () {
               if (widget.cards[index] == '配送状況') {
@@ -140,10 +144,11 @@ class _CardSliderState extends State<CardSlider> {
               }
             },
             child: Container(
-              width: 300,
+              width: 350, // 幅を 300 から 350 に変更
+              height: 150, // 高さを追加する場合
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
-                color: Colors.blueAccent,
+                borderRadius: BorderRadius.circular(20.0),
+                color: const Color.fromARGB(255, 90, 90, 90),
               ),
               child: Center(
                 child: Text(

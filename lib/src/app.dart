@@ -59,7 +59,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               icon: Icon(Icons.account_circle), label: 'アカウント'),
         ],
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromARGB(255, 67, 185, 198),
+        backgroundColor: Color.fromARGB(255, 57, 70, 87),
       ),
     );
   }

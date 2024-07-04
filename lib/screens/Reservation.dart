@@ -57,11 +57,15 @@ class _ReservationScreenState extends State<ReservationScreen> {
         preferredSize: const Size.fromHeight(110.0),
         child: AppBar(
           centerTitle: false,
-          title: Text(
-            '予約',
-            style: TextStyle(fontSize: 19, height: 4),
-          ),
-          backgroundColor: Color.fromARGB(255, 9, 142, 163),
+            title: const Text(
+              '予約',
+              style: TextStyle(
+                fontSize: 28,
+                height: 4,
+                color: Color(0xFFF1F1F1),
+              ),
+            ),
+          backgroundColor: Color.fromARGB(255, 57, 70, 87),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 15.0, top: 23.0),

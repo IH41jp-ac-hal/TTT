@@ -67,11 +67,15 @@ class _InformationScreenState extends State<InformationScreen> {
           preferredSize: const Size.fromHeight(110.0),
           child: AppBar(
             centerTitle: false,
-            title: Text(
+            title: const Text(
               '配送状況',
-              style: TextStyle(fontSize: 19, height: 4),
+              style: TextStyle(
+                fontSize: 28,
+                height: 4,
+                color: Color(0xFFF1F1F1),
+              ),
             ),
-            backgroundColor: Color.fromARGB(255, 9, 142, 163),
+            backgroundColor: Color.fromARGB(255, 57, 70, 87),
             actions: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 15.0, top: 23.0),
