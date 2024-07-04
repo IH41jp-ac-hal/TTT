@@ -412,7 +412,6 @@ class ReservationDetailsScreen extends StatelessWidget {
   }
 }
 
-
 //削除ボタン
 class ListViewWidget extends StatelessWidget {
   final List<Reservation> reservations;
