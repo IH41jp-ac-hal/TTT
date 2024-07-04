@@ -33,6 +33,13 @@ class Reservation {
   });
 }
 
+class WarehouseLocation {
+  final int id;
+  final String location;
+
+  WarehouseLocation({required this.id, required this.location});
+}
+
 class ReservationScreen extends StatefulWidget {
   const ReservationScreen({Key? key}) : super(key: key);
 
@@ -166,14 +173,14 @@ class _ReservationViewState extends State<ReservationView> {
   final _dateController = TextEditingController();
   final _timeController = TextEditingController();
   final _warehouseLocationController = TextEditingController();
-  final List<String> _warehouseLocations = [
-    '東京港区倉庫',
-    '東京千代田区倉庫',
-    '東京中央区倉庫',
-    '東京江戸区倉庫',
-    '千葉船橋市倉庫'
+  final List<WarehouseLocation> _warehouseLocations = [
+    WarehouseLocation(id: 1, location: '東京港区倉庫'),
+    WarehouseLocation(id: 2, location: '東京千代田区倉庫'),
+    WarehouseLocation(id: 3, location: '東京中央区倉庫'),
+    WarehouseLocation(id: 4, location: '東京江戸区倉庫'),
+    WarehouseLocation(id: 5, location: '千葉船橋市倉庫'),
   ];
-  String? _selectedWarehouseLocation;
+  WarehouseLocation? _selectedWarehouseLocation;
 
   @override
   void dispose() {
@@ -227,7 +234,6 @@ class _ReservationViewState extends State<ReservationView> {
                   Navigator.of(context).pop();
                 },
               ),
-              //はいを押すと登録内容表示
               TextButton(
                 child: Text("はい"),
                 onPressed: () {
@@ -236,10 +242,10 @@ class _ReservationViewState extends State<ReservationView> {
                     phoneNumber: _phoneNumberController.text,
                     date: _dateController.text,
                     time: _timeController.text,
-                    warehouseLocation: _selectedWarehouseLocation!,
+                    warehouseLocation: _selectedWarehouseLocation!.location,
                   );
                   widget.onSubmit(newReservation);
-                  Navigator.of(context).pop(); // ダイアログを閉じる
+                  Navigator.of(context).pop();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -332,25 +338,23 @@ class _ReservationViewState extends State<ReservationView> {
                 },
               ),
               SizedBox(height: 16.0),
-              DropdownButtonFormField<String>(
-                value: _selectedWarehouseLocation,
+              DropdownButtonFormField<WarehouseLocation>(
                 decoration: InputDecoration(
                   labelText: '倉庫場所',
                 ),
-                items: _warehouseLocations
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
+                items: _warehouseLocations.map((WarehouseLocation location) {
+                  return DropdownMenuItem<WarehouseLocation>(
+                    value: location,
+                    child: Text(location.location),
                   );
                 }).toList(),
-                onChanged: (String? newValue) {
+                onChanged: (WarehouseLocation? newValue) {
                   setState(() {
                     _selectedWarehouseLocation = newValue;
                   });
                 },
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value == null) {
                     return '倉庫場所を選択してください';
                   }
                   return null;
@@ -432,19 +436,11 @@ class ReservationDetailsScreen extends StatelessWidget {
   }
 }
 
+//更新画面
 class EditReservationScreen extends StatefulWidget {
   final Reservation reservation;
 
   EditReservationScreen({required this.reservation});
-
-  @override
-  _EditReservationScreenState createState() => _EditReservationScreenState();
-}
-
-class EditReservationScreens extends StatefulWidget {
-  final Reservation reservation;
-
-  EditReservationScreens({required this.reservation});
 
   @override
   _EditReservationScreenState createState() => _EditReservationScreenState();
@@ -456,14 +452,14 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
   late TextEditingController _phoneNumberController;
   late TextEditingController _dateController;
   late TextEditingController _timeController;
-  final List<String> _warehouseLocations = [
-    '東京港区倉庫',
-    '東京千代田区倉庫',
-    '東京中央区倉庫',
-    '東京江戸区倉庫',
-    '千葉船橋市倉庫'
+  final List<WarehouseLocation> _warehouseLocations = [
+    WarehouseLocation(id: 1, location: '東京港区倉庫'),
+    WarehouseLocation(id: 2, location: '東京千代田区倉庫'),
+    WarehouseLocation(id: 3, location: '東京中央区倉庫'),
+    WarehouseLocation(id: 4, location: '東京江戸区倉庫'),
+    WarehouseLocation(id: 5, location: '千葉船橋市倉庫'),
   ];
-  String? _selectedWarehouseLocation;
+  WarehouseLocation? _selectedWarehouseLocation;
 
   @override
   void initState() {
@@ -473,7 +469,10 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
         TextEditingController(text: widget.reservation.phoneNumber);
     _dateController = TextEditingController(text: widget.reservation.date);
     _timeController = TextEditingController(text: widget.reservation.time);
-    _selectedWarehouseLocation = widget.reservation.warehouseLocation;
+    _selectedWarehouseLocation = _warehouseLocations.firstWhere(
+      (location) => location.location == widget.reservation.warehouseLocation,
+      orElse: () => _warehouseLocations.first,
+    );
   }
 
   @override
@@ -518,7 +517,7 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
         phoneNumber: _phoneNumberController.text,
         date: _dateController.text,
         time: _timeController.text,
-        warehouseLocation: _selectedWarehouseLocation!,
+        warehouseLocation: _selectedWarehouseLocation?.location ?? '',
       );
       Navigator.of(context).pop(editedReservation);
     }
@@ -539,6 +538,7 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
+                  key: ValueKey('name'),
                   controller: _nameController,
                   decoration: InputDecoration(
                     labelText: 'お名前',
@@ -552,6 +552,7 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
                 ),
                 SizedBox(height: 16.0),
                 TextFormField(
+                  key: ValueKey('phonenumber'),
                   keyboardType: TextInputType.phone,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp('[0-9]')),
@@ -570,6 +571,7 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
                 ),
                 SizedBox(height: 16.0),
                 TextFormField(
+                  key: ValueKey('day'),
                   controller: _dateController,
                   decoration: InputDecoration(
                     labelText: '日付',
@@ -587,6 +589,7 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
                 ),
                 SizedBox(height: 16.0),
                 TextFormField(
+                  key: ValueKey('time'),
                   controller: _timeController,
                   decoration: InputDecoration(
                     labelText: '時刻',
@@ -603,25 +606,21 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
                   },
                 ),
                 SizedBox(height: 16.0),
-                DropdownButtonFormField<String>(
+                DropdownButtonFormField<WarehouseLocation>(
                   value: _selectedWarehouseLocation,
-                  decoration: InputDecoration(
-                    labelText: '倉庫場所',
-                  ),
-                  items: _warehouseLocations
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
+                  items: _warehouseLocations.map((WarehouseLocation location) {
+                    return DropdownMenuItem<WarehouseLocation>(
+                      value: location,
+                      child: Text(location.location),
                     );
                   }).toList(),
-                  onChanged: (String? newValue) {
+                  onChanged: (WarehouseLocation? newValue) {
                     setState(() {
                       _selectedWarehouseLocation = newValue;
                     });
                   },
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null) {
                       return '倉庫場所を選択してください';
                     }
                     return null;
@@ -657,12 +656,17 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
 }
 
 //削除ボタン
-class ListViewWidget extends StatelessWidget {
+class ListViewWidget extends StatefulWidget {
   final List<Reservation> reservations;
 
   ListViewWidget({required this.reservations});
 
-  void _deleteReservation(BuildContext context, int index) {
+  @override
+  _ListViewWidgetState createState() => _ListViewWidgetState();
+}
+
+class _ListViewWidgetState extends State<ListViewWidget> {
+  void _deleteReservation(int index) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -679,8 +683,10 @@ class ListViewWidget extends StatelessWidget {
             TextButton(
               child: Text("削除"),
               onPressed: () {
-                _removeReservation(context, index);
-                Navigator.of(context).pop(); // Close the dialog
+                setState(() {
+                  widget.reservations.removeAt(index);
+                });
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -689,38 +695,20 @@ class ListViewWidget extends StatelessWidget {
     );
   }
 
-  void _removeReservation(BuildContext context, int index) {
-    // Ensure the context used to find _ReservationScreenState is correct
-    final _reservationScreenState =
-        context.findAncestorStateOfType<_ReservationScreenState>();
-
-    if (_reservationScreenState != null) {
-      _reservationScreenState.setState(() {
-        reservations.removeAt(index); // Remove the reservation from the list
-      });
-    }
-  }
-
-  void _editReservation(BuildContext context, int index) async {
+  void _editReservation(int index) async {
     final editedReservation = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => EditReservationScreen(
-          reservation: reservations[index],
+          reservation: widget.reservations[index],
         ),
       ),
     );
 
     if (editedReservation != null) {
-      final _reservationScreenState =
-          context.findAncestorStateOfType<_ReservationScreenState>();
-
-      if (_reservationScreenState != null) {
-        _reservationScreenState.setState(() {
-          reservations[index] =
-              editedReservation; // Update the edited reservation
-        });
-      }
+      setState(() {
+        widget.reservations[index] = editedReservation;
+      });
     }
   }
 
@@ -728,9 +716,9 @@ class ListViewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       shrinkWrap: true,
-      itemCount: reservations.length,
+      itemCount: widget.reservations.length,
       itemBuilder: (context, index) {
-        final reservation = reservations[index];
+        final reservation = widget.reservations[index];
 
         return ListTile(
           tileColor: Color.fromARGB(255, 173, 250, 237),
@@ -742,12 +730,11 @@ class ListViewWidget extends StatelessWidget {
               Text(reservation.warehouseLocation),
               IconButton(
                 icon: Icon(Icons.edit),
-                onPressed: () => _editReservation(context, index),
+                onPressed: () => _editReservation(index),
               ),
               IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: () =>
-                    _deleteReservation(context, index), // Call delete method
+                onPressed: () => _deleteReservation(index),
               ),
             ],
           ),
