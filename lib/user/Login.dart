@@ -3,6 +3,8 @@ import 'package:trukkertrakker/src/app.dart';
 import 'Sign.dart';
 
 // firebase用のimport
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer' as developer;
@@ -32,11 +34,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void setEmail(String email) {
-    this.email = email;
+    loginUserEmail = email;
   }
 
   void setPassword(String password) {
-    this.password = password;
+    loginUserPassword = password;
   }
 
   void _login() async {
@@ -100,6 +102,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    //Initialize FireBase
+    Firebase.initializeApp();
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:trukkertrakker/src/app.dart';
 
 // firebase用のimport
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer' as developer;
@@ -31,11 +33,11 @@ class _SignupPageState extends State<SignUpPage> {
   }
 
   void setEmail(String email) {
-    this.email = email;
+    registerUserEmail = email;
   }
 
   void setPassword(String password) {
-    this.password = password;
+    registerUserPassword = password;
   }
 
   void _signup() async {
@@ -71,12 +73,15 @@ class _SignupPageState extends State<SignUpPage> {
       setState(() {
         DebugText = "Register Fail：${e.toString()}";
       });
-      
+
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    //Initialize FireBase
+    Firebase.initializeApp();
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(
