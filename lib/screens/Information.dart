@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:trukkertrakker/src/app.dart';
 
+// firebase用のimport
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer' as developer;
+
+FirebaseDatabase database = FirebaseDatabase.instance;
+
 void main() => runApp(MyApp());
 
 class InformationScreen extends StatefulWidget {
