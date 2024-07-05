@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:trukkertrakker/screens/HomePage.dart';
-import 'package:trukkertrakker/screens/Browse.dart';
+import 'package:trukkertrakker/screens/Reservation.dart';
 import 'package:trukkertrakker/screens/Information.dart';
-import 'package:trukkertrakker/screens/Library.dart';
+import 'package:trukkertrakker/user/Login.dart';
+import 'package:trukkertrakker/user/Sign.dart';
+import 'package:trukkertrakker/screens/account.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'TruckerTrekker',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyStatefulWidget(),
+      home: LoginPage(),
     );
   }
 }
@@ -27,9 +29,9 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const _screens = [
     HomePageScreen(),
-    BrowseScreen(),
+    ReservationScreen(),
     InformationScreen(),
-    LibraryScreen(),
+    AccountScreen(),
   ];
 
   int _selectedIndex = 0;
@@ -48,15 +50,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'トップ'),
+          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'ホーム'),
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month), label: '予約'),
           BottomNavigationBarItem(
               icon: Icon(Icons.local_shipping), label: '配送状況'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: 'Library'),
+              icon: Icon(Icons.account_circle), label: 'アカウント'),
         ],
         type: BottomNavigationBarType.fixed,
+        backgroundColor: Color.fromARGB(255, 67, 185, 198),
       ),
     );
   }
