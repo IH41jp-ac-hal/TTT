@@ -64,32 +64,33 @@ class _InformationScreenState extends State<InformationScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(110.0),
+          preferredSize: Size.fromHeight(getAppBarHeight(context)),
           child: AppBar(
             centerTitle: false,
-            title: const Text(
+            title: Text(
               '配送状況',
               style: TextStyle(
-                fontSize: 28,
-                height: 4,
-                color: Color(0xFFF1F1F1),
+                fontSize: getAppBarFontSize(context),
+                height: 1.2,
+                color: Colors.white,
               ),
             ),
-            backgroundColor: Color.fromARGB(255, 57, 70, 87),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0, top: 23.0),
-                child: Container(
-                  width: 114,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/logo.png'), // 画像のパス指定
-                      )),
+            backgroundColor: Color(0xFFFFD800),
+          actions: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: 15.0, top: MediaQuery.of(context).size.height * 0.03),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.2,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/logo.png'),
+                  ),
                 ),
-              )
-            ],
+              ),
+            ),
+          ],
           ),
         ),
         body: SingleChildScrollView(
@@ -103,10 +104,11 @@ class _InformationScreenState extends State<InformationScreen> {
                   child: Text(
                     '現在の状況: ${getCurrentStatus()}',
                     style: TextStyle(
-                        fontSize: 44,
-                        height: 1.5,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white), // テキストの色を白に設定
+                      fontSize: getContainerFontSize(context),
+                      height: 1.5,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // テキストの色を白に設定
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -116,7 +118,10 @@ class _InformationScreenState extends State<InformationScreen> {
                 child: Text(
                   '今の配送状況をボタンを押して投票！',
                   style: TextStyle(
-                      fontSize: 20, height: 3, fontWeight: FontWeight.bold),
+                    fontSize: 20,
+                    height: 3,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Row(
@@ -166,15 +171,16 @@ class _InformationScreenState extends State<InformationScreen> {
       child: Column(
         children: [
           Container(
-            height: 60, // ボタンの高さを設定
+            height: getButtonHeight(context), // ボタンの高さを動的に設定
             child: ElevatedButton(
               onPressed: onPressed,
               child: Text(
                 label,
                 style: TextStyle(
-                    fontSize: 14, // フォントサイズを調整
-                    color: Colors.white, // テキストの色を白に設定
-                    fontWeight: FontWeight.bold),
+                  fontSize: getButtonFontSize(context), // フォントサイズを調整
+                  color: Colors.white, // テキストの色を白に設定
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
               style: ElevatedButton.styleFrom(
@@ -188,5 +194,60 @@ class _InformationScreenState extends State<InformationScreen> {
         ],
       ),
     );
+  }
+
+  double getAppBarHeight(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    if (screenHeight < 600) {
+      return 80.0; // Small screen height
+    } else if (screenHeight < 900) {
+      return 100.0; // Medium screen height
+    } else {
+      return 110.0; // Large screen height
+    }
+  }
+
+  double getAppBarFontSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 400) {
+      return 20.0; // Small screen width
+    } else if (screenWidth < 800) {
+      return 24.0; // Medium screen width
+    } else {
+      return 28.0; // Large screen width
+    }
+  }
+
+  double getContainerFontSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 400) {
+      return 28.0; // Small screen width
+    } else if (screenWidth < 800) {
+      return 36.0; // Medium screen width
+    } else {
+      return 44.0; // Large screen width
+    }
+  }
+
+  double getButtonHeight(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 400) {
+      return 40.0; // Small screen width
+    } else if (screenWidth < 800) {
+      return 50.0; // Medium screen width
+    } else {
+      return 60.0; // Large screen width
+    }
+  }
+
+  double getButtonFontSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 400) {
+      return 10.0; // Small screen width
+    } else if (screenWidth < 800) {
+      return 12.0; // Medium screen width
+    } else {
+      return 14.0; // Large screen width
+    }
   }
 }

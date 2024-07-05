@@ -29,23 +29,23 @@ class HomePageScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(110.0),
+        preferredSize: Size.fromHeight(getAppBarHeight(context)),
         child: AppBar(
           centerTitle: false,
-          title: const Text(
+          title: Text(
             'TruckTrakker',
             style: TextStyle(
-              fontSize: 28,
-              height: 4,
-              color: Color(0xFFF1F1F1),
+              fontSize: getAppBarFontSize(context),
+              height: 1.2,
+              color: Colors.white,
             ),
           ),
-          backgroundColor: Color.fromARGB(255, 57, 70, 87),
+          backgroundColor: Color(0xFFFFD800),
           actions: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(right: 15.0, top: 23.0),
+              padding: EdgeInsets.only(right: 15.0, top: MediaQuery.of(context).size.height * 0.03),
               child: Container(
-                width: 114,
+                width: MediaQuery.of(context).size.width * 0.2,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
@@ -65,6 +65,28 @@ class HomePageScreen extends StatelessWidget {
         itemDotOffset: 0.25,
       ),
     );
+  }
+
+  double getAppBarHeight(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    if (screenHeight < 600) {
+      return 80.0; // Small screen height
+    } else if (screenHeight < 900) {
+      return 100.0; // Medium screen height
+    } else {
+      return 110.0; // Large screen height
+    }
+  }
+
+  double getAppBarFontSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 400) {
+      return 20.0; // Small screen width
+    } else if (screenWidth < 800) {
+      return 24.0; // Medium screen width
+    } else {
+      return 28.0; // Large screen width
+    }
   }
 }
 
@@ -144,11 +166,11 @@ class _CardSliderState extends State<CardSlider> {
               }
             },
             child: Container(
-              width: 350, // 幅を 300 から 350 に変更
-              height: 150, // 高さを追加する場合
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.2,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
-                color: const Color.fromARGB(255, 90, 90, 90),
+                color: Color.fromARGB(255, 184, 184, 184),
               ),
               child: Center(
                 child: Text(

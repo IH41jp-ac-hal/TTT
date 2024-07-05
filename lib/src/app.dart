@@ -49,6 +49,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Color(0xFFA3A3A3),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'ホーム'),
           BottomNavigationBarItem(
@@ -59,7 +61,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               icon: Icon(Icons.account_circle), label: 'アカウント'),
         ],
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromARGB(255, 57, 70, 87),
+        backgroundColor: Color(0xFFFFD800),
       ),
     );
   }
