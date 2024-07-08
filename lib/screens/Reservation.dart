@@ -274,6 +274,7 @@ class _ReservationViewState extends State<ReservationView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
+                key: ValueKey('name'),
                 controller: _nameController,
                 decoration: InputDecoration(
                   labelText: 'お名前',
@@ -287,6 +288,7 @@ class _ReservationViewState extends State<ReservationView> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+            key: ValueKey('phonenumber'),
                 keyboardType: TextInputType.phone, // 数字キーボードを指定
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp('[0-9]')), //数字のみ入力
@@ -305,6 +307,7 @@ class _ReservationViewState extends State<ReservationView> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                key: ValueKey('day'),
                 controller: _dateController,
                 decoration: InputDecoration(
                   labelText: '日付',
@@ -322,6 +325,7 @@ class _ReservationViewState extends State<ReservationView> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                key: ValueKey('time'),
                 controller: _timeController,
                 decoration: InputDecoration(
                   labelText: '時刻',
@@ -344,6 +348,7 @@ class _ReservationViewState extends State<ReservationView> {
                 ),
                 items: _warehouseLocations.map((WarehouseLocation location) {
                   return DropdownMenuItem<WarehouseLocation>(
+                    key: ValueKey('warehouse'),
                     value: location,
                     child: Text(location.location),
                   );
@@ -607,6 +612,7 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
                 ),
                 SizedBox(height: 16.0),
                 DropdownButtonFormField<WarehouseLocation>(
+                  key: ValueKey('warehouse'),
                   value: _selectedWarehouseLocation,
                   items: _warehouseLocations.map((WarehouseLocation location) {
                     return DropdownMenuItem<WarehouseLocation>(
@@ -675,6 +681,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
           content: Text("この予約を削除しますか？"),
           actions: <Widget>[
             TextButton(
+              key: ValueKey('delete'),
               child: Text("キャンセル"),
               onPressed: () {
                 Navigator.of(context).pop();
