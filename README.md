@@ -108,7 +108,7 @@ Gitでは現在のブランチを削除することできません。そのた�
 
 ```
 git switch main
-git brach -d "ブランチ名"
+git branch -D "ブランチ名"
 ```
 
 // ブランチ名変更
