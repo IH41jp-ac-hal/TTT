@@ -22,9 +22,9 @@ class HomePageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> valuesData = [
-      '予約画面',
-      '配送状況',
-      'アカウント情報',
+      '配送先#1',
+      '配送先#2',
+      '配送先#3',
     ];
 
     return Scaffold(
@@ -43,7 +43,8 @@ class HomePageScreen extends StatelessWidget {
           backgroundColor: Color(0xFFFFD800),
           actions: <Widget>[
             Padding(
-              padding: EdgeInsets.only(right: 15.0, top: MediaQuery.of(context).size.height * 0.03),
+              padding: EdgeInsets.only(
+                  right: 15.0, top: MediaQuery.of(context).size.height * 0.03),
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.2,
                 decoration: BoxDecoration(
@@ -148,35 +149,17 @@ class _CardSliderState extends State<CardSlider> {
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(36.0),
-          child: GestureDetector(
-            onTap: () {
-              if (widget.cards[index] == '配送状況') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InformationScreen()),
-                );
-              } else if (widget.cards[index] == '予約画面') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ReservationScreen()),
-                );
-              } else if (widget.cards[index] == 'アカウント情報') {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountScreen()));
-              }
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.2,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                color: Color.fromARGB(255, 184, 184, 184),
-              ),
-              child: Center(
-                child: Text(
-                  widget.cards[index],
-                  style: TextStyle(fontSize: 28, color: Colors.white),
-                ),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.2,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              color: Color.fromARGB(255, 220, 220, 220),
+            ),
+            child: Center(
+              child: Text(
+                widget.cards[index],
+                style: TextStyle(fontSize: 28, color: Colors.white),
               ),
             ),
           ),
