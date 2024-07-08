@@ -345,7 +345,7 @@ class _ReservationViewState extends State<ReservationView> {
                 child: ElevatedButton(
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
+                    backgroundColor: Colors.blue,
                     padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.25,
                       vertical: getButtonHeight(context) * 0.5,
