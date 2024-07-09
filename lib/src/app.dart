@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:trukkertrakker/screens/HomePage.dart';
 import 'package:trukkertrakker/screens/Reservation.dart';
 import 'package:trukkertrakker/screens/Information.dart';
+import 'package:trukkertrakker/user/Login.dart';
+import 'package:trukkertrakker/user/Sign.dart';
 import 'package:trukkertrakker/screens/account.dart';
 
 class MyApp extends StatelessWidget {
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'TruckerTrekker',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyStatefulWidget(),
+      home: LoginPage(),
     );
   }
 }
@@ -29,7 +31,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     HomePageScreen(),
     ReservationScreen(),
     InformationScreen(),
-    accountScreen(),
+    AccountScreen(),
   ];
 
   int _selectedIndex = 0;
