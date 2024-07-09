@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer' as developer;
 
 FirebaseDatabase database = FirebaseDatabase.instance;
+DatabaseReference database_ref = FirebaseDatabase.instance.ref("Warehouse");
 
 void main() => runApp(MyApp());
 
@@ -67,8 +68,40 @@ class _InformationScreenState extends State<InformationScreen> {
     }
   }
 
+  // 指定された倉庫の混雑状況で背景色を返す関数
+  // Color getBackgroundColorColor() {
+  //   getBackgroundColor();
+  //   String currentStatus = getCurrentStatus();
+  //   switch (currentStatus) {
+  //     case '異常':
+  //       return Colors.lightGreen;
+  //     // case '~10分':
+  //     //   return Colors.lightBlue;
+  //     // case '~30分':
+  //     //   return Colors.orangeAccent;
+  //     // case '30分以上':
+  //     //   return Colors.redAccent;
+  //     // case '渋滞':
+  //     //   return Colors.purpleAccent;
+  //     default:
+  //       return Colors.blueGrey;
+  //   }
+  // }
+
+  // void getBackgroundColor() async {
+  //   final snapshot = await database_ref.child('Warehouse/千葉船橋市倉庫').get();
+  //   if (snapshot.exists) {
+  //     print(snapshot.value);
+  //   } else {
+  //     print('No data available.');
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
+    //Initialize FireBase
+    Firebase.initializeApp();
+
     final Size size = MediaQuery.of(context).size; // 画面サイズを得るための変数定義(size)
     return MaterialApp(
       home: Scaffold(
@@ -131,11 +164,29 @@ class _InformationScreenState extends State<InformationScreen> {
                     setState(() {
                       normalCount++;
                     });
+
+                    //Update DBvalue
+                    database_ref.update({
+                      "東京港区倉庫": "平常",
+                      "東京千代田区倉庫": "平常",
+                      "東京中央区倉庫": "平常",
+                      "東京江戸区倉庫": "平常",
+                      "千葉船橋市倉庫": "平常"
+                    });
                   }),
                   _buildStatusButton('~10分', Colors.lightBlue, tenMinutesCount,
                       () {
                     setState(() {
                       tenMinutesCount++;
+                    });
+
+                    //Update DBvalue
+                    database_ref.update({
+                      "東京港区倉庫": "~10分",
+                      "東京千代田区倉庫": "~10分",
+                      "東京中央区倉庫": "~10分",
+                      "東京江戸区倉庫": "~10分",
+                      "千葉船橋市倉庫": "~10分"
                     });
                   }),
                   _buildStatusButton(
@@ -143,17 +194,44 @@ class _InformationScreenState extends State<InformationScreen> {
                     setState(() {
                       thirtyMinutesCount++;
                     });
+
+                    //Update DBvalue
+                    database_ref.update({
+                      "東京港区倉庫": "~30分",
+                      "東京千代田区倉庫": "~30分",
+                      "東京中央区倉庫": "~30分",
+                      "東京江戸区倉庫": "~30分",
+                      "千葉船橋市倉庫": "~30分"
+                    });
                   }),
                   _buildStatusButton(
                       '30分以上', Colors.redAccent, moreThanThirtyCount, () {
                     setState(() {
                       moreThanThirtyCount++;
                     });
+
+                    //Update DBvalue
+                    database_ref.update({
+                      "東京港区倉庫": "30分以上",
+                      "東京千代田区倉庫": "30分以上",
+                      "東京中央区倉庫": "30分以上",
+                      "東京江戸区倉庫": "30分以上",
+                      "千葉船橋市倉庫": "30分以上"
+                    });
                   }),
                   _buildStatusButton('渋滞', Colors.purpleAccent, trafficJamCount,
                       () {
                     setState(() {
                       trafficJamCount++;
+                    });
+
+                    //Update DBvalue
+                    database_ref.update({
+                      "東京港区倉庫": "渋滞",
+                      "東京千代田区倉庫": "渋滞",
+                      "東京中央区倉庫": "渋滞",
+                      "東京江戸区倉庫": "渋滞",
+                      "千葉船橋市倉庫": "渋滞"
                     });
                   }),
                 ],
