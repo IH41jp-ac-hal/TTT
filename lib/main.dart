@@ -5,6 +5,9 @@ import 'package:trukkertrakker/Login.dart';
 import 'firebase_options.dart';
 import 'src/app.dart';
 
+// fiebaseのimportでエラーが起きていたらターミナルで
+// flutter pub add firebase_auth
+
 void main() {
 
   runApp(const MyApp());

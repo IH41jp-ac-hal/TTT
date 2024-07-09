@@ -3,12 +3,11 @@ import 'package:trukkertrakker/src/app.dart';
 import 'Sign.dart';
 
 // firebase用のimport
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:developer' as developer;
-FirebaseDatabase database = FirebaseDatabase.instance;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -57,33 +56,30 @@ class _LoginPageState extends State<LoginPage> {
     //   }
     // }
 
-    try { 
-        // Try login
-        final FirebaseAuth auth = FirebaseAuth.instance;
-        final UserCredential result =
-            await auth.signInWithEmailAndPassword(
-          email: loginUserEmail,
-          password: loginUserPassword,
-        );
-        
-        // Succeeded to login
-        final User user = result.user!;
-        setState(() {
-          DebugText = "Succeeded to Login：${user.email}";
-        });
+    try {
+      // Try login
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      final UserCredential result = await auth.signInWithEmailAndPassword(
+        email: loginUserEmail,
+        password: loginUserPassword,
+      );
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => MyStatefulWidget()),
-        );
+      // Succeeded to login
+      final User user = result.user!;
+      setState(() {
+        DebugText = "Succeeded to Login：${user.email}";
+      });
 
-      } catch (e) {
-        
-        // Failed to login
-        setState(() {
-          DebugText = "Failed to Login：${e.toString()}";
-        });
-      }
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MyStatefulWidget()),
+      );
+    } catch (e) {
+      // Failed to login
+      setState(() {
+        DebugText = "Failed to Login：${e.toString()}";
+      });
+    }
   }
 
   void _loginAsGuest() {
@@ -91,6 +87,13 @@ class _LoginPageState extends State<LoginPage> {
       context,
       MaterialPageRoute(builder: (context) => MyStatefulWidget()),
     );
+  }
+
+  void _loginWithGoogle() {
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => MyStatefulWidget()),
+    // );
   }
 
   void _navigateToSignup() {
@@ -104,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     //Initialize FireBase
     Firebase.initializeApp();
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -174,6 +177,13 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: _loginAsGuest,
                       child: const Text('ゲストでログイン'),
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // サインイン画面を表示する
+                        signInWithGoogle();
+                      },
+                      child: const Text('Googleでログイン'),
+                    ),
                     const SizedBox(
                       height: 16,
                     ),
@@ -212,4 +222,22 @@ class ValidateText {
       }
     }
   }
+}
+
+Future<UserCredential> signInWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+  // Once signed in, return the UserCredential
+  return await FirebaseAuth.instance.signInWithCredential(credential);
 }
