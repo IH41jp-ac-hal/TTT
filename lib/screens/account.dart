@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trukkertrakker/screens/EditAccount.dart';
 import 'package:trukkertrakker/src/app.dart';
+import 'package:trukkertrakker/user/Setting.dart';
 
 // アカウント情報モデル
 class AccountInfo {
@@ -19,19 +20,31 @@ class AccountInfo {
 
 void main() => runApp(MyApp());
 
-class AccountScreen extends StatelessWidget {
+class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    // アカウント情報取得 (仮)
-    final accountInfo = AccountInfo(
-      name: '山田 太郎',
-      email: 'yamada.taro@example.com',
-      profileImageUrl: 'assets/logo.png',
-      bio: 'こんにちは、山田太郎です。フルスタックエンジニアとして働いています。',
-    );
+  _AccountScreenState createState() => _AccountScreenState();
+}
 
+class _AccountScreenState extends State<AccountScreen> {
+  late AccountInfo accountInfo;
+  bool _gpsValue = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // アカウント情報取得 (仮)
+    accountInfo = AccountInfo(
+      name: '山田　太郎',
+      email: 'yamada@domain.com',
+      profileImageUrl: 'assets/logo.png',
+      bio: 'こんにちわ。○○運送です。よろしくお願います。',
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: PreferredSize(
@@ -40,22 +53,30 @@ class AccountScreen extends StatelessWidget {
             centerTitle: false,
             title: Text(
               'アカウント',
-              style: TextStyle(fontSize: 19, height: 3),
+              style: TextStyle(fontSize: 18, height: 3),
             ),
             backgroundColor: Color.fromARGB(255, 9, 142, 163),
             actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0, top: 23.0),
-                child: Container(
-                  width: 114,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/logo.png'),
+              IconButton(
+                highlightColor: Colors.red,
+                icon: Icon(Icons.people),
+                iconSize: 35,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SettingPage(
+                        title: '位置情報取得',
+                        value: _gpsValue,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _gpsValue = value;
+                          });
+                        },
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
             ],
           ),
@@ -67,9 +88,32 @@ class AccountScreen extends StatelessWidget {
                 // プロフィール写真
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: CircleAvatar(
-                    radius: 50.0,
-                    backgroundImage: AssetImage(accountInfo.profileImageUrl),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Image.asset(accountInfo.profileImageUrl),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('閉じる'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage: AssetImage(accountInfo.profileImageUrl),
+                    ),
                   ),
                 ),
                 SizedBox(height: 10.0),
@@ -111,12 +155,10 @@ class AccountScreen extends StatelessWidget {
                     );
 
                     if (updatedAccountInfo != null) {
-                      // アカウント情報を更新する
-                      accountInfo.name = updatedAccountInfo.name;
-                      accountInfo.email = updatedAccountInfo.email;
-                      accountInfo.profileImageUrl =
-                          updatedAccountInfo.profileImageUrl;
-                      accountInfo.bio = updatedAccountInfo.bio;
+                      setState(() {
+                        // アカウント情報を更新する
+                        accountInfo = updatedAccountInfo;
+                      });
                     }
                   },
                   child: Text('編集'),
