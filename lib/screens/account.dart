@@ -46,22 +46,24 @@ class AccountScreen extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            backgroundColor: Color(0xFFFFD800),
-          actions: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(right: 15.0, top: MediaQuery.of(context).size.height * 0.03),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.2,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/logo.png'),
+            backgroundColor: Color(0xFF00334d),
+            actions: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                    right: 15.0,
+                    top: MediaQuery.of(context).size.height * 0.03),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/logo.png'),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
           ),
         ),
         body: SingleChildScrollView(

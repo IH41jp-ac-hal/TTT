@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'TruckerTrekker',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Color(0xFF00334d),
       ),
       home: ReservationScreen(),
     );
@@ -50,7 +50,6 @@ class _ReservationScreenState extends State<ReservationScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,10 +65,11 @@ class _ReservationScreenState extends State<ReservationScreen> {
               color: Colors.white,
             ),
           ),
-          backgroundColor: Color(0xFFFFD800),
+          backgroundColor: Color(0xFF00334d),
           actions: <Widget>[
             Padding(
-              padding: EdgeInsets.only(right: 15.0, top: MediaQuery.of(context).size.height * 0.03),
+              padding: EdgeInsets.only(
+                  right: 15.0, top: MediaQuery.of(context).size.height * 0.03),
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.2,
                 decoration: BoxDecoration(
@@ -99,15 +99,18 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: _isReservationSelected ? Colors.blue : Colors.white,
+                      color:
+                          _isReservationSelected ? Color(0xFF00334d) : Colors.white,
                       borderRadius: BorderRadius.circular(16.0),
-                      border: Border.all(color: Colors.blue),
+                      border: Border.all(color: Color(0xFF00334d)),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 50.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 50.0),
                     child: Text(
                       '予約受付',
                       style: TextStyle(
-                        color: _isReservationSelected ? Colors.white : Colors.blue,
+                        color:
+                            _isReservationSelected ? Colors.white : Color(0xFF00334d),
                       ),
                     ),
                   ),
@@ -121,15 +124,19 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: !_isReservationSelected ? Colors.blue : Colors.white,
+                      color:
+                          !_isReservationSelected ? Color(0xFF00334d) : Colors.white,
                       borderRadius: BorderRadius.circular(16.0),
-                      border: Border.all(color: Colors.blue),
+                      border: Border.all(color: Color(0xFF00334d)),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 50.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 50.0),
                     child: Text(
                       '予約一覧',
                       style: TextStyle(
-                        color: !_isReservationSelected ? Colors.white : Colors.blue,
+                        color: !_isReservationSelected
+                            ? Colors.white
+                            : Color(0xFF00334d),
                       ),
                     ),
                   ),
@@ -345,7 +352,7 @@ class _ReservationViewState extends State<ReservationView> {
                 child: ElevatedButton(
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Color(0xFF00334d),
                     padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.25,
                       vertical: getButtonHeight(context) * 0.5,
@@ -353,7 +360,9 @@ class _ReservationViewState extends State<ReservationView> {
                   ),
                   child: Text(
                     '予約する',
-                    style: TextStyle(fontSize: getButtonFontSize(context) * 2, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: getButtonFontSize(context) * 2,
+                        color: Colors.white),
                   ),
                 ),
               ),
@@ -444,58 +453,57 @@ class ListViewWidget extends StatelessWidget {
   }
 }
 
-
-  double getAppBarHeight(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    if (screenHeight < 600) {
-      return 80.0; // Small screen height
-    } else if (screenHeight < 900) {
-      return 100.0; // Medium screen height
-    } else {
-      return 110.0; // Large screen height
-    }
+double getAppBarHeight(BuildContext context) {
+  double screenHeight = MediaQuery.of(context).size.height;
+  if (screenHeight < 600) {
+    return 80.0; // Small screen height
+  } else if (screenHeight < 900) {
+    return 100.0; // Medium screen height
+  } else {
+    return 110.0; // Large screen height
   }
+}
 
-  double getAppBarFontSize(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 400) {
-      return 20.0; // Small screen width
-    } else if (screenWidth < 800) {
-      return 24.0; // Medium screen width
-    } else {
-      return 28.0; // Large screen width
-    }
+double getAppBarFontSize(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  if (screenWidth < 400) {
+    return 20.0; // Small screen width
+  } else if (screenWidth < 800) {
+    return 24.0; // Medium screen width
+  } else {
+    return 28.0; // Large screen width
   }
+}
 
-  double getContainerFontSize(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 400) {
-      return 28.0; // Small screen width
-    } else if (screenWidth < 800) {
-      return 36.0; // Medium screen width
-    } else {
-      return 44.0; // Large screen width
-    }
+double getContainerFontSize(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  if (screenWidth < 400) {
+    return 28.0; // Small screen width
+  } else if (screenWidth < 800) {
+    return 36.0; // Medium screen width
+  } else {
+    return 44.0; // Large screen width
   }
+}
 
-  double getButtonHeight(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 400) {
-      return 40.0; // Small screen width
-    } else if (screenWidth < 800) {
-      return 50.0; // Medium screen width
-    } else {
-      return 60.0; // Large screen width
-    }
+double getButtonHeight(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  if (screenWidth < 400) {
+    return 40.0; // Small screen width
+  } else if (screenWidth < 800) {
+    return 50.0; // Medium screen width
+  } else {
+    return 60.0; // Large screen width
   }
+}
 
-  double getButtonFontSize(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 400) {
-      return 10.0; // Small screen width
-    } else if (screenWidth < 800) {
-      return 12.0; // Medium screen width
-    } else {
-      return 14.0; // Large screen width
-    }
+double getButtonFontSize(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  if (screenWidth < 400) {
+    return 10.0; // Small screen width
+  } else if (screenWidth < 800) {
+    return 12.0; // Medium screen width
+  } else {
+    return 14.0; // Large screen width
   }
+}

@@ -40,7 +40,7 @@ class HomePageScreen extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          backgroundColor: Color(0xFFFFD800),
+          backgroundColor: Color(0xFF00334d),
           actions: <Widget>[
             Padding(
               padding: EdgeInsets.only(
@@ -48,6 +48,7 @@ class HomePageScreen extends StatelessWidget {
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.2,
                 decoration: BoxDecoration(
+                  color: Color(0xFF842e5b),
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
@@ -59,6 +60,7 @@ class HomePageScreen extends StatelessWidget {
           ],
         ),
       ),
+      backgroundColor: Color(0xFFa6a6a6),
       body: CardSlider(
         cards: valuesData,
         bottomOffset: .0005,
@@ -154,12 +156,12 @@ class _CardSliderState extends State<CardSlider> {
             height: MediaQuery.of(context).size.height * 0.2,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
-              color: Color.fromARGB(255, 220, 220, 220),
+              color: Color(0xFFffffff),
             ),
             child: Center(
               child: Text(
                 widget.cards[index],
-                style: TextStyle(fontSize: 28, color: Colors.white),
+                style: TextStyle(fontSize: 28, color: Color(0xFF333333)),
               ),
             ),
           ),
