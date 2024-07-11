@@ -209,9 +209,9 @@ class _InformationScreenState extends State<InformationScreen> {
 
   double getAppBarFontSize(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 400) {
+    if (screenWidth < 600) {
       return 20.0; // Small screen width
-    } else if (screenWidth < 800) {
+    } else if (screenWidth < 900) {
       return 24.0; // Medium screen width
     } else {
       return 28.0; // Large screen width
@@ -220,9 +220,9 @@ class _InformationScreenState extends State<InformationScreen> {
 
   double getContainerFontSize(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 400) {
+    if (screenWidth < 600) {
       return 28.0; // Small screen width
-    } else if (screenWidth < 800) {
+    } else if (screenWidth < 900) {
       return 36.0; // Medium screen width
     } else {
       return 44.0; // Large screen width
@@ -231,9 +231,9 @@ class _InformationScreenState extends State<InformationScreen> {
 
   double getButtonHeight(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 400) {
+    if (screenWidth < 600) {
       return 40.0; // Small screen width
-    } else if (screenWidth < 800) {
+    } else if (screenWidth < 900) {
       return 50.0; // Medium screen width
     } else {
       return 60.0; // Large screen width
@@ -242,9 +242,9 @@ class _InformationScreenState extends State<InformationScreen> {
 
   double getButtonFontSize(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 400) {
+    if (screenWidth < 600) {
       return 10.0; // Small screen width
-    } else if (screenWidth < 800) {
+    } else if (screenWidth < 900) {
       return 12.0; // Medium screen width
     } else {
       return 14.0; // Large screen width

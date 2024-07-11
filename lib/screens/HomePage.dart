@@ -81,10 +81,10 @@ class HomePageScreen extends StatelessWidget {
 
   double getAppBarFontSize(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 400) {
-      return 20.0; // Small screen width
-    } else if (screenWidth < 800) {
-      return 24.0; // Medium screen width
+    if (screenWidth < 600) {
+      return 24.0; // Small screen width
+    } else if (screenWidth < 900) {
+      return 26.0; // Medium screen width
     } else {
       return 28.0; // Large screen width
     }
