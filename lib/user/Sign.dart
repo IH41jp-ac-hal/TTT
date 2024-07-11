@@ -38,12 +38,15 @@ class _SignupPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'TruckerTrekker',
-          style: TextStyle(color: const Color.fromARGB(255, 255, 0, 0)),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
+        child: AppBar(
+          title: Text(
+            'TruckerTrekker',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Color(0xFF00334d),
         ),
-        backgroundColor: Colors.black,
       ),
       body: Center(
         child: Column(
@@ -90,7 +93,10 @@ class _SignupPageState extends State<SignUpPage> {
                     ),
                     ElevatedButton(
                       onPressed: _signup,
-                      child: const Text('サインイン'),
+                      child: const Text(
+                        'サインイン',
+                        style: TextStyle(color: Color(0xFF00334d)),
+                      ),
                     ),
                   ],
                 )),

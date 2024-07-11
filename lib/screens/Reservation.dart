@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'TruckerTrekker',
       theme: ThemeData(
-        primarySwatch: Color(0xFF00334d),
+        primarySwatch: Colors.blue,
       ),
       home: ReservationScreen(),
     );
@@ -54,40 +54,36 @@ class _ReservationScreenState extends State<ReservationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(getAppBarHeight(context)),
+        preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
         child: AppBar(
-          centerTitle: false,
-          title: Text(
-            '予約',
-            style: TextStyle(
-              fontSize: getAppBarFontSize(context),
-              height: 2,
-              color: Colors.white,
-            ),
-          ),
-          backgroundColor: Color(0xFF00334d),
-          actions: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                  right: 15.0, top: MediaQuery.of(context).size.height * 0.03),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.2,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
+          title: Row(
+            children: [
+              Container(
+                width: 90,
+                height: 90,
+                decoration: const BoxDecoration(
                   image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/logo.png'),
+                    image: AssetImage('assets/logo.png'), //画像
                   ),
                 ),
               ),
-            ),
-          ],
+              Text(
+                '予約',
+                style: TextStyle(
+                  fontSize: getAppBarFontSize(context), // フォントサイズ
+                  color: Colors.white, // テキストカラー
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Color(0xFF00334d),
         ),
       ),
       body: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.only(
+                right: 15.0, top: MediaQuery.of(context).size.height * 0.1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -99,8 +95,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color:
-                          _isReservationSelected ? Color(0xFF00334d) : Colors.white,
+                      color: _isReservationSelected
+                          ? Color(0xFF00334d)
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(16.0),
                       border: Border.all(color: Color(0xFF00334d)),
                     ),
@@ -109,8 +106,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     child: Text(
                       '予約受付',
                       style: TextStyle(
-                        color:
-                            _isReservationSelected ? Colors.white : Color(0xFF00334d),
+                        color: _isReservationSelected
+                            ? Colors.white
+                            : Color(0xFF00334d),
                       ),
                     ),
                   ),
@@ -124,8 +122,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color:
-                          !_isReservationSelected ? Color(0xFF00334d) : Colors.white,
+                      color: !_isReservationSelected
+                          ? Color(0xFF00334d)
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(16.0),
                       border: Border.all(color: Color(0xFF00334d)),
                     ),
@@ -151,6 +150,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           ),
         ],
       ),
+      backgroundColor: Color(0xFFe6e6e6),
     );
   }
 }
@@ -382,8 +382,11 @@ class ReservationDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('予約詳細'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
+        child: AppBar(
+          title: Text('予約詳細'),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
@@ -456,11 +459,11 @@ class ListViewWidget extends StatelessWidget {
 double getAppBarHeight(BuildContext context) {
   double screenHeight = MediaQuery.of(context).size.height;
   if (screenHeight < 600) {
-    return 80.0; // Small screen height
+    return 20.0; // Small screen height
   } else if (screenHeight < 900) {
-    return 100.0; // Medium screen height
+    return 24.0; // Medium screen height
   } else {
-    return 110.0; // Large screen height
+    return 28.0; // Large screen height
   }
 }
 
@@ -478,22 +481,22 @@ double getAppBarFontSize(BuildContext context) {
 double getContainerFontSize(BuildContext context) {
   double screenWidth = MediaQuery.of(context).size.width;
   if (screenWidth < 400) {
-    return 28.0; // Small screen width
+    return 20.0; // Small screen width
   } else if (screenWidth < 800) {
-    return 36.0; // Medium screen width
+    return 24.0; // Medium screen width
   } else {
-    return 44.0; // Large screen width
+    return 28.0; // Large screen width
   }
 }
 
 double getButtonHeight(BuildContext context) {
   double screenWidth = MediaQuery.of(context).size.width;
   if (screenWidth < 400) {
-    return 40.0; // Small screen width
+    return 30.0; // Small screen width
   } else if (screenWidth < 800) {
-    return 50.0; // Medium screen width
+    return 40.0; // Medium screen width
   } else {
-    return 60.0; // Large screen width
+    return 50.0; // Large screen width
   }
 }
 

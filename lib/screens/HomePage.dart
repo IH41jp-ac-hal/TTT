@@ -29,38 +29,37 @@ class HomePageScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(getAppBarHeight(context)),
+        preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
         child: AppBar(
-          centerTitle: false,
-          title: Text(
-            'TruckTrakker',
-            style: TextStyle(
-              fontSize: getAppBarFontSize(context),
-              height: 1.2,
-              color: Colors.white,
-            ),
-          ),
-          backgroundColor: Color(0xFF00334d),
-          actions: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                  right: 15.0, top: MediaQuery.of(context).size.height * 0.03),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.2,
-                decoration: BoxDecoration(
-                  color: Color(0xFF842e5b),
-                  shape: BoxShape.circle,
+          title: Row(
+            children: [
+              Container(
+                width: 90,
+                height: 90,
+                decoration: const BoxDecoration(
                   image: DecorationImage(
-                    fit: BoxFit.cover,
                     image: AssetImage('assets/logo.png'),
                   ),
                 ),
               ),
+              Text(
+                'トラトレ',
+                style: TextStyle(
+                  fontSize: getAppBarFontSize(context),
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Color(0xFF00334d),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16.0),
             ),
           ],
         ),
       ),
-      backgroundColor: Color(0xFFa6a6a6),
+      backgroundColor: Color(0xFFe6e6e6),
       body: CardSlider(
         cards: valuesData,
         bottomOffset: .0005,
@@ -83,10 +82,10 @@ class HomePageScreen extends StatelessWidget {
 
   double getAppBarFontSize(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 600) {
-      return 24.0; // Small screen width
-    } else if (screenWidth < 900) {
-      return 26.0; // Medium screen width
+    if (screenWidth < 400) {
+      return 20.0; // Small screen width
+    } else if (screenWidth < 800) {
+      return 24.0; // Medium screen width
     } else {
       return 28.0; // Large screen width
     }
@@ -121,7 +120,7 @@ class _CardSliderState extends State<CardSlider> {
     super.initState();
     _pageController = PageController(initialPage: 0);
 
-    _timer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
+    _timer = Timer.periodic(Duration(seconds: 4), (Timer timer) {
       if (_currentPage < widget.cards.length - 1) {
         _currentPage++;
       } else {
@@ -130,8 +129,8 @@ class _CardSliderState extends State<CardSlider> {
 
       _pageController.animateToPage(
         _currentPage,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeIn,
+        duration: Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
       );
     });
   }

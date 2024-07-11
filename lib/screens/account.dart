@@ -35,16 +35,27 @@ class AccountScreen extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(getAppBarHeight(context)),
+          preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
           child: AppBar(
-            centerTitle: false,
-            title: Text(
-              'アカウント',
-              style: TextStyle(
-                fontSize: getAppBarFontSize(context),
-                height: 1.2,
-                color: Colors.white,
-              ),
+            title: Row(
+              children: [
+                Container(
+                  width: 90,
+                  height: 90,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/logo.png'),
+                    ),
+                  ),
+                ),
+                Text(
+                  'アカウント',
+                  style: TextStyle(
+                    fontSize: getAppBarFontSize(context),
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
             backgroundColor: Color(0xFF00334d),
             actions: <Widget>[
@@ -52,16 +63,6 @@ class AccountScreen extends StatelessWidget {
                 padding: EdgeInsets.only(
                     right: 15.0,
                     top: MediaQuery.of(context).size.height * 0.03),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/logo.png'),
-                    ),
-                  ),
-                ),
               ),
             ],
           ),
@@ -72,10 +73,13 @@ class AccountScreen extends StatelessWidget {
               children: <Widget>[
                 // プロフィール写真
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.only(
+                      right: 15.0,
+                      top: MediaQuery.of(context).size.height * 0.1),
                   child: CircleAvatar(
                     radius: 50.0,
                     backgroundImage: AssetImage(accountInfo.profileImageUrl),
+                    backgroundColor: Color(0xFFFFFFFF),
                   ),
                 ),
                 SizedBox(height: 10.0),
@@ -131,12 +135,16 @@ class AccountScreen extends StatelessWidget {
                       accountInfo.bio = updatedAccountInfo.bio;
                     }
                   },
-                  child: Text('編集'),
+                  child: Text(
+                    '編集',
+                    style: TextStyle(color: Color(0xFF00334d)),
+                  ),
                 ),
               ],
             ),
           ),
         ),
+        backgroundColor: Color(0xFFe6e6e6),
       ),
     );
   }
@@ -154,9 +162,9 @@ class AccountScreen extends StatelessWidget {
 
   double getAppBarFontSize(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 600) {
+    if (screenWidth < 400) {
       return 20.0; // Small screen width
-    } else if (screenWidth < 900) {
+    } else if (screenWidth < 800) {
       return 24.0; // Medium screen width
     } else {
       return 28.0; // Large screen width

@@ -60,18 +60,34 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'TruckerTrekker',
-          style: TextStyle(color: const Color.fromARGB(255, 255, 0, 0)),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
+        child: AppBar(
+          title: Row(
+            children: [
+              Container(
+                width: 90,
+                height: 90,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/logo.png'), //画像
+                  ),
+                ),
+              ),
+              Text(
+                'TruckerTrekker',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+          backgroundColor: Color(0xFF00334d),
         ),
-        backgroundColor: Colors.black,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('ログイン', style: TextStyle(fontSize: 35)),
+            Text('❖LOGIN❖', style: TextStyle(fontSize: 35)),
             Text(
               'メールアドレスとパスワードを入力してください',
               style: TextStyle(fontSize: 15),
@@ -116,7 +132,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ElevatedButton(
                       onPressed: _login,
-                      child: const Text('ログイン'),
+                      child: const Text(
+                        'ログイン',
+                        style: TextStyle(color: Color(0xFF00334d)),
+                      ),
                       style: ElevatedButton.styleFrom(
                         fixedSize: Size(144, double.infinity),
                       ),
@@ -126,20 +145,27 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ElevatedButton(
                       onPressed: _loginAsGuest,
-                      child: const Text('ゲストでログイン'),
+                      child: const Text(
+                        'ゲストでログイン',
+                        style: TextStyle(color: Color(0xFF00334d)),
+                      ),
                     ),
                     const SizedBox(
                       height: 16,
                     ),
-                    TextButton(
+                    ElevatedButton(
                       onPressed: _navigateToSignup,
-                      child: const Text('新規会員登録'),
+                      child: const Text(
+                        '新規会員登録',
+                        style: TextStyle(color: Color(0xFF00334d)),
+                      ),
                     ),
                   ],
                 )),
           ],
         ),
       ),
+      backgroundColor: Color(0xFF00334d),
     );
   }
 }

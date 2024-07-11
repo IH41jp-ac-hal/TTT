@@ -64,26 +64,14 @@ class _InformationScreenState extends State<InformationScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(getAppBarHeight(context)),
+          preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
           child: AppBar(
-            centerTitle: false,
-            title: Text(
-              '配送状況',
-              style: TextStyle(
-                fontSize: getAppBarFontSize(context),
-                height: 1.2,
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: Color(0xFF00334d),
-            actions: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                    right: 15.0,
-                    top: MediaQuery.of(context).size.height * 0.03),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  decoration: BoxDecoration(
+            title: Row(
+              children: [
+                Container(
+                  width: 90,
+                  height: 90,
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       fit: BoxFit.cover,
@@ -91,6 +79,21 @@ class _InformationScreenState extends State<InformationScreen> {
                     ),
                   ),
                 ),
+                Text(
+                  '配送状況',
+                  style: TextStyle(
+                    fontSize: getAppBarFontSize(context),
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            backgroundColor: Color(0xFF00334d),
+            actions: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                    right: 15.0,
+                    top: MediaQuery.of(context).size.height * 0.03),
               ),
             ],
           ),
@@ -163,6 +166,7 @@ class _InformationScreenState extends State<InformationScreen> {
             ],
           ),
         ),
+        backgroundColor: Color(0xFFe6e6e6),
       ),
     );
   }
@@ -211,9 +215,9 @@ class _InformationScreenState extends State<InformationScreen> {
 
   double getAppBarFontSize(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth < 600) {
+    if (screenWidth < 400) {
       return 20.0; // Small screen width
-    } else if (screenWidth < 900) {
+    } else if (screenWidth < 800) {
       return 24.0; // Medium screen width
     } else {
       return 28.0; // Large screen width
