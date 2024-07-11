@@ -69,10 +69,6 @@ class _ReservationScreenState extends State<ReservationScreen> {
                 width: 114,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/logo.png'),
-                  ),
                 ),
               ),
             ),
