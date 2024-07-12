@@ -77,12 +77,6 @@ class _InformationScreenState extends State<InformationScreen> {
                 padding: const EdgeInsets.only(right: 15.0, top: 23.0),
                 child: Container(
                   width: 114,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/logo.png'), // 画像のパス指定
-                      )),
                 ),
               )
             ],

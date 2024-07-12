@@ -50,13 +50,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'ホーム'),
+          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'トップ'),
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month), label: '予約'),
           BottomNavigationBarItem(
               icon: Icon(Icons.local_shipping), label: '配送状況'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: 'アカウント'),
+              icon: Icon(Icons.account_circle), label: 'Library'),
         ],
         type: BottomNavigationBarType.fixed,
         backgroundColor: Color.fromARGB(255, 67, 185, 198),

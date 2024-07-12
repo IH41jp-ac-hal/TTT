@@ -12,11 +12,17 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  flutter_native_splash: ^2.3.7
+  image_picker: ^1.0.8
+  flutter_launcher_icons: ^0.13.1
+
+  feedback: ^3.1.0
+  
+  url_launcher: ^6.2.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  image_picker: ^0.8.4+3
 
   flutter_lints: ^2.0.0
 
@@ -25,3 +31,23 @@ flutter:
 
   assets:
     - assets/logo.png
+    - assets/sprash.logo.png
+    - assets/App_logo.png
+
+ #スプラッシュ画面の設定
+flutter_native_splash:
+  color: "#42a5f5"
+  image: assets/sprash.logo.png
+  android: true
+  ios: true
+  web: true
+  android_gravity: center
+  ios_content_mode: center
+  web_image_mode: center
+  fullscreen: true
+
+#  アプリアイコン
+flutter_icons:       
+  android: true
+  ios: true
+  image_path: "assets/App_logo.png"
