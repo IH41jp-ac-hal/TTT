@@ -88,7 +88,7 @@ class _InformationScreenState extends State<InformationScreen> {
                 ),
               ],
             ),
-            backgroundColor: Color(0xFF00334d),
+            backgroundColor: Color(0xFF84a2d4),
             actions: <Widget>[
               Padding(
                 padding: EdgeInsets.only(

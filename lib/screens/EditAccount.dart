@@ -46,7 +46,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
         child: AppBar(
           title: Text('プロフィール編集', style: TextStyle(color: Colors.white)),
-          backgroundColor: Color(0xFF00334d),
+          backgroundColor: Color(0xFF84a2d4),
         ),
       ),
       body: Padding(
@@ -111,7 +111,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               },
               child: Text(
                 '保存',
-                style: TextStyle(color: Color(0xFF00334d)),
+                style: TextStyle(color: Color(0xFF84a2d4)),
               ),
             ),
           ],

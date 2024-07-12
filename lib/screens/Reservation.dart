@@ -76,7 +76,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
               ),
             ],
           ),
-          backgroundColor: Color(0xFF00334d),
+          backgroundColor: Color(0xFF84a2d4),
         ),
       ),
       body: Column(
@@ -96,10 +96,10 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: _isReservationSelected
-                          ? Color(0xFF00334d)
+                          ? Color(0xFF84a2d4)
                           : Colors.white,
                       borderRadius: BorderRadius.circular(16.0),
-                      border: Border.all(color: Color(0xFF00334d)),
+                      border: Border.all(color: Color(0xFF84a2d4)),
                     ),
                     padding:
                         EdgeInsets.symmetric(vertical: 12.0, horizontal: 50.0),
@@ -108,7 +108,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       style: TextStyle(
                         color: _isReservationSelected
                             ? Colors.white
-                            : Color(0xFF00334d),
+                            : Color(0xFF84a2d4),
                       ),
                     ),
                   ),
@@ -123,10 +123,10 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: !_isReservationSelected
-                          ? Color(0xFF00334d)
+                          ? Color(0xFF84a2d4)
                           : Colors.white,
                       borderRadius: BorderRadius.circular(16.0),
-                      border: Border.all(color: Color(0xFF00334d)),
+                      border: Border.all(color: Color(0xFF84a2d4)),
                     ),
                     padding:
                         EdgeInsets.symmetric(vertical: 12.0, horizontal: 50.0),
@@ -135,7 +135,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       style: TextStyle(
                         color: !_isReservationSelected
                             ? Colors.white
-                            : Color(0xFF00334d),
+                            : Color(0xFF84a2d4),
                       ),
                     ),
                   ),
@@ -352,7 +352,7 @@ class _ReservationViewState extends State<ReservationView> {
                 child: ElevatedButton(
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF00334d),
+                    backgroundColor: Color(0xFF84a2d4),
                     padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.25,
                       vertical: getButtonHeight(context) * 0.5,

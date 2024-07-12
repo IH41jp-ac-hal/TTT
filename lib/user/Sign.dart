@@ -45,7 +45,7 @@ class _SignupPageState extends State<SignUpPage> {
             'TruckerTrekker',
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: Color(0xFF00334d),
+          backgroundColor: Color(0xFF84a2d4),
         ),
       ),
       body: Center(
@@ -95,7 +95,7 @@ class _SignupPageState extends State<SignUpPage> {
                       onPressed: _signup,
                       child: const Text(
                         'サインイン',
-                        style: TextStyle(color: Color(0xFF00334d)),
+                        style: TextStyle(color: Color(0xFF84a2d4)),
                       ),
                     ),
                   ],

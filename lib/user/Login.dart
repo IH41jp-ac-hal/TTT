@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ],
           ),
-          backgroundColor: Color(0xFF00334d),
+          backgroundColor: Color(0xFF84a2d4),
         ),
       ),
       body: Center(
@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: _login,
                       child: const Text(
                         'ログイン',
-                        style: TextStyle(color: Color(0xFF00334d)),
+                        style: TextStyle(color: Color(0xFF84a2d4)),
                       ),
                       style: ElevatedButton.styleFrom(
                         fixedSize: Size(144, double.infinity),
@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: _loginAsGuest,
                       child: const Text(
                         'ゲストでログイン',
-                        style: TextStyle(color: Color(0xFF00334d)),
+                        style: TextStyle(color: Color(0xFF84a2d4)),
                       ),
                     ),
                     const SizedBox(
@@ -157,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: _navigateToSignup,
                       child: const Text(
                         '新規会員登録',
-                        style: TextStyle(color: Color(0xFF00334d)),
+                        style: TextStyle(color: Color(0xFF84a2d4)),
                       ),
                     ),
                   ],
@@ -165,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-      backgroundColor: Color(0xFF00334d),
+      backgroundColor: Color(0xFF84a2d4),
     );
   }
 }

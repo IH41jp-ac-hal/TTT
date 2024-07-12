@@ -29,7 +29,7 @@ class HomePageScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
+        preferredSize: Size.fromHeight(80.0), // AppBairの高さをここで指定します
         child: AppBar(
           title: Row(
             children: [
@@ -51,7 +51,7 @@ class HomePageScreen extends StatelessWidget {
               ),
             ],
           ),
-          backgroundColor: Color(0xFF00334d),
+          backgroundColor: Color(0xFF84a2d4),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.all(16.0),

@@ -57,7 +57,7 @@ class AccountScreen extends StatelessWidget {
                 ),
               ],
             ),
-            backgroundColor: Color(0xFF00334d),
+            backgroundColor: Color(0xFF84a2d4),
             actions: <Widget>[
               Padding(
                 padding: EdgeInsets.only(
@@ -137,7 +137,7 @@ class AccountScreen extends StatelessWidget {
                   },
                   child: Text(
                     '編集',
-                    style: TextStyle(color: Color(0xFF00334d)),
+                    style: TextStyle(color: Color(0xFF84a2d4)),
                   ),
                 ),
               ],
