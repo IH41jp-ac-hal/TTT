@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:trukkertrakker/screens/HomePage.dart';
 import 'package:trukkertrakker/screens/Browse.dart';
 import 'package:trukkertrakker/screens/Information.dart';
-import 'package:trukkertrakker/screens/Library.dart';
+import 'package:trukkertrakker/screens/Reservation.dart';
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     HomePageScreen(),
     BrowseScreen(),
     InformationScreen(),
-    LibraryScreen(),
+    ReservationScreen(),
   ];
 
   int _selectedIndex = 0;
