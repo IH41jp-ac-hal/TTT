@@ -23,8 +23,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//firebaseに保存
 class Reservation {
-  String? id; // FirestoreのドキュメントIDを保存するためのフィールドを追加
+  String? id;
   final String name;
   final String phoneNumber;
   final String date;
@@ -108,6 +109,7 @@ class WarehouseLocation {
   WarehouseLocation({required this.id, required this.location});
 }
 
+//予約画面
 class ReservationScreen extends StatefulWidget {
   const ReservationScreen({Key? key}) : super(key: key);
 
@@ -249,6 +251,7 @@ class ReservationView extends StatefulWidget {
   _ReservationViewState createState() => _ReservationViewState();
 }
 
+//予約画面（入力）
 class _ReservationViewState extends State<ReservationView> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -487,6 +490,7 @@ class _ReservationViewState extends State<ReservationView> {
   }
 }
 
+//予約画面
 class ReservationDetailsScreen extends StatelessWidget {
   final Reservation reservation;
 
