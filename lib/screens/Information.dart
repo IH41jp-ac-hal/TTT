@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:trukkertrakker/screens/firebase_service.dart';
 import 'package:trukkertrakker/src/app.dart';
 
 void main() => runApp(MyApp());
+
+FirebaseService fbservice = FirebaseService();
 
 class InformationScreen extends StatefulWidget {
   const InformationScreen({Key? key}) : super(key: key);
@@ -11,37 +14,39 @@ class InformationScreen extends StatefulWidget {
 }
 
 class _InformationScreenState extends State<InformationScreen> {
-  // 各ボタンの押下回数を記録する変数
-  int normalCount = 0;
-  int tenMinutesCount = 0;
-  int thirtyMinutesCount = 0;
-  int moreThanThirtyCount = 0;
-  int trafficJamCount = 0;
+  String? lastPressedButton;
+  String? warehouseLocation;
+  String currentStatus = '平常';
+  Map<String, dynamic> statusCounts = {};
 
-  // 現在の混雑状況を取得する関数
-  String getCurrentStatus() {
-    Map<String, int> countMap = {
-      '平常': normalCount,
-      '~10分': tenMinutesCount,
-      '~30分': thirtyMinutesCount,
-      '30分以上': moreThanThirtyCount,
-      '渋滞': trafficJamCount,
-    };
-
-    // 初期状態では「平常」を返す
-    if (countMap.values.every((count) => count == 0)) {
-      return '平常';
-    }
-
-    // カウントが最も多いキー（状況）を探す
-    String highestStatus =
-        countMap.entries.reduce((a, b) => a.value > b.value ? a : b).key;
-    return highestStatus;
+  @override
+  void initState() {
+    super.initState();
+    getWarehouseLocationAndStatus();
   }
 
-  // 状況に応じた背景色を返す関数
+  Future<void> getWarehouseLocationAndStatus() async {
+    String reservationId = '8b4XbiziuzCvRbcSmrM7'; // 実際の予約IDに置き換え
+    String? location = await fbservice.getWarehouseLocation(reservationId);
+    if (location != null) {
+      setState(() {
+        warehouseLocation = location;
+      });
+
+      // warehouseLocationに基づいて混雑状況を取得し、currentStatusを更新
+      fbservice.getStatusUpdates(location).listen((snapshot) {
+        if (snapshot.exists) {
+          final data = snapshot.data() as Map<String, dynamic>;
+          setState(() {
+            currentStatus = data['currentStatus'] ?? '平常';
+            statusCounts = data['statusCounts'] ?? {};
+          });
+        }
+      });
+    }
+  }
+
   Color getBackgroundColor() {
-    String currentStatus = getCurrentStatus();
     switch (currentStatus) {
       case '平常':
         return Colors.lightGreen;
@@ -58,9 +63,15 @@ class _InformationScreenState extends State<InformationScreen> {
     }
   }
 
+  void resetLastPressedButton() {
+    setState(() {
+      lastPressedButton = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size; // 画面サイズを得るための変数定義(size)
+    final Size size = MediaQuery.of(context).size;
     return MaterialApp(
       home: Scaffold(
         appBar: PreferredSize(
@@ -81,7 +92,7 @@ class _InformationScreenState extends State<InformationScreen> {
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('assets/logo.png'), // 画像のパス指定
+                        image: AssetImage('assets/logo.png'),
                       )),
                 ),
               )
@@ -92,17 +103,17 @@ class _InformationScreenState extends State<InformationScreen> {
           child: Column(
             children: [
               Container(
-                width: size.width, // 画面の幅を設定
-                height: size.height * 0.4, // 画面の高さを設定
-                color: getBackgroundColor(), // 混雑状況に基づいた背景色を設定
+                width: size.width,
+                height: size.height * 0.4,
+                color: getBackgroundColor(),
                 child: Center(
                   child: Text(
-                    '現在の状況: ${getCurrentStatus()}',
+                    '現在の状況: $currentStatus',
                     style: TextStyle(
                         fontSize: 44,
                         height: 1.5,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white), // テキストの色を白に設定
+                        color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -116,38 +127,67 @@ class _InformationScreenState extends State<InformationScreen> {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 均等に配置
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  _buildStatusButton('平常', Colors.lightGreen, normalCount, () {
+                  _buildStatusButton('平常', Colors.lightGreen, () async {
+                    if (warehouseLocation != null) {
+                      await fbservice.incrementButtonCount(
+                          warehouseLocation!, '平常');
+                      setState(() {
+                        lastPressedButton = '平常';
+                      });
+                    } else {
+                      // warehouseLocationがnullの場合の処理（エラーメッセージを表示するなど）
+                      print('Warehouse location is not set.');
+                    }
+                  }),
+                  _buildStatusButton('~10分', Colors.lightBlue, () {
                     setState(() {
-                      normalCount++;
+                      lastPressedButton = '~10分';
                     });
                   }),
-                  _buildStatusButton('~10分', Colors.lightBlue, tenMinutesCount,
-                      () {
+                  _buildStatusButton('~30分', Colors.orangeAccent, () {
                     setState(() {
-                      tenMinutesCount++;
+                      lastPressedButton = '~30分';
                     });
                   }),
-                  _buildStatusButton(
-                      '~30分', Colors.orangeAccent, thirtyMinutesCount, () {
+                  _buildStatusButton('30分以上', Colors.redAccent, () {
                     setState(() {
-                      thirtyMinutesCount++;
+                      lastPressedButton = '30分以上';
                     });
                   }),
-                  _buildStatusButton(
-                      '30分以上', Colors.redAccent, moreThanThirtyCount, () {
+                  _buildStatusButton('渋滞', Colors.purpleAccent, () {
                     setState(() {
-                      moreThanThirtyCount++;
-                    });
-                  }),
-                  _buildStatusButton('渋滞', Colors.purpleAccent, trafficJamCount,
-                      () {
-                    setState(() {
-                      trafficJamCount++;
+                      lastPressedButton = '渋滞';
                     });
                   }),
                 ],
+              ),
+              if (lastPressedButton != null)
+                Container(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: ElevatedButton(
+                    onPressed: resetLastPressedButton,
+                    child: Text('取り消し'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey,
+                    ),
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: statusCounts.entries.map((entry) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: Text(
+                        '${entry.key}: ${entry.value}',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
             ],
           ),
@@ -156,31 +196,30 @@ class _InformationScreenState extends State<InformationScreen> {
     );
   }
 
-  Widget _buildStatusButton(
-      String label, Color color, int count, VoidCallback onPressed) {
+  Widget _buildStatusButton(String label, Color color, VoidCallback onPressed) {
+    bool isButtonActive =
+        lastPressedButton == null || lastPressedButton == label;
     return Expanded(
       child: Column(
         children: [
           Container(
-            height: 60, // ボタンの高さを設定
+            height: 60,
             child: ElevatedButton(
-              onPressed: onPressed,
+              onPressed: isButtonActive ? onPressed : null,
               child: Text(
                 label,
                 style: TextStyle(
-                    fontSize: 14, // フォントサイズを調整
-                    color: Colors.white, // テキストの色を白に設定
+                    fontSize: 14,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: color, // ボタンの背景色を設定
+                backgroundColor: isButtonActive ? color : Colors.grey,
                 shape: CircleBorder(),
               ),
             ),
           ),
-          SizedBox(height: 8), // テキストとボタンの間にスペースを追加
-          Text('$count'), // 押された回数を表示
         ],
       ),
     );

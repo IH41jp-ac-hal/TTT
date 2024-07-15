@@ -7,7 +7,7 @@ import 'package:trukkertrakker/screens/account.dart';
 class EditAccountScreen extends StatefulWidget {
   final AccountInfo accountInfo;
 
-  EditAccountScreen({required this.accountInfo});
+  const EditAccountScreen({super.key, required this.accountInfo});
 
   @override
   _EditAccountScreenState createState() => _EditAccountScreenState();
@@ -43,7 +43,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('プロフィール編集'),
+        title: const Text('プロフィール編集'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -58,34 +58,34 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                     : AssetImage(_profileImageUrl) as ImageProvider,
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
 
             // 名前入力フィールド
             TextField(
               controller: _nameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: '名前',
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
 
             // メールアドレス入力フィールド
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'メールアドレス',
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
 
             // バイオ入力フィールド
             TextField(
               controller: _bioController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: '自己紹介',
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
 
             // 保存ボタン
             ElevatedButton(
@@ -99,7 +99,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
 
                 Navigator.pop(context, widget.accountInfo);
               },
-              child: Text('保存'),
+              child: const Text('保存'),
             ),
           ],
         ),

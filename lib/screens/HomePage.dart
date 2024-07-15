@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:trukkertrakker/screens/Information.dart';
 import 'package:trukkertrakker/screens/Reservation.dart';
 import 'package:trukkertrakker/screens/account.dart';
-import 'package:trukkertrakker/src/app.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePageScreen(),
     );
   }
@@ -32,17 +33,17 @@ class HomePageScreen extends StatelessWidget {
         preferredSize: const Size.fromHeight(110.0),
         child: AppBar(
           centerTitle: false,
-          title: Text(
+          title: const Text(
             'TruckTrakker 仮メインページ',
             style: TextStyle(fontSize: 19, height: 4),
           ),
-          backgroundColor: Color.fromARGB(255, 9, 142, 163),
+          backgroundColor: const Color.fromARGB(255, 9, 142, 163),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 15.0, top: 23.0),
               child: Container(
                 width: 114,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
@@ -92,7 +93,7 @@ class _CardSliderState extends State<CardSlider> {
     super.initState();
     _pageController = PageController(initialPage: 0);
 
-    _timer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (_currentPage < widget.cards.length - 1) {
         _currentPage++;
       } else {
@@ -101,7 +102,7 @@ class _CardSliderState extends State<CardSlider> {
 
       _pageController.animateToPage(
         _currentPage,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
       );
     });
@@ -127,16 +128,16 @@ class _CardSliderState extends State<CardSlider> {
               if (widget.cards[index] == '配送状況') {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => InformationScreen()),
+                  MaterialPageRoute(builder: (context) => const InformationScreen()),
                 );
               } else if (widget.cards[index] == '予約画面') {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ReservationScreen()),
+                  MaterialPageRoute(builder: (context) => const ReservationScreen()),
                 );
               } else if (widget.cards[index] == 'アカウント情報') {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountScreen()));
+                    MaterialPageRoute(builder: (context) => const AccountScreen()));
               }
             },
             child: Container(
@@ -148,7 +149,7 @@ class _CardSliderState extends State<CardSlider> {
               child: Center(
                 child: Text(
                   widget.cards[index],
-                  style: TextStyle(fontSize: 28, color: Colors.white),
+                  style: const TextStyle(fontSize: 28, color: Colors.white),
                 ),
               ),
             ),

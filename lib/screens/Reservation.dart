@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:trukkertrakker/src/app.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ReservationScreen(),
+      home: const ReservationScreen(),
     );
   }
 }
@@ -57,17 +58,17 @@ class _ReservationScreenState extends State<ReservationScreen> {
         preferredSize: const Size.fromHeight(110.0),
         child: AppBar(
           centerTitle: false,
-          title: Text(
+          title: const Text(
             '予約',
             style: TextStyle(fontSize: 19, height: 4),
           ),
-          backgroundColor: Color.fromARGB(255, 9, 142, 163),
+          backgroundColor: const Color.fromARGB(255, 9, 142, 163),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 15.0, top: 23.0),
               child: Container(
                 width: 114,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
@@ -100,7 +101,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       border: Border.all(color: Colors.blue),
                     ),
                     padding:
-                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                        const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
                     child: Text(
                       '予約',
                       style: TextStyle(
@@ -110,7 +111,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     ),
                   ),
                 ),
-                SizedBox(width: 16.0),
+                const SizedBox(width: 16.0),
                 GestureDetector(
                   onTap: () {
                     setState(() {
@@ -125,7 +126,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       border: Border.all(color: Colors.blue),
                     ),
                     padding:
-                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                        const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
                     child: Text(
                       '予約一覧',
                       style: TextStyle(
@@ -153,7 +154,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
 class ReservationView extends StatefulWidget {
   final Function(Reservation) onSubmit;
 
-  ReservationView({required this.onSubmit});
+  const ReservationView({super.key, required this.onSubmit});
 
   @override
   _ReservationViewState createState() => _ReservationViewState();
@@ -218,18 +219,18 @@ class _ReservationViewState extends State<ReservationView> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("確認"),
-            content: Text("この内容で予約を完了しますか？"),
+            title: const Text("確認"),
+            content: const Text("この内容で予約を完了しますか？"),
             actions: <Widget>[
               TextButton(
-                child: Text("いいえ"),
+                child: const Text("いいえ"),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               //はいを押すと登録内容表示
               TextButton(
-                child: Text("はい"),
+                child: const Text("はい"),
                 onPressed: () {
                   final newReservation = Reservation(
                     name: _nameController.text,
@@ -269,7 +270,7 @@ class _ReservationViewState extends State<ReservationView> {
             children: [
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'お名前',
                 ),
                 validator: (value) {
@@ -279,7 +280,7 @@ class _ReservationViewState extends State<ReservationView> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextFormField(
                 keyboardType: TextInputType.phone, // 数字キーボードを指定
                 inputFormatters: [
@@ -287,7 +288,7 @@ class _ReservationViewState extends State<ReservationView> {
                   LengthLimitingTextInputFormatter(11) //11文字
                 ],
                 controller: _phoneNumberController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '電話番号',
                 ),
                 validator: (value) {
@@ -297,10 +298,10 @@ class _ReservationViewState extends State<ReservationView> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextFormField(
                 controller: _dateController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '日付',
                 ),
                 readOnly: true,
@@ -314,10 +315,10 @@ class _ReservationViewState extends State<ReservationView> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextFormField(
                 controller: _timeController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '時刻',
                 ),
                 readOnly: true,
@@ -331,10 +332,10 @@ class _ReservationViewState extends State<ReservationView> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               DropdownButtonFormField<String>(
                 value: _selectedWarehouseLocation,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '倉庫場所',
                 ),
                 items: _warehouseLocations
@@ -356,16 +357,10 @@ class _ReservationViewState extends State<ReservationView> {
                   return null;
                 },
               ),
-              SizedBox(height: 32.0),
+              const SizedBox(height: 32.0),
               Center(
                 child: ElevatedButton(
                   onPressed: _submitForm,
-                  child: Text(
-                    '送信',
-                    style: TextStyle(
-                      color: Colors.white, // テキストの色を白に設定
-                    ),
-                  ),
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all(Colors.black), // ボタンの背景色を設定
@@ -373,6 +368,12 @@ class _ReservationViewState extends State<ReservationView> {
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16.0), // 角丸の半径を指定
                       ),
+                    ),
+                  ),
+                  child: const Text(
+                    '送信',
+                    style: TextStyle(
+                      color: Colors.white, // テキストの色を白に設定
                     ),
                   ),
                 ),
@@ -388,13 +389,13 @@ class _ReservationViewState extends State<ReservationView> {
 class ReservationDetailsScreen extends StatelessWidget {
   final Reservation reservation;
 
-  ReservationDetailsScreen({required this.reservation});
+  const ReservationDetailsScreen({super.key, required this.reservation});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('予約詳細'),
+        title: const Text('予約詳細'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -403,27 +404,27 @@ class ReservationDetailsScreen extends StatelessWidget {
           children: [
             Text(
               'お名前: ${reservation.name}',
-              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+              style: const TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
               '電話番号: ${reservation.phoneNumber}',
-              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+              style: const TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
               '日付: ${reservation.date}',
-              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+              style: const TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
               '時刻: ${reservation.time}',
-              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+              style: const TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
               '倉庫場所: ${reservation.warehouseLocation}',
-              style: TextStyle(fontSize: 20.0), // 文字の大きさを20に設定
+              style: const TextStyle(fontSize: 20.0), // 文字の大きさを20に設定
             ),
           ],
         ),
@@ -435,7 +436,7 @@ class ReservationDetailsScreen extends StatelessWidget {
 class EditReservationScreen extends StatefulWidget {
   final Reservation reservation;
 
-  EditReservationScreen({required this.reservation});
+  const EditReservationScreen({super.key, required this.reservation});
 
   @override
   _EditReservationScreenState createState() => _EditReservationScreenState();
@@ -444,7 +445,7 @@ class EditReservationScreen extends StatefulWidget {
 class EditReservationScreens extends StatefulWidget {
   final Reservation reservation;
 
-  EditReservationScreens({required this.reservation});
+  const EditReservationScreens({super.key, required this.reservation});
 
   @override
   _EditReservationScreenState createState() => _EditReservationScreenState();
@@ -528,7 +529,7 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('予約を編集'),
+        title: const Text('予約を編集'),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -540,7 +541,7 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
               children: [
                 TextFormField(
                   controller: _nameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'お名前',
                   ),
                   validator: (value) {
@@ -550,7 +551,7 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 TextFormField(
                   keyboardType: TextInputType.phone,
                   inputFormatters: [
@@ -558,7 +559,7 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
                     LengthLimitingTextInputFormatter(11)
                   ],
                   controller: _phoneNumberController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: '電話番号',
                   ),
                   validator: (value) {
@@ -568,10 +569,10 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 TextFormField(
                   controller: _dateController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: '日付',
                   ),
                   readOnly: true,
@@ -585,10 +586,10 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 TextFormField(
                   controller: _timeController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: '時刻',
                   ),
                   readOnly: true,
@@ -602,10 +603,10 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 DropdownButtonFormField<String>(
                   value: _selectedWarehouseLocation,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: '倉庫場所',
                   ),
                   items: _warehouseLocations
@@ -627,22 +628,22 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 32.0),
+                const SizedBox(height: 32.0),
                 Center(
                   child: ElevatedButton(
                     onPressed: _submitForm,
-                    child: Text(
-                      '更新',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.black),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0),
                         ),
+                      ),
+                    ),
+                    child: const Text(
+                      '更新',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -660,24 +661,24 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
 class ListViewWidget extends StatelessWidget {
   final List<Reservation> reservations;
 
-  ListViewWidget({required this.reservations});
+  const ListViewWidget({super.key, required this.reservations});
 
   void _deleteReservation(BuildContext context, int index) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("削除"),
-          content: Text("この予約を削除しますか？"),
+          title: const Text("削除"),
+          content: const Text("この予約を削除しますか？"),
           actions: <Widget>[
             TextButton(
-              child: Text("キャンセル"),
+              child: const Text("キャンセル"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text("削除"),
+              child: const Text("削除"),
               onPressed: () {
                 _removeReservation(context, index);
                 Navigator.of(context).pop(); // Close the dialog
@@ -691,11 +692,11 @@ class ListViewWidget extends StatelessWidget {
 
   void _removeReservation(BuildContext context, int index) {
     // Ensure the context used to find _ReservationScreenState is correct
-    final _reservationScreenState =
+    final reservationScreenState =
         context.findAncestorStateOfType<_ReservationScreenState>();
 
-    if (_reservationScreenState != null) {
-      _reservationScreenState.setState(() {
+    if (reservationScreenState != null) {
+      reservationScreenState.setState(() {
         reservations.removeAt(index); // Remove the reservation from the list
       });
     }
@@ -712,11 +713,11 @@ class ListViewWidget extends StatelessWidget {
     );
 
     if (editedReservation != null) {
-      final _reservationScreenState =
+      final reservationScreenState =
           context.findAncestorStateOfType<_ReservationScreenState>();
 
-      if (_reservationScreenState != null) {
-        _reservationScreenState.setState(() {
+      if (reservationScreenState != null) {
+        reservationScreenState.setState(() {
           reservations[index] =
               editedReservation; // Update the edited reservation
         });
@@ -733,7 +734,7 @@ class ListViewWidget extends StatelessWidget {
         final reservation = reservations[index];
 
         return ListTile(
-          tileColor: Color.fromARGB(255, 173, 250, 237),
+          tileColor: const Color.fromARGB(255, 173, 250, 237),
           title: Text(reservation.name),
           subtitle: Text('${reservation.date} ${reservation.time}'),
           trailing: Row(
@@ -741,11 +742,11 @@ class ListViewWidget extends StatelessWidget {
             children: [
               Text(reservation.warehouseLocation),
               IconButton(
-                icon: Icon(Icons.edit),
+                icon: const Icon(Icons.edit),
                 onPressed: () => _editReservation(context, index),
               ),
               IconButton(
-                icon: Icon(Icons.delete),
+                icon: const Icon(Icons.delete),
                 onPressed: () =>
                     _deleteReservation(context, index), // Call delete method
               ),
@@ -763,7 +764,7 @@ class ListViewWidget extends StatelessWidget {
           },
         );
       },
-      separatorBuilder: (context, index) => Divider(),
+      separatorBuilder: (context, index) => const Divider(),
     );
   }
 }

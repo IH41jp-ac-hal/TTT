@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "741180300675",
+    "firebase_url": "https://ih14---ih4c-default-rtdb.firebaseio.com",
+    "project_id": "ih14---ih4c",
+    "storage_bucket": "ih14---ih4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741180300675:android:5267030ed0af3c84022ab6",
+        "android_client_info": {
+          "package_name": "com.example.trukkertrakker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741180300675-tp3vfrm5pmu9n93tvms20m5p9j9gk194.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjPEcMoxyUSmXxHGhPbHFnYUgQzcG7s2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741180300675-tp3vfrm5pmu9n93tvms20m5p9j9gk194.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "741180300675-a0r4vpit6c1hd357he1vehpmhs1u6ttn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.trukkertrakker"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

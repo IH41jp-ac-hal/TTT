@@ -3,6 +3,8 @@ import 'package:trukkertrakker/src/app.dart';
 import 'Sign.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -32,12 +34,12 @@ class _LoginPageState extends State<LoginPage> {
       if (email == "user@example.com" && password == "password123") {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MyStatefulWidget()),
+          MaterialPageRoute(builder: (context) => const MyStatefulWidget()),
         );
       } else {
         // error message
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('無効なメールアドレスまたはパスワード')),
+          const SnackBar(content: Text('無効なメールアドレスまたはパスワード')),
         );
       }
     }
@@ -46,14 +48,14 @@ class _LoginPageState extends State<LoginPage> {
   void _loginAsGuest() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => MyStatefulWidget()),
+      MaterialPageRoute(builder: (context) => const MyStatefulWidget()),
     );
   }
 
   void _navigateToSignup() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SignUpPage()),
+      MaterialPageRoute(builder: (context) => const SignUpPage()),
     );
   }
 
@@ -61,9 +63,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'TruckerTrekker',
-          style: TextStyle(color: const Color.fromARGB(255, 255, 0, 0)),
+          style: TextStyle(color: Color.fromARGB(255, 255, 0, 0)),
         ),
         backgroundColor: Colors.black,
       ),
@@ -71,8 +73,8 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('ログイン', style: TextStyle(fontSize: 35)),
-            Text(
+            const Text('ログイン', style: TextStyle(fontSize: 35)),
+            const Text(
               'メールアドレスとパスワードを入力してください',
               style: TextStyle(fontSize: 15),
             ),
@@ -116,10 +118,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ElevatedButton(
                       onPressed: _login,
-                      child: const Text('ログイン'),
                       style: ElevatedButton.styleFrom(
-                        fixedSize: Size(144, double.infinity),
+                        fixedSize: const Size(144, double.infinity),
                       ),
+                      child: const Text('ログイン'),
                     ),
                     const SizedBox(
                       height: 16,
@@ -153,6 +155,7 @@ class ValidateText {
         return 'Please enter at least 6 alphanumeric characters';
       }
     }
+    return null;
   }
 
   static String? email(String? value) {
@@ -163,5 +166,6 @@ class ValidateText {
         return 'Please enter valid email address';
       }
     }
+    return null;
   }
 }
