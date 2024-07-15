@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:trukkertrakker/src/app.dart';
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
   @override
   _SignupPageState createState() => _SignupPageState();
 }
@@ -30,7 +32,7 @@ class _SignupPageState extends State<SignUpPage> {
       // Replace this with actual signup logic
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MyStatefulWidget()),
+        MaterialPageRoute(builder: (context) => const MyStatefulWidget()),
       );
     }
   }
@@ -39,9 +41,9 @@ class _SignupPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'TruckerTrekker',
-          style: TextStyle(color: const Color.fromARGB(255, 255, 0, 0)),
+          style: TextStyle(color: Color.fromARGB(255, 255, 0, 0)),
         ),
         backgroundColor: Colors.black,
       ),
@@ -49,7 +51,7 @@ class _SignupPageState extends State<SignUpPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('新規会員登録', style: TextStyle(fontSize: 35)),
+            const Text('新規会員登録', style: TextStyle(fontSize: 35)),
             Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -110,6 +112,7 @@ class ValidateText {
         return 'Please enter at least 6 alphanumeric characters';
       }
     }
+    return null;
   }
 
   static String? email(String? value) {
@@ -120,5 +123,6 @@ class ValidateText {
         return 'Please enter valid email address';
       }
     }
+    return null;
   }
 }

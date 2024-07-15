@@ -17,7 +17,7 @@ class AccountInfo {
   });
 }
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -38,17 +38,17 @@ class AccountScreen extends StatelessWidget {
           preferredSize: const Size.fromHeight(110.0),
           child: AppBar(
             centerTitle: false,
-            title: Text(
+            title: const Text(
               'アカウント',
               style: TextStyle(fontSize: 19, height: 4),
             ),
-            backgroundColor: Color.fromARGB(255, 9, 142, 163),
+            backgroundColor: const Color.fromARGB(255, 9, 142, 163),
             actions: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 15.0, top: 23.0),
                 child: Container(
                   width: 114,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       fit: BoxFit.cover,
@@ -72,32 +72,32 @@ class AccountScreen extends StatelessWidget {
                     backgroundImage: AssetImage(accountInfo.profileImageUrl),
                   ),
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
 
                 // 名前
                 Text(
                   accountInfo.name,
-                  style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 5.0),
+                const SizedBox(height: 5.0),
 
                 // メールアドレス
                 Text(
                   accountInfo.email,
-                  style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                  style: const TextStyle(fontSize: 16.0, color: Colors.grey),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
 
                 // バイオ
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
                     accountInfo.bio,
-                    style: TextStyle(fontSize: 16.0),
+                    style: const TextStyle(fontSize: 16.0),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
 
                 // 編集ボタン
                 ElevatedButton(
@@ -119,7 +119,7 @@ class AccountScreen extends StatelessWidget {
                       accountInfo.bio = updatedAccountInfo.bio;
                     }
                   },
-                  child: Text('編集'),
+                  child: const Text('編集'),
                 ),
               ],
             ),

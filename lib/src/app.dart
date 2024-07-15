@@ -3,7 +3,6 @@ import 'package:trukkertrakker/screens/HomePage.dart';
 import 'package:trukkertrakker/screens/Reservation.dart';
 import 'package:trukkertrakker/screens/Information.dart';
 import 'package:trukkertrakker/user/Login.dart';
-import 'package:trukkertrakker/user/Sign.dart';
 import 'package:trukkertrakker/screens/account.dart';
 
 class MyApp extends StatelessWidget {
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'TruckerTrekker',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }
@@ -59,7 +58,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               icon: Icon(Icons.account_circle), label: 'アカウント'),
         ],
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromARGB(255, 67, 185, 198),
+        backgroundColor: const Color.fromARGB(255, 67, 185, 198),
       ),
     );
   }
