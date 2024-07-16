@@ -67,7 +67,7 @@ class _SignupPageState extends State<SignUpPage> {
                       },
                     ),
                     const SizedBox(
-                      height: 1,
+                      height: 16,
                     ),
                     TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
