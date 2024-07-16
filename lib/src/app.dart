@@ -46,20 +46,34 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'ホーム'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month), label: '予約'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.local_shipping), label: '配送状況'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: 'アカウント'),
-        ],
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromARGB(255, 67, 185, 198),
+      bottomNavigationBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
+        child: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        selectedItemColor: Color(0xFFf2e5bc),
+        unselectedItemColor: Color(0xFFffffff),
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.newspaper, size: 40),
+              label: 'ホーム',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_month, size: 40),
+              label: '予約',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.local_shipping, size: 40),
+              label: '配送状況',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle, size: 40),
+              label: 'アカウント',
+            ),
+          ],
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Color(0xFF84a2d4),
+        ),
       ),
     );
   }
