@@ -22,38 +22,44 @@ class HomePageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> valuesData = [
-      '予約画面',
-      '配送状況',
-      'アカウント情報',
+      '配送先#1',
+      '配送先#2',
+      '配送先#3',
     ];
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(110.0),
+        preferredSize: Size.fromHeight(80.0), // AppBairの高さをここで指定します
         child: AppBar(
-          centerTitle: false,
-          title: Text(
-            'TruckTrakker 仮メインページ',
-            style: TextStyle(fontSize: 19, height: 4),
-          ),
-          backgroundColor: Color.fromARGB(255, 9, 142, 163),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 15.0, top: 23.0),
-              child: Container(
-                width: 114,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
+          title: Row(
+            children: [
+              Container(
+                width: 90,
+                height: 90,
+                decoration: const BoxDecoration(
                   image: DecorationImage(
-                    fit: BoxFit.cover,
                     image: AssetImage('assets/logo.png'),
                   ),
                 ),
               ),
+              Text(
+                'トラトレ',
+                style: TextStyle(
+                  fontSize: getAppBarFontSize(context),
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Color(0xFF84a2d4),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16.0),
             ),
           ],
         ),
       ),
+      backgroundColor: Color(0xFFe6e6e6),
       body: CardSlider(
         cards: valuesData,
         bottomOffset: .0005,
@@ -61,6 +67,28 @@ class HomePageScreen extends StatelessWidget {
         itemDotOffset: 0.25,
       ),
     );
+  }
+
+  double getAppBarHeight(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    if (screenHeight < 600) {
+      return 80.0; // Small screen height
+    } else if (screenHeight < 900) {
+      return 100.0; // Medium screen height
+    } else {
+      return 110.0; // Large screen height
+    }
+  }
+
+  double getAppBarFontSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 400) {
+      return 20.0; // Small screen width
+    } else if (screenWidth < 800) {
+      return 24.0; // Medium screen width
+    } else {
+      return 28.0; // Large screen width
+    }
   }
 }
 
@@ -92,7 +120,7 @@ class _CardSliderState extends State<CardSlider> {
     super.initState();
     _pageController = PageController(initialPage: 0);
 
-    _timer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
+    _timer = Timer.periodic(Duration(seconds: 4), (Timer timer) {
       if (_currentPage < widget.cards.length - 1) {
         _currentPage++;
       } else {
@@ -101,8 +129,8 @@ class _CardSliderState extends State<CardSlider> {
 
       _pageController.animateToPage(
         _currentPage,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeIn,
+        duration: Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
       );
     });
   }
@@ -121,35 +149,18 @@ class _CardSliderState extends State<CardSlider> {
       itemCount: widget.cards.length,
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () {
-              if (widget.cards[index] == '配送状況') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InformationScreen()),
-                );
-              } else if (widget.cards[index] == '予約画面') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ReservationScreen()),
-                );
-              } else if (widget.cards[index] == 'アカウント情報') {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountScreen()));
-              }
-            },
-            child: Container(
-              width: 300,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
-                color: Colors.blueAccent,
-              ),
-              child: Center(
-                child: Text(
-                  widget.cards[index],
-                  style: TextStyle(fontSize: 28, color: Colors.white),
-                ),
+          padding: const EdgeInsets.all(36.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.2,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              color: Color(0xFFffffff),
+            ),
+            child: Center(
+              child: Text(
+                widget.cards[index],
+                style: TextStyle(fontSize: 28, color: Color(0xFF333333)),
               ),
             ),
           ),
