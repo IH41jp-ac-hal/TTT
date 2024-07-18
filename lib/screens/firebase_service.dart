@@ -3,33 +3,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirebaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<String?> getWarehouseLocation(String reservationId) async {
-    DocumentSnapshot snapshot =
-        await _db.collection('reservations').doc(reservationId).get();
-    if (snapshot.exists) {
-      return snapshot['warehouseLocation'];
-    }
-    return null;
-  }
-
   Future<void> incrementButtonCount(String warehouseId, String status) async {
-    DocumentReference countRef =
-        _db.collection('warehouse_status').doc(warehouseId);
+    // Firestoreの参照を取得
+    DocumentReference countRef = _db.collection('warehouse').doc('warehouse01');
 
+    print(await countRef.get()); // await を追加して非同期で結果を取得
+
+    // Firestoreのトランザクションを実行
     await _db.runTransaction((transaction) async {
       DocumentSnapshot snapshot = await transaction.get(countRef);
       if (!snapshot.exists) {
-        transaction.set(countRef, {
-          'currentStatus': status,
-          'statusCounts': {status: 1}
-        });
+        // 初めての更新なら1からスタート
+        transaction
+            .set(countRef, {'$status': 1}); // status をフィールド名として使うために {} を修正
       } else {
-        Map<String, dynamic> statusCounts =
-            Map<String, dynamic>.from(snapshot['statusCounts']);
-        int currentValue = statusCounts[status] ?? 0;
-        statusCounts[status] = currentValue + 1;
-        transaction.update(
-            countRef, {'currentStatus': status, 'statusCounts': statusCounts});
+        int currentValue = snapshot.get(status) ?? 0; // status に対応するフィールドの値を取得
+        print(currentValue);
+        transaction.update(countRef, {status: currentValue + 1});
       }
     }).then((value) {
       print('Count updated successfully.');
@@ -39,15 +29,7 @@ class FirebaseService {
   }
 
   Stream<DocumentSnapshot> getStatusUpdates(String warehouseId) {
-    return _db.collection('warehouse_status').doc(warehouseId).snapshots();
-  }
-
-  Future<Map<String, dynamic>> getStatusCounts(String warehouseId) async {
-    DocumentSnapshot snapshot =
-        await _db.collection('warehouse_status').doc(warehouseId).get();
-    if (snapshot.exists) {
-      return snapshot['statusCounts'];
-    }
-    return {};
+    // Firestoreの指定したドキュメントのストリームを取得
+    return _db.collection('Warehouse').doc(warehouseId).snapshots();
   }
 }
