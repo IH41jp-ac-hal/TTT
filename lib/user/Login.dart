@@ -60,30 +60,30 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
-        child: AppBar(
-          title: Row(
-            children: [
-              Container(
-                width: 90,
-                height: 90,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/logo.png'), //画像
-                  ),
-                ),
-              ),
-            ],
-          ),
-          backgroundColor: Color(0xFF84a2d4),
-        ),
-      ),
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(1.0), // AppBarの高さをここで指定します
+      //   child: AppBar(
+      //     title: Row(
+      //       children: [
+      //         Container(
+      //           width: 90,
+      //           height: 90,
+      //           decoration: const BoxDecoration(
+      //             // image: DecorationImage(
+      //             //   image: AssetImage('assets/logo.png'), //画像
+      //             // ),
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //     backgroundColor: Color(0xFF84a2d4),
+      //   ),
+      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('TruckerTrekker', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Color(0xFFFFFFFF))),
+            Text('TruckerTrekker', style: TextStyle(fontSize: 115, fontWeight: FontWeight.bold, color: Color(0xFFFFFFFF), height: 0.9)),
             Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
