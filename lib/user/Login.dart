@@ -74,10 +74,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              Text(
-                'TruckerTrekker',
-                style: TextStyle(color: Colors.white),
-              ),
             ],
           ),
           backgroundColor: Color(0xFF84a2d4),
@@ -87,11 +83,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('❖LOGIN❖', style: TextStyle(fontSize: 35)),
-            Text(
-              'メールアドレスとパスワードを入力してください',
-              style: TextStyle(fontSize: 15),
-            ),
+            Text('TruckerTrekker', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Color(0xFFFFFFFF))),
             Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -100,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: ValidateText.email,
                       decoration: const InputDecoration(
-                          filled: true, hintText: 'Hirano._.@domain.com'),
+                          filled: true, hintText: 'メールアドレスを入力してください'),
                       onChanged: (text) {
                         setEmail(text);
                       },
@@ -121,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                           filled: true,
-                          hintText: 'パスワード'),
+                          hintText: 'パスワードを入力してください'),
                       onChanged: (text) {
                         setPassword(text);
                       },
