@@ -62,6 +62,7 @@ class _InformationScreenState extends State<InformationScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size; // 画面サイズを得るための変数定義(size)
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
