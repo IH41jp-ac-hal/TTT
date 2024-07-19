@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:trukkertrakker/src/app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//firebaseに保存
 class Reservation {
   String? id;
   final String name;
@@ -31,6 +31,7 @@ class Reservation {
   final String date;
   final String time;
   final String warehouseLocation;
+  final String userId;
 
   Reservation({
     this.id,
@@ -39,6 +40,7 @@ class Reservation {
     required this.date,
     required this.time,
     required this.warehouseLocation,
+    required this.userId,
   });
 
   factory Reservation.fromFirestore(DocumentSnapshot doc) {
@@ -50,10 +52,10 @@ class Reservation {
       date: data['date'] ?? '',
       time: data['time'] ?? '',
       warehouseLocation: data['warehouseLocation'] ?? '',
+      userId: data['userId'] ?? '',
     );
   }
 
-  // FirestoreにデータをMap形式で保存するためのメソッド
   Map<String, dynamic> toFirestore() {
     return {
       'name': name,
@@ -61,21 +63,27 @@ class Reservation {
       'date': date,
       'time': time,
       'warehouseLocation': warehouseLocation,
+      'userId': userId,
     };
   }
 
-  // Firestoreに予約を保存するメソッド
   Future<void> saveToFirestore() async {
     try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        throw Exception('User is not logged in');
+      }
       if (id == null) {
-        // 新規予約の場合
         DocumentReference docRef = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser.uid)
             .collection('reservations')
             .add(toFirestore());
         id = docRef.id;
       } else {
-        // 既存予約の更新の場合
         await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser.uid)
             .collection('reservations')
             .doc(id)
             .set(toFirestore());
@@ -86,11 +94,16 @@ class Reservation {
     }
   }
 
-  // Firestoreから予約を削除するメソッド
   Future<void> deleteFromFirestore() async {
     try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        throw Exception('User is not logged in');
+      }
       if (id != null) {
         await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser.uid)
             .collection('reservations')
             .doc(id)
             .delete();
@@ -109,7 +122,6 @@ class WarehouseLocation {
   WarehouseLocation({required this.id, required this.location});
 }
 
-//予約画面
 class ReservationScreen extends StatefulWidget {
   const ReservationScreen({Key? key}) : super(key: key);
 
@@ -230,28 +242,12 @@ class _ReservationScreenState extends State<ReservationScreen> {
 class ReservationView extends StatefulWidget {
   final Function(Reservation) onSubmit;
 
-  Future<void> _saveReservationToFirestore(Reservation reservation) async {
-    try {
-      await FirebaseFirestore.instance.collection('reservations').add({
-        'name': reservation.name,
-        'phoneNumber': reservation.phoneNumber,
-        'date': reservation.date,
-        'time': reservation.time,
-        'warehouseLocation': reservation.warehouseLocation,
-      });
-      print('Reservation saved to Firestore');
-    } catch (e) {
-      print('Error saving reservation to Firestore: $e');
-    }
-  }
-
   ReservationView({required this.onSubmit});
 
   @override
   _ReservationViewState createState() => _ReservationViewState();
 }
 
-//予約画面（入力）
 class _ReservationViewState extends State<ReservationView> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -304,7 +300,6 @@ class _ReservationViewState extends State<ReservationView> {
     }
   }
 
-  //リマインダー仮
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       showDialog(
@@ -323,12 +318,21 @@ class _ReservationViewState extends State<ReservationView> {
               TextButton(
                 child: Text("はい"),
                 onPressed: () async {
+                  User? currentUser = FirebaseAuth.instance.currentUser;
+                  if (currentUser == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('ログインしてください')),
+                    );
+                    Navigator.of(context).pop();
+                    return;
+                  }
                   final newReservation = Reservation(
                     name: _nameController.text,
                     phoneNumber: _phoneNumberController.text,
                     date: _dateController.text,
                     time: _timeController.text,
                     warehouseLocation: _selectedWarehouseLocation!.location,
+                    userId: currentUser.uid,
                   );
 
                   try {
@@ -385,10 +389,10 @@ class _ReservationViewState extends State<ReservationView> {
               SizedBox(height: 16.0),
               TextFormField(
                 key: ValueKey('phonenumber'),
-                keyboardType: TextInputType.phone, // 数字キーボードを指定
+                keyboardType: TextInputType.phone,
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[0-9]')), //数字のみ入力
-                  LengthLimitingTextInputFormatter(11) //11文字
+                  FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                  LengthLimitingTextInputFormatter(11)
                 ],
                 controller: _phoneNumberController,
                 decoration: InputDecoration(
@@ -468,15 +472,15 @@ class _ReservationViewState extends State<ReservationView> {
                   child: Text(
                     '送信',
                     style: TextStyle(
-                      color: Colors.white, // テキストの色を白に設定
+                      color: Colors.white,
                     ),
                   ),
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all(Colors.black), // ボタンの背景色を設定
+                        MaterialStateProperty.all(Colors.black),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0), // 角丸の半径を指定
+                        borderRadius: BorderRadius.circular(16.0),
                       ),
                     ),
                   ),
@@ -490,7 +494,6 @@ class _ReservationViewState extends State<ReservationView> {
   }
 }
 
-//予約画面
 class ReservationDetailsScreen extends StatelessWidget {
   final Reservation reservation;
 
@@ -509,27 +512,27 @@ class ReservationDetailsScreen extends StatelessWidget {
           children: [
             Text(
               'お名前: ${reservation.name}',
-              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+              style: TextStyle(fontSize: 22.0),
             ),
             SizedBox(height: 8.0),
             Text(
               '電話番号: ${reservation.phoneNumber}',
-              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+              style: TextStyle(fontSize: 22.0),
             ),
             SizedBox(height: 8.0),
             Text(
               '日付: ${reservation.date}',
-              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+              style: TextStyle(fontSize: 22.0),
             ),
             SizedBox(height: 8.0),
             Text(
               '時刻: ${reservation.time}',
-              style: TextStyle(fontSize: 22.0), // 文字の大きさを22に設定
+              style: TextStyle(fontSize: 22.0),
             ),
             SizedBox(height: 8.0),
             Text(
               '倉庫場所: ${reservation.warehouseLocation}',
-              style: TextStyle(fontSize: 20.0), // 文字の大きさを20に設定
+              style: TextStyle(fontSize: 20.0),
             ),
           ],
         ),
@@ -538,7 +541,6 @@ class ReservationDetailsScreen extends StatelessWidget {
   }
 }
 
-//更新画面
 class EditReservationScreen extends StatefulWidget {
   final Reservation reservation;
 
@@ -567,8 +569,7 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.reservation.name);
-    _phoneNumberController =
-        TextEditingController(text: widget.reservation.phoneNumber);
+    _phoneNumberController = TextEditingController(text: widget.reservation.phoneNumber);
     _dateController = TextEditingController(text: widget.reservation.date);
     _timeController = TextEditingController(text: widget.reservation.time);
     _selectedWarehouseLocation = _warehouseLocations.firstWhere(
@@ -615,11 +616,13 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       final editedReservation = Reservation(
+        id: widget.reservation.id,
         name: _nameController.text,
         phoneNumber: _phoneNumberController.text,
         date: _dateController.text,
         time: _timeController.text,
         warehouseLocation: _selectedWarehouseLocation?.location ?? '',
+        userId: widget.reservation.userId,
       );
       Navigator.of(context).pop(editedReservation);
     }
@@ -758,7 +761,6 @@ class _EditReservationScreenState extends State<EditReservationScreen> {
   }
 }
 
-//削除ボタン
 class ListViewWidget extends StatefulWidget {
   final List<Reservation> reservations;
 
@@ -770,14 +772,27 @@ class ListViewWidget extends StatefulWidget {
 
 class _ListViewWidgetState extends State<ListViewWidget> {
   late Stream<QuerySnapshot> _reservationsStream;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
     super.initState();
-    _reservationsStream = FirebaseFirestore.instance
-        .collection('reservations')
-        .orderBy('date')
-        .snapshots();
+    _initializeReservationsStream();
+  }
+
+  void _initializeReservationsStream() {
+    User? currentUser = _auth.currentUser;
+    if (currentUser != null) {
+      _reservationsStream = FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('reservations')
+          .orderBy('date')
+          .snapshots();
+    } else {
+      // ユーザーがログインしていない場合の処理
+      _reservationsStream = Stream.empty();
+    }
   }
 
   void _deleteReservation(String id) {
@@ -798,7 +813,13 @@ class _ListViewWidgetState extends State<ListViewWidget> {
               child: Text("削除"),
               onPressed: () async {
                 try {
+                  User? currentUser = _auth.currentUser;
+                  if (currentUser == null) {
+                    throw Exception('User is not logged in');
+                  }
                   await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(currentUser.uid)
                       .collection('reservations')
                       .doc(id)
                       .delete();
@@ -829,7 +850,13 @@ class _ListViewWidgetState extends State<ListViewWidget> {
 
     if (editedReservation != null) {
       try {
+        User? currentUser = _auth.currentUser;
+        if (currentUser == null) {
+          throw Exception('User is not logged in');
+        }
         await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser.uid)
             .collection('reservations')
             .doc(reservation.id)
             .update(editedReservation.toFirestore());
@@ -853,6 +880,10 @@ class _ListViewWidgetState extends State<ListViewWidget> {
 
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
+        }
+
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Center(child: Text('予約はありません'));
         }
 
         return ListView(

@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:trukkertrakker/src/app.dart';
 
+// firebase用のimport
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:developer' as developer;
+
+FirebaseDatabase database = FirebaseDatabase.instance;
+
 class SignUpPage extends StatefulWidget {
   @override
   _SignupPageState createState() => _SignupPageState();
@@ -11,6 +19,13 @@ class _SignupPageState extends State<SignUpPage> {
   String? password;
   bool isVisible = false;
 
+  // Registration Field Email Address
+  String registerUserEmail = "";
+  // Registration Field Password
+  String registerUserPassword = "";
+  // View information about registration and login
+  String DebugText = "";
+
   void toggleShowPassword() {
     setState(() {
       isVisible = !isVisible;
@@ -18,25 +33,51 @@ class _SignupPageState extends State<SignUpPage> {
   }
 
   void setEmail(String email) {
-    this.email = email;
+    registerUserEmail = email;
   }
 
   void setPassword(String password) {
-    this.password = password;
+    registerUserPassword = password;
   }
 
-  void _signup() {
-    if (email != null && password != null) {
-      // Replace this with actual signup logic
+  void _signup() async {
+    // if (email != null && password != null) {
+    //   // Replace this with actual signup logic
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => MyStatefulWidget()),
+    //   );
+    // }
+    try {
+      // User Registration
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      final UserCredential result = await auth.createUserWithEmailAndPassword(
+        email: registerUserEmail,
+        password: registerUserPassword,
+      );
+      // Registered User Information
+      final User user = result.user!;
+      setState(() {
+        DebugText = "Register OK：${user.email}";
+      });
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MyStatefulWidget()),
       );
+    } catch (e) {
+      // Failed User Information
+      setState(() {
+        DebugText = "Register Fail：${e.toString()}";
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    //Initialize FireBase
+    Firebase.initializeApp();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
