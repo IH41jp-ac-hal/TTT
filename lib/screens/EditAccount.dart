@@ -42,11 +42,20 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('プロフィール編集'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
+        child: AppBar(
+          title: Text('プロフィール編集', style: TextStyle(color: Colors.white)),
+          backgroundColor: Color(0xFF84a2d4),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(
+          top: 80,
+          right: 20,
+          bottom: 20,
+          left: 20,
+        ),
         child: Column(
           children: <Widget>[
             GestureDetector(
@@ -56,6 +65,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                 backgroundImage: _imageFile != null
                     ? FileImage(_imageFile!)
                     : AssetImage(_profileImageUrl) as ImageProvider,
+                backgroundColor: Color(0xFFffffff),
               ),
             ),
             SizedBox(height: 20.0),
@@ -99,11 +109,15 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
 
                 Navigator.pop(context, widget.accountInfo);
               },
-              child: Text('保存'),
+              child: Text(
+                '保存',
+                style: TextStyle(color: Color(0xFF84a2d4)),
+              ),
             ),
           ],
         ),
       ),
+      backgroundColor: Color(0xFFe6e6e6),
     );
   }
 }

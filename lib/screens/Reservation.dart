@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'TruckerTrekker',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -143,35 +144,36 @@ class _ReservationScreenState extends State<ReservationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(110.0),
+        preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
         child: AppBar(
-          centerTitle: false,
-          title: Text(
-            '予約',
-            style: TextStyle(fontSize: 19, height: 4),
-          ),
-          backgroundColor: Color.fromARGB(255, 9, 142, 163),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 15.0, top: 23.0),
-              child: Container(
-                width: 114,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
+          title: Row(
+            children: [
+              Container(
+                width: 90,
+                height: 90,
+                decoration: const BoxDecoration(
                   image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/logo.png'),
+                    image: AssetImage('assets/logo.png'), //画像
                   ),
                 ),
               ),
-            ),
-          ],
+              Text(
+                '予約',
+                style: TextStyle(
+                  fontSize: getAppBarFontSize(context), // フォントサイズ
+                  color: Colors.white, // テキストカラー
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Color(0xFF84a2d4),
         ),
       ),
       body: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.only(
+                right: 15.0, top: MediaQuery.of(context).size.height * 0.1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -183,18 +185,20 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color:
-                          _isReservationSelected ? Colors.blue : Colors.white,
+                      color: _isReservationSelected
+                          ? Color(0xFF84a2d4)
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(16.0),
-                      border: Border.all(color: Colors.blue),
+                      border: Border.all(color: Color(0xFF84a2d4)),
                     ),
                     padding:
-                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 50.0),
                     child: Text(
-                      '予約',
+                      '予約受付',
                       style: TextStyle(
-                        color:
-                            _isReservationSelected ? Colors.white : Colors.blue,
+                        color: _isReservationSelected
+                            ? Colors.white
+                            : Color(0xFF84a2d4),
                       ),
                     ),
                   ),
@@ -208,19 +212,20 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color:
-                          !_isReservationSelected ? Colors.blue : Colors.white,
+                      color: !_isReservationSelected
+                          ? Color(0xFF84a2d4)
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(16.0),
-                      border: Border.all(color: Colors.blue),
+                      border: Border.all(color: Color(0xFF84a2d4)),
                     ),
                     padding:
-                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 50.0),
                     child: Text(
                       '予約一覧',
                       style: TextStyle(
                         color: !_isReservationSelected
                             ? Colors.white
-                            : Colors.blue,
+                            : Color(0xFF84a2d4),
                       ),
                     ),
                   ),
@@ -235,6 +240,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           ),
         ],
       ),
+      backgroundColor: Color(0xFFe6e6e6),
     );
   }
 }
@@ -369,16 +375,14 @@ class _ReservationViewState extends State<ReservationView> {
       child: Form(
         key: _formKey,
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
                 key: ValueKey('name'),
                 controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: 'お名前',
-                ),
+                decoration: InputDecoration(labelText: 'お名前'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'お名前を入力してください';
@@ -386,18 +390,10 @@ class _ReservationViewState extends State<ReservationView> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               TextFormField(
-                key: ValueKey('phonenumber'),
-                keyboardType: TextInputType.phone,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                  LengthLimitingTextInputFormatter(11)
-                ],
                 controller: _phoneNumberController,
-                decoration: InputDecoration(
-                  labelText: '電話番号',
-                ),
+                decoration: InputDecoration(labelText: '電話番号'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return '電話番号を入力してください';
@@ -405,17 +401,17 @@ class _ReservationViewState extends State<ReservationView> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               TextFormField(
                 key: ValueKey('day'),
                 controller: _dateController,
                 decoration: InputDecoration(
                   labelText: '日付',
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.calendar_today),
+                    onPressed: () => _selectDate(context),
+                  ),
                 ),
-                readOnly: true,
-                onTap: () {
-                  _selectDate(context);
-                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return '日付を入力してください';
@@ -423,17 +419,17 @@ class _ReservationViewState extends State<ReservationView> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               TextFormField(
                 key: ValueKey('time'),
                 controller: _timeController,
                 decoration: InputDecoration(
                   labelText: '時刻',
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.access_time),
+                    onPressed: () => _selectTime(context),
+                  ),
                 ),
-                readOnly: true,
-                onTap: () {
-                  _selectTime(context);
-                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return '時刻を入力してください';
@@ -465,24 +461,22 @@ class _ReservationViewState extends State<ReservationView> {
                   return null;
                 },
               ),
-              SizedBox(height: 32.0),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Center(
                 child: ElevatedButton(
                   onPressed: _submitForm,
-                  child: Text(
-                    '送信',
-                    style: TextStyle(
-                      color: Colors.white,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF84a2d4),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.25,
+                      vertical: getButtonHeight(context) * 0.5,
                     ),
                   ),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.black),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                    ),
+                  child: Text(
+                    '予約する',
+                    style: TextStyle(
+                        fontSize: getButtonFontSize(context) * 2,
+                        color: Colors.white),
                   ),
                 ),
               ),
@@ -502,37 +496,40 @@ class ReservationDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('予約詳細'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
+        child: AppBar(
+          title: Text('予約詳細'),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'お名前: ${reservation.name}',
-              style: TextStyle(fontSize: 22.0),
+              style: TextStyle(fontSize: getContainerFontSize(context)),
             ),
-            SizedBox(height: 8.0),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             Text(
               '電話番号: ${reservation.phoneNumber}',
-              style: TextStyle(fontSize: 22.0),
+              style: TextStyle(fontSize: getContainerFontSize(context)),
             ),
-            SizedBox(height: 8.0),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             Text(
               '日付: ${reservation.date}',
-              style: TextStyle(fontSize: 22.0),
+              style: TextStyle(fontSize: getContainerFontSize(context)),
             ),
-            SizedBox(height: 8.0),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             Text(
               '時刻: ${reservation.time}',
-              style: TextStyle(fontSize: 22.0),
+              style: TextStyle(fontSize: getContainerFontSize(context)),
             ),
-            SizedBox(height: 8.0),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             Text(
               '倉庫場所: ${reservation.warehouseLocation}',
-              style: TextStyle(fontSize: 20.0),
+              style: TextStyle(fontSize: getContainerFontSize(context)),
             ),
           ],
         ),
@@ -924,5 +921,60 @@ class _ListViewWidgetState extends State<ListViewWidget> {
         );
       },
     );
+  }
+}
+
+double getAppBarHeight(BuildContext context) {
+  double screenHeight = MediaQuery.of(context).size.height;
+  if (screenHeight < 600) {
+    return 20.0; // Small screen height
+  } else if (screenHeight < 900) {
+    return 24.0; // Medium screen height
+  } else {
+    return 28.0; // Large screen height
+  }
+}
+
+double getAppBarFontSize(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  if (screenWidth < 400) {
+    return 20.0; // Small screen width
+  } else if (screenWidth < 800) {
+    return 24.0; // Medium screen width
+  } else {
+    return 28.0; // Large screen width
+  }
+}
+
+double getContainerFontSize(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  if (screenWidth < 400) {
+    return 20.0; // Small screen width
+  } else if (screenWidth < 800) {
+    return 24.0; // Medium screen width
+  } else {
+    return 28.0; // Large screen width
+  }
+}
+
+double getButtonHeight(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  if (screenWidth < 400) {
+    return 30.0; // Small screen width
+  } else if (screenWidth < 800) {
+    return 40.0; // Medium screen width
+  } else {
+    return 50.0; // Large screen width
+  }
+}
+
+double getButtonFontSize(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  if (screenWidth < 400) {
+    return 10.0; // Small screen width
+  } else if (screenWidth < 800) {
+    return 12.0; // Medium screen width
+  } else {
+    return 14.0; // Large screen width
   }
 }
