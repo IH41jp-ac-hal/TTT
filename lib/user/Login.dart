@@ -60,22 +60,30 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'TruckerTrekker',
-          style: TextStyle(color: const Color.fromARGB(255, 255, 0, 0)),
-        ),
-        backgroundColor: Colors.black,
-      ),
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(1.0), // AppBarの高さをここで指定します
+      //   child: AppBar(
+      //     title: Row(
+      //       children: [
+      //         Container(
+      //           width: 90,
+      //           height: 90,
+      //           decoration: const BoxDecoration(
+      //             // image: DecorationImage(
+      //             //   image: AssetImage('assets/logo.png'), //画像
+      //             // ),
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //     backgroundColor: Color(0xFF84a2d4),
+      //   ),
+      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('ログイン', style: TextStyle(fontSize: 35)),
-            Text(
-              'メールアドレスとパスワードを入力してください',
-              style: TextStyle(fontSize: 15),
-            ),
+            Text('TruckerTrekker', style: TextStyle(fontSize: 115, fontWeight: FontWeight.bold, color: Color(0xFFFFFFFF), height: 0.9)),
             Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -84,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: ValidateText.email,
                       decoration: const InputDecoration(
-                          filled: true, hintText: 'Hirano._.@domain.com'),
+                          filled: true, hintText: 'メールアドレスを入力してください'),
                       onChanged: (text) {
                         setEmail(text);
                       },
@@ -105,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                           filled: true,
-                          hintText: 'パスワード'),
+                          hintText: 'パスワードを入力してください'),
                       onChanged: (text) {
                         setPassword(text);
                       },
@@ -116,7 +124,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ElevatedButton(
                       onPressed: _login,
-                      child: const Text('ログイン'),
+                      child: const Text(
+                        'ログイン',
+                        style: TextStyle(color: Color(0xFF84a2d4)),
+                      ),
                       style: ElevatedButton.styleFrom(
                         fixedSize: Size(144, double.infinity),
                       ),
@@ -126,20 +137,27 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ElevatedButton(
                       onPressed: _loginAsGuest,
-                      child: const Text('ゲストでログイン'),
+                      child: const Text(
+                        'ゲストでログイン',
+                        style: TextStyle(color: Color(0xFF84a2d4)),
+                      ),
                     ),
                     const SizedBox(
                       height: 16,
                     ),
-                    TextButton(
+                    ElevatedButton(
                       onPressed: _navigateToSignup,
-                      child: const Text('新規会員登録'),
+                      child: const Text(
+                        '新規会員登録',
+                        style: TextStyle(color: Color(0xFF84a2d4)),
+                      ),
                     ),
                   ],
                 )),
           ],
         ),
       ),
+      backgroundColor: Color(0xFF84a2d4),
     );
   }
 }
