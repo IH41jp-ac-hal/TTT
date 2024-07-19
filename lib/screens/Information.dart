@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:trukkertrakker/screens/firebase_service.dart';
 import 'package:trukkertrakker/src/app.dart';
 
 void main() => runApp(MyApp());
+
+FirebaseService fbservice = FirebaseService();
 
 class InformationScreen extends StatefulWidget {
   const InformationScreen({Key? key}) : super(key: key);
@@ -11,90 +14,118 @@ class InformationScreen extends StatefulWidget {
 }
 
 class _InformationScreenState extends State<InformationScreen> {
-  // 各ボタンの押下回数を記録する変数
-  int normalCount = 0;
-  int tenMinutesCount = 0;
-  int thirtyMinutesCount = 0;
-  int moreThanThirtyCount = 0;
-  int trafficJamCount = 0;
+  String? lastPressedButton;
+  bool isButtonPressed = false; // ボタンが押されたかどうかのフラグ
+  Map<String, int> buttonCounts = {
+    '平常': 0,
+    '~10分': 0,
+    '~30分': 0,
+    '30分以上': 0,
+    '渋滞': 0,
+  };
 
-  // 現在の混雑状況を取得する関数
-  String getCurrentStatus() {
-    Map<String, int> countMap = {
-      '平常': normalCount,
-      '~10分': tenMinutesCount,
-      '~30分': thirtyMinutesCount,
-      '30分以上': moreThanThirtyCount,
-      '渋滞': trafficJamCount,
-    };
-
-    // 初期状態では「平常」を返す
-    if (countMap.values.every((count) => count == 0)) {
-      return '平常';
-    }
-
-    // カウントが最も多いキー（状況）を探す
-    String highestStatus =
-        countMap.entries.reduce((a, b) => a.value > b.value ? a : b).key;
-    return highestStatus;
+  @override
+  void initState() {
+    super.initState();
+    _fetchButtonCounts();
   }
 
-  // 状況に応じた背景色を返す関数
+  Future<void> _fetchButtonCounts() async {
+    int normalCount = await fbservice.getButtonCount('warehouseId', 'normal');
+    int delay10Count =
+        await fbservice.getButtonCount('warehouseId', 'delay_10');
+    int delay30Count =
+        await fbservice.getButtonCount('warehouseId', 'delay_30');
+    int delayOver30Count =
+        await fbservice.getButtonCount('warehouseId', 'delay_over30');
+    int jamCount = await fbservice.getButtonCount('warehouseId', 'jam');
+
+    setState(() {
+      buttonCounts['平常'] = normalCount;
+      buttonCounts['~10分'] = delay10Count;
+      buttonCounts['~30分'] = delay30Count;
+      buttonCounts['30分以上'] = delayOver30Count;
+      buttonCounts['渋滞'] = jamCount;
+    });
+  }
+
+  String getCurrentStatus() {
+    String currentStatus = '平常';
+    int maxCount = 0;
+
+    buttonCounts.forEach((status, count) {
+      if (count > maxCount) {
+        maxCount = count;
+        currentStatus = status;
+      }
+    });
+
+    return currentStatus;
+  }
+
   Color getBackgroundColor() {
     String currentStatus = getCurrentStatus();
     switch (currentStatus) {
       case '平常':
-        return Colors.lightGreen;
+        return Color(0xFF7fff7f);
       case '~10分':
-        return Colors.lightBlue;
+        return Color(0xFF7fbfff);
       case '~30分':
-        return Colors.orangeAccent;
+        return Color(0xFFffbf7f);
       case '30分以上':
-        return Colors.redAccent;
+        return Color(0xFFff7f7f);
       case '渋滞':
-        return Colors.purpleAccent;
+        return Color(0xFFbf7fff);
       default:
         return Colors.blueGrey;
     }
   }
 
+  void resetLastPressedButton() {
+    setState(() {
+      lastPressedButton = null;
+      isButtonPressed = false; // フラグをリセット
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size; // 画面サイズを得るための変数定義(size)
+    final Size size = MediaQuery.of(context).size;
     return MaterialApp(
       home: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(110.0),
+          preferredSize: const Size.fromHeight(80.0),
           child: AppBar(
-            centerTitle: false,
-            title: Text(
-              '配送状況',
-              style: TextStyle(fontSize: 19, height: 4),
-            ),
-            backgroundColor: Color.fromARGB(255, 9, 142, 163),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0, top: 23.0),
-                child: Container(
-                  width: 114,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/logo.png'), // 画像のパス指定
-                      )),
+            title: Row(
+              children: [
+                Container(
+                  width: 90,
+                  height: 90,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/logo.png'), //画像
+                    ),
+                  ),
                 ),
-              )
-            ],
+                Text(
+                  '配送状況',
+                  style: TextStyle(
+                    fontSize: getAppBarFontSize(context), // フォントサイズ
+                    color: Colors.white, // テキストカラー
+                  ),
+                ),
+              ],
+            ),
+            backgroundColor: Color(0xFF84a2d4),
           ),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
               Container(
-                width: size.width, // 画面の幅を設定
-                height: size.height * 0.4, // 画面の高さを設定
-                color: getBackgroundColor(), // 混雑状況に基づいた背景色を設定
+                width: size.width,
+                height: size.height * 0.4,
+                color: getBackgroundColor(),
                 child: Center(
                   child: Text(
                     '現在の状況: ${getCurrentStatus()}',
@@ -102,7 +133,7 @@ class _InformationScreenState extends State<InformationScreen> {
                         fontSize: 44,
                         height: 1.5,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white), // テキストの色を白に設定
+                        color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -116,39 +147,65 @@ class _InformationScreenState extends State<InformationScreen> {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 均等に配置
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  _buildStatusButton('平常', Colors.lightGreen, normalCount, () {
+                  _buildStatusButton('平常', Color(0xFF7fff7f), () async {
+                    await fbservice.incrementButtonCount(
+                        'warehouseId', 'normal');
                     setState(() {
-                      normalCount++;
+                      lastPressedButton = '平常';
+                      buttonCounts['平常'] = (buttonCounts['平常'] ?? 0) + 1;
+                      isButtonPressed = true; // フラグをセット
                     });
                   }),
-                  _buildStatusButton('~10分', Colors.lightBlue, tenMinutesCount,
-                      () {
+                  _buildStatusButton('~10分', Color(0xFF7fbfff), () async {
+                    await fbservice.incrementButtonCount(
+                        'warehouseId', 'delay_10');
                     setState(() {
-                      tenMinutesCount++;
+                      lastPressedButton = '~10分';
+                      buttonCounts['~10分'] = (buttonCounts['~10分'] ?? 0) + 1;
+                      isButtonPressed = true; // フラグをセット
                     });
                   }),
-                  _buildStatusButton(
-                      '~30分', Colors.orangeAccent, thirtyMinutesCount, () {
+                  _buildStatusButton('~30分', Color(0xFFffbf7f), () async {
+                    await fbservice.incrementButtonCount(
+                        'warehouseId', 'delay_30');
                     setState(() {
-                      thirtyMinutesCount++;
+                      lastPressedButton = '~30分';
+                      buttonCounts['~30分'] = (buttonCounts['~30分'] ?? 0) + 1;
+                      isButtonPressed = true; // フラグをセット
                     });
                   }),
-                  _buildStatusButton(
-                      '30分以上', Colors.redAccent, moreThanThirtyCount, () {
+                  _buildStatusButton('30分以上', Color(0xFFff7f7f), () async {
+                    await fbservice.incrementButtonCount(
+                        'warehouseId', 'delay_over30');
                     setState(() {
-                      moreThanThirtyCount++;
+                      lastPressedButton = '30分以上';
+                      buttonCounts['30分以上'] = (buttonCounts['30分以上'] ?? 0) + 1;
+                      isButtonPressed = true; // フラグをセット
                     });
                   }),
-                  _buildStatusButton('渋滞', Colors.purpleAccent, trafficJamCount,
-                      () {
+                  _buildStatusButton('渋滞', Color(0xFFbf7fff), () async {
+                    await fbservice.incrementButtonCount('warehouseId', 'jam');
                     setState(() {
-                      trafficJamCount++;
+                      lastPressedButton = '渋滞';
+                      buttonCounts['渋滞'] = (buttonCounts['渋滞'] ?? 0) + 1;
+                      isButtonPressed = true; // フラグをセット
                     });
                   }),
                 ],
               ),
+              if (lastPressedButton != null)
+                Container(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: ElevatedButton(
+                    onPressed: resetLastPressedButton,
+                    child: Text('取り消し'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
@@ -156,33 +213,52 @@ class _InformationScreenState extends State<InformationScreen> {
     );
   }
 
-  Widget _buildStatusButton(
-      String label, Color color, int count, VoidCallback onPressed) {
+  Widget _buildStatusButton(String label, Color color, VoidCallback onPressed) {
+    bool isButtonActive =
+        (lastPressedButton == null || lastPressedButton == label) &&
+            !isButtonPressed;
     return Expanded(
       child: Column(
         children: [
           Container(
-            height: 60, // ボタンの高さを設定
+            height: 60,
             child: ElevatedButton(
-              onPressed: onPressed,
+              onPressed: isButtonActive ? onPressed : null,
               child: Text(
                 label,
                 style: TextStyle(
-                    fontSize: 14, // フォントサイズを調整
-                    color: Colors.white, // テキストの色を白に設定
+                    fontSize: 14,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: color, // ボタンの背景色を設定
+                backgroundColor: isButtonActive ? color : Colors.grey,
                 shape: CircleBorder(),
               ),
             ),
           ),
-          SizedBox(height: 8), // テキストとボタンの間にスペースを追加
-          Text('$count'), // 押された回数を表示
+          SizedBox(height: 8),
+          Text(
+            '${buttonCounts[label] ?? 0} 回',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
+  }
+}
+
+double getAppBarFontSize(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  if (screenWidth < 400) {
+    return 20.0; // Small screen width
+  } else if (screenWidth < 800) {
+    return 24.0; // Medium screen width
+  } else {
+    return 28.0; // Large screen width
   }
 }
