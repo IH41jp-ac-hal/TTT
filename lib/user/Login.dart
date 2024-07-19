@@ -67,11 +67,17 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('TruckerTrekker',
+            Padding(
+              padding: EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                'TruckerTrekker',
                 style: TextStyle(
-                    fontSize: fontSize,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFFFFFFFF))),
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFFFFFFFF),
+                ),
+              ),
+            ),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40.0), // 左右に40.0のパディング適応
                 child: Column(
@@ -129,9 +135,9 @@ class _LoginPageState extends State<LoginPage> {
                       height: 16,
                     ),
                     ElevatedButton(
-                      onPressed: _loginAsGuest,
+                      onPressed: _navigateToSignup,
                       child: const Text(
-                        'ゲストでログイン',
+                        '新規会員登録',
                         style: TextStyle(color: Color(0xFF84a2d4)),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -142,9 +148,9 @@ class _LoginPageState extends State<LoginPage> {
                       height: 16,
                     ),
                     ElevatedButton(
-                      onPressed: _navigateToSignup,
+                      onPressed: _loginAsGuest,
                       child: const Text(
-                        '新規会員登録',
+                        'ゲストユーザー',
                         style: TextStyle(color: Color(0xFF84a2d4)),
                       ),
                       style: ElevatedButton.styleFrom(
