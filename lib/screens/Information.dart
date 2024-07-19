@@ -62,211 +62,199 @@ class _InformationScreenState extends State<InformationScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size; // 画面サイズを得るための変数定義(size)
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(110.0),
+          preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
           child: AppBar(
-            centerTitle: false,
-            title: Text(
-              '配送状況',
-              style: TextStyle(fontSize: 19, height: 4),
-            ),
-            backgroundColor: Color.fromARGB(255, 9, 142, 163),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0, top: 23.0),
-                child: Container(
-                  width: 114,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/logo.png'), // 画像のパス指定
-                      )),
+            title: Row(
+              children: [
+                Container(
+                  width: 90,
+                  height: 90,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/logo.png'),
+                    ),
+                  ),
                 ),
-              )
-            ],
-          ),
-        ),
-        body: Column(
-          children: [
-            Container(
-              width: size.width, // 画面の幅を設定
-              height: size.height * 0.4, // 画面の高さを設定
-              color: getBackgroundColor(), // 混雑状況に基づいた背景色を設定
-              child: Center(
-                child: Text(
-                  '現在の状況: ${getCurrentStatus()}',
+                Text(
+                  '配送状況',
                   style: TextStyle(
-                      fontSize: 44,
-                      height: 1.5,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white), // テキストの色を白に設定
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 23.0, bottom: 30.0),
-              child: Text(
-                '今の配送状況をボタンを押して投票！',
-                style: TextStyle(
-                    fontSize: 22, height: 4, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 均等に配置
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 60, // ボタンの高さを設定
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              normalCount++;
-                            });
-                          },
-                          child: Text(
-                            '平常',
-                            style: TextStyle(
-                                fontSize: 14, // フォントサイズを調整
-                                color: Colors.white, // テキストの色を白に設定
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightGreen, // ボタンの背景色を設定
-                            shape: CircleBorder(),
-                          ),
-                        ),
-                      ),
-                      Text('$normalCount'), // 押された回数を表示
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 60, // ボタンの高さを設定
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              tenMinutesCount++;
-                            });
-                          },
-                          child: Text(
-                            '~10分',
-                            style: TextStyle(
-                                fontSize: 14, // フォントサイズを調整
-                                color: Colors.white, // テキストの色を白に設定
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightBlue, // ボタンの背景色を設定
-                            shape: CircleBorder(),
-                          ),
-                        ),
-                      ),
-                      Text('$tenMinutesCount'), // 押された回数を表示
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 60, // ボタンの高さを設定
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              thirtyMinutesCount++;
-                            });
-                          },
-                          child: Text(
-                            '~30分',
-                            style: TextStyle(
-                                fontSize: 14, // フォントサイズを調整
-                                color: Colors.white, // テキストの色を白に設定
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orangeAccent, // ボタンの背景色を設定
-                            shape: CircleBorder(),
-                          ),
-                        ),
-                      ),
-                      Text('$thirtyMinutesCount'), // 押された回数を表示
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 60, // ボタンの高さを設定
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              moreThanThirtyCount++;
-                            });
-                          },
-                          child: Text(
-                            '30分以上',
-                            style: TextStyle(
-                                fontSize: 14, // フォントサイズを調整
-                                color: Colors.white, // テキストの色を白に設定
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.redAccent, // ボタンの背景色を設定
-                            shape: CircleBorder(),
-                          ),
-                        ),
-                      ),
-                      Text('$moreThanThirtyCount'), // 押された回数を表示
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 60, // ボタンの高さを設定
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              trafficJamCount++;
-                            });
-                          },
-                          child: Text(
-                            '渋滞',
-                            style: TextStyle(
-                                fontSize: 14, // フォントサイズを調整
-                                color: Colors.white, // テキストの色を白に設定
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.purpleAccent, // ボタンの背景色を設定
-                            shape: CircleBorder(),
-                          ),
-                        ),
-                      ),
-                      Text('$trafficJamCount'), // 押された回数を表示
-                    ],
+                    fontSize: getAppBarFontSize(context),
+                    color: Colors.white,
                   ),
                 ),
               ],
             ),
-          ],
+            backgroundColor: Color(0xFF84a2d4),
+            actions: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                    right: 15.0,
+                    top: MediaQuery.of(context).size.height * 0.03),
+              ),
+            ],
+          ),
         ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: size.width, // 画面の幅を設定
+                height: size.height * 0.4, // 画面の高さを設定
+                color: getBackgroundColor(), // 混雑状況に基づいた背景色を設定
+                child: Center(
+                  child: Text(
+                    '現在の状況: ${getCurrentStatus()}',
+                    style: TextStyle(
+                      fontSize: getContainerFontSize(context),
+                      height: 1.5,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // テキストの色を白に設定
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 15.0, bottom: 26.0),
+                child: Text(
+                  '今の配送状況をボタンを押して投票！',
+                  style: TextStyle(
+                    fontSize: 20,
+                    height: 3,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 均等に配置
+                children: <Widget>[
+                  _buildStatusButton('平常', Colors.lightGreen, normalCount, () {
+                    setState(() {
+                      normalCount++;
+                    });
+                  }),
+                  _buildStatusButton('~10分', Colors.lightBlue, tenMinutesCount,
+                      () {
+                    setState(() {
+                      tenMinutesCount++;
+                    });
+                  }),
+                  _buildStatusButton(
+                      '~30分', Colors.orangeAccent, thirtyMinutesCount, () {
+                    setState(() {
+                      thirtyMinutesCount++;
+                    });
+                  }),
+                  _buildStatusButton(
+                      '30分以上', Colors.redAccent, moreThanThirtyCount, () {
+                    setState(() {
+                      moreThanThirtyCount++;
+                    });
+                  }),
+                  _buildStatusButton('渋滞', Colors.purpleAccent, trafficJamCount,
+                      () {
+                    setState(() {
+                      trafficJamCount++;
+                    });
+                  }),
+                ],
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: Color(0xFFe6e6e6),
       ),
     );
+  }
+
+  Widget _buildStatusButton(
+      String label, Color color, int count, VoidCallback onPressed) {
+    return Expanded(
+      child: Column(
+        children: [
+          Container(
+            height: getButtonHeight(context), // ボタンの高さを動的に設定
+            child: ElevatedButton(
+              onPressed: onPressed,
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: getButtonFontSize(context), // フォントサイズを調整
+                  color: Colors.white, // テキストの色を白に設定
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: color, // ボタンの背景色を設定
+                shape: CircleBorder(),
+              ),
+            ),
+          ),
+          SizedBox(height: 8), // テキストとボタンの間にスペースを追加
+          Text('$count'), // 押された回数を表示
+        ],
+      ),
+    );
+  }
+
+  double getAppBarHeight(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    if (screenHeight < 600) {
+      return 80.0; // Small screen height
+    } else if (screenHeight < 900) {
+      return 100.0; // Medium screen height
+    } else {
+      return 110.0; // Large screen height
+    }
+  }
+
+  double getAppBarFontSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 400) {
+      return 20.0; // Small screen width
+    } else if (screenWidth < 800) {
+      return 24.0; // Medium screen width
+    } else {
+      return 28.0; // Large screen width
+    }
+  }
+
+  double getContainerFontSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 600) {
+      return 28.0; // Small screen width
+    } else if (screenWidth < 900) {
+      return 36.0; // Medium screen width
+    } else {
+      return 44.0; // Large screen width
+    }
+  }
+
+  double getButtonHeight(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 600) {
+      return 40.0; // Small screen width
+    } else if (screenWidth < 900) {
+      return 50.0; // Medium screen width
+    } else {
+      return 60.0; // Large screen width
+    }
+  }
+
+  double getButtonFontSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 600) {
+      return 10.0; // Small screen width
+    } else if (screenWidth < 900) {
+      return 12.0; // Medium screen width
+    } else {
+      return 14.0; // Large screen width
+    }
   }
 }

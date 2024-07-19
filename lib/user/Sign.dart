@@ -83,12 +83,15 @@ class _SignupPageState extends State<SignUpPage> {
     Firebase.initializeApp();
     
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'TruckerTrekker',
-          style: TextStyle(color: const Color.fromARGB(255, 255, 0, 0)),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
+        child: AppBar(
+          title: Text(
+            'TruckerTrekker',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Color(0xFF84a2d4),
         ),
-        backgroundColor: Colors.black,
       ),
       body: Center(
         child: Column(
@@ -135,7 +138,10 @@ class _SignupPageState extends State<SignUpPage> {
                     ),
                     ElevatedButton(
                       onPressed: _signup,
-                      child: const Text('サインイン'),
+                      child: const Text(
+                        'サインイン',
+                        style: TextStyle(color: Color(0xFF84a2d4)),
+                      ),
                     ),
                   ],
                 )),
