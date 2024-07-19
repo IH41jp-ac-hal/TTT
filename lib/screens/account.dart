@@ -33,29 +33,37 @@ class AccountScreen extends StatelessWidget {
     );
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(110.0),
+          preferredSize: Size.fromHeight(80.0), // AppBarの高さをここで指定します
           child: AppBar(
-            centerTitle: false,
-            title: Text(
-              'アカウント',
-              style: TextStyle(fontSize: 19, height: 4),
-            ),
-            backgroundColor: Color.fromARGB(255, 9, 142, 163),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0, top: 23.0),
-                child: Container(
-                  width: 114,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
+            title: Row(
+              children: [
+                Container(
+                  width: 90,
+                  height: 90,
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
-                      fit: BoxFit.cover,
                       image: AssetImage('assets/logo.png'),
                     ),
                   ),
                 ),
+                Text(
+                  'アカウント',
+                  style: TextStyle(
+                    fontSize: getAppBarFontSize(context),
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            backgroundColor: Color(0xFF84a2d4),
+            actions: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                    right: 15.0,
+                    top: MediaQuery.of(context).size.height * 0.03),
               ),
             ],
           ),
@@ -66,10 +74,13 @@ class AccountScreen extends StatelessWidget {
               children: <Widget>[
                 // プロフィール写真
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.only(
+                      right: 15.0,
+                      top: MediaQuery.of(context).size.height * 0.1),
                   child: CircleAvatar(
                     radius: 50.0,
                     backgroundImage: AssetImage(accountInfo.profileImageUrl),
+                    backgroundColor: Color(0xFFFFFFFF),
                   ),
                 ),
                 SizedBox(height: 10.0),
@@ -77,14 +88,20 @@ class AccountScreen extends StatelessWidget {
                 // 名前
                 Text(
                   accountInfo.name,
-                  style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(height: 5.0),
 
                 // メールアドレス
                 Text(
                   accountInfo.email,
-                  style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.grey,
+                  ),
                 ),
                 SizedBox(height: 20.0),
 
@@ -119,13 +136,39 @@ class AccountScreen extends StatelessWidget {
                       accountInfo.bio = updatedAccountInfo.bio;
                     }
                   },
-                  child: Text('編集'),
+                  child: Text(
+                    '編集',
+                    style: TextStyle(color: Color(0xFF84a2d4)),
+                  ),
                 ),
               ],
             ),
           ),
         ),
+        backgroundColor: Color(0xFFe6e6e6),
       ),
     );
+  }
+
+  double getAppBarHeight(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    if (screenHeight < 600) {
+      return 80.0; // Small screen height
+    } else if (screenHeight < 900) {
+      return 100.0; // Medium screen height
+    } else {
+      return 110.0; // Large screen height
+    }
+  }
+
+  double getAppBarFontSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < 400) {
+      return 20.0; // Small screen width
+    } else if (screenWidth < 800) {
+      return 24.0; // Medium screen width
+    } else {
+      return 28.0; // Large screen width
+    }
   }
 }
