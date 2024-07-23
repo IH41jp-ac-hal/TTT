@@ -128,7 +128,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0), // 左右に40.0のパディング適応
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 40.0), // 左右に40.0のパディング適応
                 child: Column(
                   children: [
                     TextFormField(
@@ -137,7 +138,8 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: const InputDecoration(
                         filled: true,
                         hintText: 'メールアドレスを入力してください',
-                        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
                       ),
                       onChanged: (text) {
                         setEmail(text);
@@ -160,7 +162,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         filled: true,
                         hintText: 'パスワードを入力してください',
-                        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
                       ),
                       onChanged: (text) {
                         setPassword(text);
@@ -177,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: Color(0xFF84a2d4)),
                       ),
                       style: ElevatedButton.styleFrom(
-                        fixedSize: Size(144, double.infinity),
+                        fixedSize: Size(170, double.infinity),
                       ),
                     ),
                     const SizedBox(
@@ -189,13 +192,25 @@ class _LoginPageState extends State<LoginPage> {
                         'ゲストでログイン',
                         style: TextStyle(color: Color(0xFF84a2d4)),
                       ),
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(170, double.infinity),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
                     ),
                     ElevatedButton(
                       onPressed: () {
                         // サインイン画面を表示する
                         signInWithGoogle();
                       },
-                      child: const Text('Googleでログイン'),
+                      child: const Text(
+                        'Googleでログイン',
+                        style: TextStyle(color: Color(0xFF84a2d4)),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(170, double.infinity),
+                      ),
                     ),
                     const SizedBox(
                       height: 16,
@@ -205,6 +220,9 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text(
                         '新規会員登録',
                         style: TextStyle(color: Color(0xFF84a2d4)),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(170, double.infinity),
                       ),
                     ),
                     const SizedBox(height: 8),
