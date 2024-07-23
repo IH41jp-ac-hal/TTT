@@ -205,26 +205,26 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_storage
-      sha256: "594f593551a20c1de68663414965b6ec4909f9a6bde8e6b1dac240ce779de947"
+      sha256: "472e8532dfdcffd00ed8cc1ff57fda76af6f0a8a26547908bc20f25079922408"
       url: "https://pub.dev"
     source: hosted
-    version: "12.0.1"
+    version: "12.1.1"
   firebase_storage_platform_interface:
     dependency: transitive
     description:
       name: firebase_storage_platform_interface
-      sha256: "505dbaa4bceab07216c4e26cb1480bdb69ca03ab59bb7cb63f4681e2f7d5b23e"
+      sha256: f07b5dbf0efcaab0f7d38910851791f7509b8864d491bb11c079f67339f31b27
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.24"
+    version: "5.1.26"
   firebase_storage_web:
     dependency: transitive
     description:
       name: firebase_storage_web
-      sha256: d3e6f27be96c7ebdf38a43520f19584e55dc45c71f616aa86f135dba97d63a8e
+      sha256: ef9d27afcd68a1c2b90d0cad2b02cf6333a053655988f4a2f6cba2796134cae5
       url: "https://pub.dev"
     source: hosted
-    version: "3.9.9"
+    version: "3.9.11"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -234,10 +234,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_lints
-      sha256: a25a15ebbdfc33ab1cd26c63a6ee519df92338a9c10f122adda92938253bef04
+      sha256: "3f41d009ba7172d5ff9be5f6e6e6abb4300e263aab8866d2a0842ed2a70f8f0c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3"
+    version: "4.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -412,10 +412,10 @@ packages:
     dependency: transitive
     description:
       name: lints
-      sha256: "0a217c6c989d21039f1498c3ed9f3ed71b354e69873f13a8dfc3c9fe76f1b452"
+      sha256: "976c774dd944a42e83e2467f4cc670daef7eed6295b10b36ae8c85bcbf828235"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "4.0.0"
   matcher:
     dependency: transitive
     description:
