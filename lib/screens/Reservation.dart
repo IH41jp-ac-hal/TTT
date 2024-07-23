@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:trukkertrakker/src/app.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -19,19 +26,101 @@ class MyApp extends StatelessWidget {
 }
 
 class Reservation {
+  String? id;
   final String name;
   final String phoneNumber;
   final String date;
   final String time;
   final String warehouseLocation;
+  final String userId;
 
   Reservation({
+    this.id,
     required this.name,
     required this.phoneNumber,
     required this.date,
     required this.time,
     required this.warehouseLocation,
+    required this.userId,
   });
+
+  factory Reservation.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data() as Map<String, dynamic>;
+    return Reservation(
+      id: doc.id,
+      name: data['name'] ?? '',
+      phoneNumber: data['phoneNumber'] ?? '',
+      date: data['date'] ?? '',
+      time: data['time'] ?? '',
+      warehouseLocation: data['warehouseLocation'] ?? '',
+      userId: data['userId'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'name': name,
+      'phoneNumber': phoneNumber,
+      'date': date,
+      'time': time,
+      'warehouseLocation': warehouseLocation,
+      'userId': userId,
+    };
+  }
+
+  Future<void> saveToFirestore() async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        throw Exception('User is not logged in');
+      }
+      if (id == null) {
+        DocumentReference docRef = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser.uid)
+            .collection('reservations')
+            .add(toFirestore());
+        id = docRef.id;
+      } else {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser.uid)
+            .collection('reservations')
+            .doc(id)
+            .set(toFirestore());
+      }
+    } catch (e) {
+      print('Error saving reservation to Firestore: $e');
+      throw e;
+    }
+  }
+
+  Future<void> deleteFromFirestore() async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        throw Exception('User is not logged in');
+      }
+      if (id != null) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser.uid)
+            .collection('reservations')
+            .doc(id)
+            .delete();
+      }
+    } catch (e) {
+      print('Error deleting reservation from Firestore: $e');
+      throw e;
+    }
+  }
+}
+
+class WarehouseLocation {
+  final int id;
+  final String location;
+
+  WarehouseLocation({required this.id, required this.location});
 }
 
 class ReservationScreen extends StatefulWidget {
@@ -172,14 +261,14 @@ class _ReservationViewState extends State<ReservationView> {
   final _dateController = TextEditingController();
   final _timeController = TextEditingController();
   final _warehouseLocationController = TextEditingController();
-  final List<String> _warehouseLocations = [
-    '東京港区倉庫',
-    '東京千代田区倉庫',
-    '東京中央区倉庫',
-    '東京江戸区倉庫',
-    '千葉船橋市倉庫'
+  final List<WarehouseLocation> _warehouseLocations = [
+    WarehouseLocation(id: 1, location: '東京港区倉庫'),
+    WarehouseLocation(id: 2, location: '東京千代田区倉庫'),
+    WarehouseLocation(id: 3, location: '東京中央区倉庫'),
+    WarehouseLocation(id: 4, location: '東京江戸区倉庫'),
+    WarehouseLocation(id: 5, location: '千葉船橋市倉庫'),
   ];
-  String? _selectedWarehouseLocation;
+  WarehouseLocation? _selectedWarehouseLocation;
 
   @override
   void dispose() {
@@ -234,24 +323,43 @@ class _ReservationViewState extends State<ReservationView> {
               ),
               TextButton(
                 child: Text("はい"),
-                onPressed: () {
+                onPressed: () async {
+                  User? currentUser = FirebaseAuth.instance.currentUser;
+                  if (currentUser == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('ログインしてください')),
+                    );
+                    Navigator.of(context).pop();
+                    return;
+                  }
                   final newReservation = Reservation(
                     name: _nameController.text,
                     phoneNumber: _phoneNumberController.text,
                     date: _dateController.text,
                     time: _timeController.text,
-                    warehouseLocation: _selectedWarehouseLocation!,
+                    warehouseLocation: _selectedWarehouseLocation!.location,
+                    userId: currentUser.uid,
                   );
-                  widget.onSubmit(newReservation);
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReservationDetailsScreen(
-                        reservation: newReservation,
+
+                  try {
+                    await newReservation.saveToFirestore();
+                    widget.onSubmit(newReservation);
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReservationDetailsScreen(
+                          reservation: newReservation,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  } catch (e) {
+                    print('詳細なエラー情報: $e');
+                    if (e is FirebaseException) {
+                      print('Firebase エラーコード: ${e.code}');
+                      print('Firebase エラーメッセージ: ${e.message}');
+                    }
+                  }
                 },
               ),
             ],
@@ -272,6 +380,7 @@ class _ReservationViewState extends State<ReservationView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
+                key: ValueKey('name'),
                 controller: _nameController,
                 decoration: InputDecoration(labelText: 'お名前'),
                 validator: (value) {
@@ -294,6 +403,7 @@ class _ReservationViewState extends State<ReservationView> {
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               TextFormField(
+                key: ValueKey('day'),
                 controller: _dateController,
                 decoration: InputDecoration(
                   labelText: '日付',
@@ -311,6 +421,7 @@ class _ReservationViewState extends State<ReservationView> {
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               TextFormField(
+                key: ValueKey('time'),
                 controller: _timeController,
                 decoration: InputDecoration(
                   labelText: '時刻',
@@ -326,23 +437,25 @@ class _ReservationViewState extends State<ReservationView> {
                   return null;
                 },
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-              DropdownButtonFormField<String>(
-                value: _selectedWarehouseLocation,
-                hint: Text('倉庫場所を選択'),
-                onChanged: (newValue) {
+              SizedBox(height: 16.0),
+              DropdownButtonFormField<WarehouseLocation>(
+                decoration: InputDecoration(
+                  labelText: '倉庫場所',
+                ),
+                items: _warehouseLocations.map((WarehouseLocation location) {
+                  return DropdownMenuItem<WarehouseLocation>(
+                    key: ValueKey('warehouse'),
+                    value: location,
+                    child: Text(location.location),
+                  );
+                }).toList(),
+                onChanged: (WarehouseLocation? newValue) {
                   setState(() {
                     _selectedWarehouseLocation = newValue;
                   });
                 },
-                items: _warehouseLocations.map((location) {
-                  return DropdownMenuItem(
-                    child: Text(location),
-                    value: location,
-                  );
-                }).toList(),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value == null) {
                     return '倉庫場所を選択してください';
                   }
                   return null;
@@ -425,32 +538,386 @@ class ReservationDetailsScreen extends StatelessWidget {
   }
 }
 
-class ListViewWidget extends StatelessWidget {
+class EditReservationScreen extends StatefulWidget {
+  final Reservation reservation;
+
+  EditReservationScreen({required this.reservation});
+
+  @override
+  _EditReservationScreenState createState() => _EditReservationScreenState();
+}
+
+class _EditReservationScreenState extends State<EditReservationScreen> {
+  final _formKey = GlobalKey<FormState>();
+  late TextEditingController _nameController;
+  late TextEditingController _phoneNumberController;
+  late TextEditingController _dateController;
+  late TextEditingController _timeController;
+  final List<WarehouseLocation> _warehouseLocations = [
+    WarehouseLocation(id: 1, location: '東京港区倉庫'),
+    WarehouseLocation(id: 2, location: '東京千代田区倉庫'),
+    WarehouseLocation(id: 3, location: '東京中央区倉庫'),
+    WarehouseLocation(id: 4, location: '東京江戸区倉庫'),
+    WarehouseLocation(id: 5, location: '千葉船橋市倉庫'),
+  ];
+  WarehouseLocation? _selectedWarehouseLocation;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.reservation.name);
+    _phoneNumberController = TextEditingController(text: widget.reservation.phoneNumber);
+    _dateController = TextEditingController(text: widget.reservation.date);
+    _timeController = TextEditingController(text: widget.reservation.time);
+    _selectedWarehouseLocation = _warehouseLocations.firstWhere(
+      (location) => location.location == widget.reservation.warehouseLocation,
+      orElse: () => _warehouseLocations.first,
+    );
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneNumberController.dispose();
+    _dateController.dispose();
+    _timeController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      setState(() {
+        _dateController.text = "${picked.toLocal()}".split(' ')[0];
+      });
+    }
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        _timeController.text = picked.format(context);
+      });
+    }
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      final editedReservation = Reservation(
+        id: widget.reservation.id,
+        name: _nameController.text,
+        phoneNumber: _phoneNumberController.text,
+        date: _dateController.text,
+        time: _timeController.text,
+        warehouseLocation: _selectedWarehouseLocation?.location ?? '',
+        userId: widget.reservation.userId,
+      );
+      Navigator.of(context).pop(editedReservation);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('予約を編集'),
+      ),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  key: ValueKey('name'),
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: 'お名前',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'お名前を入力してください';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16.0),
+                TextFormField(
+                  key: ValueKey('phonenumber'),
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                    LengthLimitingTextInputFormatter(11)
+                  ],
+                  controller: _phoneNumberController,
+                  decoration: InputDecoration(
+                    labelText: '電話番号',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '電話番号を入力してください';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16.0),
+                TextFormField(
+                  key: ValueKey('day'),
+                  controller: _dateController,
+                  decoration: InputDecoration(
+                    labelText: '日付',
+                  ),
+                  readOnly: true,
+                  onTap: () {
+                    _selectDate(context);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '日付を入力してください';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16.0),
+                TextFormField(
+                  key: ValueKey('time'),
+                  controller: _timeController,
+                  decoration: InputDecoration(
+                    labelText: '時刻',
+                  ),
+                  readOnly: true,
+                  onTap: () {
+                    _selectTime(context);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '時刻を入力してください';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16.0),
+                DropdownButtonFormField<WarehouseLocation>(
+                  key: ValueKey('warehouse'),
+                  value: _selectedWarehouseLocation,
+                  items: _warehouseLocations.map((WarehouseLocation location) {
+                    return DropdownMenuItem<WarehouseLocation>(
+                      value: location,
+                      child: Text(location.location),
+                    );
+                  }).toList(),
+                  onChanged: (WarehouseLocation? newValue) {
+                    setState(() {
+                      _selectedWarehouseLocation = newValue;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return '倉庫場所を選択してください';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 32.0),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: _submitForm,
+                    child: Text(
+                      '更新',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ListViewWidget extends StatefulWidget {
   final List<Reservation> reservations;
 
   ListViewWidget({required this.reservations});
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: reservations.length,
-      itemBuilder: (context, index) {
-        final reservation = reservations[index];
-        return Padding(
-          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
-          child: Card(
-            elevation: 5,
-            child: ListTile(
-              title: Text(
-                reservation.name,
-                style: TextStyle(fontSize: getContainerFontSize(context)),
-              ),
-              subtitle: Text(
-                '${reservation.date} ${reservation.time} - ${reservation.warehouseLocation}',
-                style: TextStyle(fontSize: getContainerFontSize(context)),
-              ),
+  _ListViewWidgetState createState() => _ListViewWidgetState();
+}
+
+class _ListViewWidgetState extends State<ListViewWidget> {
+  late Stream<QuerySnapshot> _reservationsStream;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeReservationsStream();
+  }
+
+  void _initializeReservationsStream() {
+    User? currentUser = _auth.currentUser;
+    if (currentUser != null) {
+      _reservationsStream = FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('reservations')
+          .orderBy('date')
+          .snapshots();
+    } else {
+      // ユーザーがログインしていない場合の処理
+      _reservationsStream = Stream.empty();
+    }
+  }
+
+  void _deleteReservation(String id) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("削除"),
+          content: Text("この予約を削除しますか？"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("キャンセル"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-          ),
+            TextButton(
+              child: Text("削除"),
+              onPressed: () async {
+                try {
+                  User? currentUser = _auth.currentUser;
+                  if (currentUser == null) {
+                    throw Exception('User is not logged in');
+                  }
+                  await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(currentUser.uid)
+                      .collection('reservations')
+                      .doc(id)
+                      .delete();
+                  Navigator.of(context).pop();
+                } catch (e) {
+                  print('予約の削除中にエラーが発生しました: $e');
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('予約の削除中にエラーが発生しました')),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _editReservation(Reservation reservation) async {
+    final editedReservation = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditReservationScreen(
+          reservation: reservation,
+        ),
+      ),
+    );
+
+    if (editedReservation != null) {
+      try {
+        User? currentUser = _auth.currentUser;
+        if (currentUser == null) {
+          throw Exception('User is not logged in');
+        }
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser.uid)
+            .collection('reservations')
+            .doc(reservation.id)
+            .update(editedReservation.toFirestore());
+      } catch (e) {
+        print('予約の更新中にエラーが発生しました: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('予約の更新中にエラーが発生しました')),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _reservationsStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('エラーが発生しました: ${snapshot.error}');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Center(child: Text('予約はありません'));
+        }
+
+        return ListView(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+            Reservation reservation = Reservation.fromFirestore(document);
+
+            return ListTile(
+              tileColor: Color.fromARGB(255, 173, 250, 237),
+              title: Text(reservation.name),
+              subtitle: Text('${reservation.date} ${reservation.time}'),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(reservation.warehouseLocation),
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () => _editReservation(reservation),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => _deleteReservation(reservation.id!),
+                  ),
+                ],
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReservationDetailsScreen(
+                      reservation: reservation,
+                    ),
+                  ),
+                );
+              },
+            );
+          }).toList(),
         );
       },
     );
