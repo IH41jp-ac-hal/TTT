@@ -2,5 +2,8 @@
   "name": "TTT",
   "lockfileVersion": 2,
   "requires": true,
-  "packages": {}
+  "packages": {},
+  "scripts": {
+    "build": "flutter run"
+  }
 }
