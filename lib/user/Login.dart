@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:trukkertrakker/src/app.dart';
 import 'Sign.dart';
 
+// firebase用のimport
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:developer' as developer;
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -12,6 +19,13 @@ class _LoginPageState extends State<LoginPage> {
   String? password;
   bool isVisible = false;
 
+  // Login field email address
+  String loginUserEmail = "";
+  // Login field password (login)
+  String loginUserPassword = "";
+  // View information about registration and login
+  String DebugText = "";
+
   void toggleShowPassword() {
     setState(() {
       isVisible = !isVisible;
@@ -19,27 +33,52 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void setEmail(String email) {
-    this.email = email;
+    loginUserEmail = email;
   }
 
   void setPassword(String password) {
-    this.password = password;
+    loginUserPassword = password;
   }
 
-  void _login() {
-    if (email != null && password != null) {
-      // Replace this with actual authentication logic
-      if (email == "user@example.com" && password == "password123") {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => MyStatefulWidget()),
-        );
-      } else {
-        // error message
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('無効なメールアドレスまたはパスワード')),
-        );
-      }
+  void _login() async {
+    // if (email != null && password != null) {
+    //   // Replace this with actual authentication logic
+    //   if (email == "user@example.com" && password == "password123") {
+    //     Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(builder: (context) => MyStatefulWidget()),
+    //     );
+    //   } else {
+    //     // error message
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text('無効なメールアドレスまたはパスワード')),
+    //     );
+    //   }
+    // }
+
+    try {
+      // Try login
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      final UserCredential result = await auth.signInWithEmailAndPassword(
+        email: loginUserEmail,
+        password: loginUserPassword,
+      );
+
+      // Succeeded to login
+      final User user = result.user!;
+      setState(() {
+        DebugText = "Succeeded to Login：${user.email}";
+      });
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MyStatefulWidget()),
+      );
+    } catch (e) {
+      // Failed to login
+      setState(() {
+        DebugText = "Failed to Login：${e.toString()}";
+      });
     }
   }
 
@@ -48,6 +87,13 @@ class _LoginPageState extends State<LoginPage> {
       context,
       MaterialPageRoute(builder: (context) => MyStatefulWidget()),
     );
+  }
+
+  void _loginWithGoogle() {
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => MyStatefulWidget()),
+    // );
   }
 
   void _navigateToSignup() {
@@ -59,6 +105,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    //Initialize FireBase
+    Firebase.initializeApp();
+
     double screenWidth = MediaQuery.of(context).size.width;
     double fontSize = screenWidth * 0.1;
     double buttonWidth = screenWidth * 0.4; // 画面幅の40%をボタンの幅として使用
@@ -79,7 +128,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0), // 左右に40.0のパディング適応
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 40.0), // 左右に40.0のパディング適応
                 child: Column(
                   children: [
                     TextFormField(
@@ -88,7 +138,8 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: const InputDecoration(
                         filled: true,
                         hintText: 'メールアドレスを入力してください',
-                        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
                       ),
                       onChanged: (text) {
                         setEmail(text);
@@ -111,7 +162,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         filled: true,
                         hintText: 'パスワードを入力してください',
-                        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
                       ),
                       onChanged: (text) {
                         setPassword(text);
@@ -128,7 +180,36 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: Color(0xFF84a2d4)),
                       ),
                       style: ElevatedButton.styleFrom(
-                        fixedSize: Size(buttonWidth, 45), // レスポンシブなサイズ
+                        fixedSize: Size(170, double.infinity),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    ElevatedButton(
+                      onPressed: _loginAsGuest,
+                      child: const Text(
+                        'ゲストでログイン',
+                        style: TextStyle(color: Color(0xFF84a2d4)),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(170, double.infinity),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // サインイン画面を表示する
+                        signInWithGoogle();
+                      },
+                      child: const Text(
+                        'Googleでログイン',
+                        style: TextStyle(color: Color(0xFF84a2d4)),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(170, double.infinity),
                       ),
                     ),
                     const SizedBox(
@@ -141,22 +222,11 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: Color(0xFF84a2d4)),
                       ),
                       style: ElevatedButton.styleFrom(
-                        fixedSize: Size(buttonWidth, 45), // レスポンシブなサイズ
+                        fixedSize: Size(170, double.infinity),
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    ElevatedButton(
-                      onPressed: _loginAsGuest,
-                      child: const Text(
-                        'ゲストユーザー',
-                        style: TextStyle(color: Color(0xFF84a2d4)),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(buttonWidth, 45), // レスポンシブなサイズ
-                      ),
-                    ),
+                    const SizedBox(height: 8),
+                    Text(DebugText),
                   ],
                 )),
           ],
@@ -187,4 +257,22 @@ class ValidateText {
       }
     }
   }
+}
+
+Future<UserCredential> signInWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+  // Once signed in, return the UserCredential
+  return await FirebaseAuth.instance.signInWithCredential(credential);
 }
