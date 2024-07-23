@@ -19,3 +19,13 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_IH14___IH4C }}
           projectId: ih14---ih4c
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.2.2' # Flutterのバージョンを指定
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run build
+        run: flutter build apk # Flutterのビルドコマンドを指定
